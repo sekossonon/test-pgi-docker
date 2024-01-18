@@ -12,6 +12,7 @@ pipeline {
                 echo 'creating virtual env and install pre-commit'
                 sh '''
                 git init .
+                cat /root/.cache/pre-commit/pre-commit.log
                 ls -l .
                 python -m venv venv
                 . venv/bin/activate
