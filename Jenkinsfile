@@ -8,7 +8,7 @@ pipeline {
             steps {
                 echo 'creating virtual env and install pre-commit'
                 sh '''
-                pip install pre-commit
+                sudo pip install pre-commit
                 cd mic
                 pre-commit install
                 '''
