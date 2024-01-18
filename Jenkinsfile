@@ -40,8 +40,9 @@ pipeline {
                 dir('project') {
                     git branch: '16.0', url: 'https://github.com/OCA/project.git'
                 }
-                
-                docker.build("my-mic-16:${env.BUILD_ID}")
+                script {
+                    docker.build("my-mic-16:${env.BUILD_ID}")
+                }
             }
         }
 
