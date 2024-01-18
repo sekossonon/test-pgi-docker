@@ -1,4 +1,5 @@
-pipeline {
+node {
+    checkout scm
     agent {
         docker { 
             image 'python:bullseye'
