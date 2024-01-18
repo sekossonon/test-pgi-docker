@@ -8,8 +8,10 @@ pipeline {
             steps {
                 echo 'creating virtual env and install pre-commit'
                 sh '''
-                pip install --user pre-commit
                 cd mic
+                python -m venv venv
+                . venv/bin/activate
+                pip install pre-commit
                 pre-commit install
                 '''
             }
