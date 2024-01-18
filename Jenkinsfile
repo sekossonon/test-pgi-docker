@@ -7,7 +7,7 @@ pipeline {
     }
 
     stages {
-        stage('Setting up virtual env') {
+        stage('Code QA') {
             steps {
                 echo 'creating virtual env and install pre-commit'
                 sh '''
@@ -27,12 +27,19 @@ pipeline {
                 '''
             }
         }
-        stage('Running pre-commit') {
+        stage('Testing') {
             steps {
-                echo 'running pre-commit'
+                echo 'cloning odoo 16'
                 sh '''
-                pre-commit run --files mic/**/*
-                pre-commit run --from-ref origin/HEAD --to-ref HEAD
+                git clone https://github.com/odoo/odoo.git -b 16.0
+                '''
+                echo 'clone odoo-common 16'
+                sh '''
+                git clone https://github.com/microcom/odoo-common.git -b 16.0
+                '''
+                echo 'clone oca/projects 16'
+                sh '''
+                git clone https://github.com/OCA/project.git -b 16.0
                 '''
             }
         }
