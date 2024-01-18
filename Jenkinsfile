@@ -11,8 +11,8 @@ pipeline {
             steps {
                 echo 'creating virtual env and install pre-commit'
                 sh '''
-                echo ${workspace}
-                git config --global --add safe.directory $CI_PROJECT_DIR
+                echo $(pwd)
+                git config --global --add safe.directory $(pwd)
                 git init .
                 git status
                 ls -l .
