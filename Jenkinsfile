@@ -38,7 +38,7 @@ pipeline {
         stage('TEst') {
             steps {
                 echo 'Test'
-                sh "ls -l ."
+                sh "cd .. && ls -l ."
             }
         }
     }
