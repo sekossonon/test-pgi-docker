@@ -5,6 +5,9 @@ pipeline {
             args '-u root --privileged'
         }
     }
+    environment {
+        dockerImage = 'pgi'
+    }
 
     stages {
         // stage('Code QA') {
@@ -37,10 +40,8 @@ pipeline {
                 dir('project') {
                     git branch: '16.0', url: 'https://github.com/OCA/project.git'
                 }
-                sh '''ls -l .
-                docker build . -t mic.16.0
-                docker image list
-                '''
+                
+                docker.build("my-mic-16:${env.BUILD_ID}")
             }
         }
 
