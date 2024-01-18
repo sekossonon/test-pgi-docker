@@ -8,10 +8,8 @@ pipeline {
             steps {
                 echo 'creating virtual env and install pre-commit'
                 sh '''
-                cd mic
-                python3 -m venv venv
-                source venv/bin/activate
                 pip install pre-commit
+                cd mic
                 pre-commit install
                 '''
             }
