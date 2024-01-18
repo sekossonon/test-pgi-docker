@@ -30,15 +30,14 @@ pipeline {
         stage('Cloning dependencies') {
             steps {
                 echo 'clone odoo-common 16'
-                git branch: '16.0', credentialsId: 'jenkins-upa-test', url: 'https://github.com/microcom/odoo-common.git'
-                echo 'clone oca/projects 16'
-                git branch: '16.0', url: 'https://github.com/OCA/project.git'
-            }
-        }
-        stage('TEst') {
-            steps {
-                echo 'Test'
-                sh "cd .. && ls -l ."
+                dir('odoo-common') {
+                    git branch: '16.0', credentialsId: 'jenkins-upa-test', url: 'https://github.com/microcom/odoo-common.git'
+                    echo 'clone oca/projects 16'
+                }
+                dir('project') {
+                    git branch: '16.0', url: 'https://github.com/OCA/project.git'
+                }
+                sh "ls -l ."
             }
         }
     }
