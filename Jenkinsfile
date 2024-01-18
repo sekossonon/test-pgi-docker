@@ -16,7 +16,7 @@ pipeline {
                 . venv/bin/activate
                 pip install --upgrade pip
                 pip install pre-commit
-                pre-commit install
+                pre-commit install .
                 '''
             }
         }
