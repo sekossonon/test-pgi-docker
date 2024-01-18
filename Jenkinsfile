@@ -47,8 +47,11 @@ pipeline {
             }
         }
         stage('Test') {
-            echo 'Test'
-            sh "ls -l ."
+            setps {
+                echo 'Test'
+                sh "ls -l ."
+            }
+
         }
 
     }
