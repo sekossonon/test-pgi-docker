@@ -15,8 +15,7 @@ RUN apt-get clean
 RUN \
   pip install --no-cache-dir \
     -r /odoo/src/odoo/requirements.txt \
-    -f https://wheelhouse.acsone.eu/manylinux2014 \
-  && pip install -e /odoo/src/odoo
+    -f https://wheelhouse.acsone.eu/manylinux2014
 RUN pip install pyOpenSSL --upgrade
 
 ENV ADDONS_PATH=/odoo/src/odoo/addons,/odoo/src/odoo/odoo/addons/
