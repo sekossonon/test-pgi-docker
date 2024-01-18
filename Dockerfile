@@ -1,7 +1,11 @@
 FROM microcom/odoo-base:16
 
 #last commit hash bc1ad08286be9bb02d111e49fe095879b649449e
-COPY ./src/odoo /odoo/src/odoo
+COPY ./odoo /odoo/src/odoo
+COPY ./odoo-common /odoo/custom_addons/16.0/odoo-common
+COPY ./projects /odoo/custom_addons/16.0/projects
+COPY ./mic /odoo/custom_addons/16.0/mic
+
 
 RUN apt-get update
 RUN apt install -y postgresql-common postgresql-client

@@ -29,17 +29,13 @@ pipeline {
         // }
         stage('Testing') {
             steps {
-                echo 'cloning odoo 16'
-                sh '''
-                git clone https://github.com/odoo/odoo.git -b 16.0
-                '''
                 echo 'clone odoo-common 16'
                 sh '''
-                git clone https://github.com/microcom/odoo-common.git -b 16.0
+                git clone --depth=1 --branch=16.0 https://github.com/microcom/odoo-common.git
                 '''
                 echo 'clone oca/projects 16'
                 sh '''
-                git clone https://github.com/OCA/project.git -b 16.0
+                git clone --depth=1 --branch=16.0 https://github.com/OCA/project.git
                 '''
             }
         }
