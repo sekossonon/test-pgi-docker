@@ -1,5 +1,4 @@
-node {
-    checkout scm
+pipeline {
     agent {
         docker { 
             image 'python:bullseye'
@@ -12,6 +11,7 @@ node {
             steps {
                 echo 'creating virtual env and install pre-commit'
                 sh '''
+                git init .
                 git pull
                 ls -l .
                 python -m venv venv
