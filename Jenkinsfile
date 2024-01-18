@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { image 'python:3' }
+        docker { image 'python:bullseye' }
     }
 
     stages {
