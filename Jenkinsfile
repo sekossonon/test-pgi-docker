@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker { 
             image 'python:bullseye'
-            args '-u root --privileged' 
+            args '-u root --privileged'
         }
     }
 
@@ -11,9 +11,6 @@ pipeline {
             steps {
                 echo 'creating virtual env and install pre-commit'
                 sh '''
-                ls -l mic
-                echo $USER
-                chown -R $USER:$USER mic
                 cd mic
                 python -m venv venv
                 . venv/bin/activate
