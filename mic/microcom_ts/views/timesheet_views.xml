@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--  GENERAL MENU   -->
+        <menuitem name="Quick TS"
+                  id="menu_project_microcom_ts"
+                  parent="project.menu_main_pm"
+                  sequence="5" groups="group_microcom_ts"/>
+
+        <record model="ir.actions.client" id="quick_ts_create_action">
+            <field name="name">Quick timesheet create action</field>
+            <field name="tag">microcom_ts.QuickTimesheetCreate</field>
+        </record>
+
+        <record id="supervise_selected_timesheet_action_admin" model="ir.actions.server">
+            <field name="name">Supervise Selected Timesheet</field>
+            <field name="model_id" ref="model_microcom_timesheet"/>
+            <field name="binding_model_id" ref="model_microcom_timesheet"/>
+            <field name="groups_id" eval="[Command.link(ref('uranos_ts.group_uranos_approval'))]"/>
+            <field name="state">code</field>
+            <field name="code">action = records.action_supervise_timesheet()</field>
+        </record>
+
+        <!--  ADMIN TIMESHEET QUICK ENTRY MENU   -->
+        <record id="microcom_admin_quick_timesheet_tree" model="ir.ui.view">
+            <field name="name">microcom.admin.timesheet.quick.tree</field>
+            <field name="model">microcom.timesheet</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom" js_class="quick_ts_list"
+                      decoration-muted="state != 'open'"
+                      decoration-danger="has_changes">
+                    <header>
+                        <button type="object" name="action_merge_events" icon="fa-compress"
+                                string="Merge Events"/>
+                        <button name="action_close_timesheet"
+                                type="object" string="Close Timesheets"
+                                icon="fa-lock" title="Close Timesheets"
+                                attrs="{'invisible': [('action_status', '!=', 'Open')]}"/>
+                        <button name="action_open_timesheet"
+                                type="object" string="Open Timesheets"
+                                icon="fa-unlock" title="Open Timesheets"
+                                attrs="{'invisible': [('action_status', '!=', 'Closed')]}"/>
+                        <button name="action_change_task"
+                                type="object" string="Change linked Task"
+                                groups="uranos_ts.group_uranos_ts_admin"/>
+                    </header>
+                    <field name="state" invisible="1"/>
+                    <field name="has_changes" invisible="1"/>
+                    <field name="is_first_of_day" invisible="1"/>
+                    <field name="pk_event" invisible="1"/>
+                    <field name="event_id" invisible="1"/>
+                    <button name="%(quick_ts_create_action)d" type="action" icon="fa-clipboard"
+                            attrs="{'invisible':['|',('id', '=', False),('event_id','=',False)]}"
+                            title="Create an entry of the same event"/>
+                    <button name="button_update_day" type="object" icon="fa-globe" title="Sync whole day"
+                            attrs="{'invisible': [('is_first_of_day', '=', False)]}"/>
+                    <button name="button_do_nothing" type="object" icon="fa-unlink" title="Not synced"
+                            attrs="{'invisible': [('has_changes', '=', False)]}"/>
+                    <field name="user_id" attrs="{'readonly':[('pk_event', '!=', 0)]}"/>
+                    <field name="user_ref" readonly="1" string="User" optional="show"/>
+                    <field name="partner_id" attrs="{'readonly': [('state', '=', 'billed')]}"
+                           options="{'no_create': True, 'field_bg_color': 'line_bg_color',
+                              'field_label_color': 'line_label_color'}" optional="show"/>
+                    <field name="line_bg_color" invisible="1"/>
+                    <field name="line_label_color" invisible="1"/>
+                    <field name="project_id" attrs="{'readonly': [('state', '=', 'billed')]}" optional="hide"/>
+                    <field name="task_id" attrs="{'readonly': [('state', '=', 'billed')]}"
+                           context="{'default_partner_id': partner_id, 'default_project_id': project_id, 'default_user_id': user_id}"/>
+                    <field name="name" attrs="{'readonly': [('state', '=', 'billed')]}"/>
+                    <field name="description" attrs="{'readonly': [('state', '=', 'billed')]}" optional="hide"/>
+                    <field name="date" attrs="{'readonly': [('state', '=', 'billed')]}"/>
+                    <field name="start_minute" invisible="1"/>
+                    <field name="end_minute" invisible="1"/>
+                    <field name="duration_minute" invisible="1"/>
+                    <field name="start_time" attrs="{'readonly': [('state', '=', 'billed')]}"/>
+                    <field name="end_time" attrs="{'readonly': [('state', '=', 'billed')]}"/>
+                    <field name="duration_time" attrs="{'readonly': [('state', '=', 'billed')]}"
+                           options="{'field_bg_color': 'overlap_bg_color', 'field_label_color': 'overlap_fg_color'}"/>
+                    <field name="billing_code_id" attrs="{'readonly': [('state', '=', 'billed')]}"
+                           options="{'no_create': True}"/>
+                    <field name="followup_id" attrs="{'readonly': [('state', '=', 'billed')]}"
+                           domain="[('task_id', '=', task_id), ('state', '=', 'open')]"
+                           context="{'show_user_code':True}" optional="show"/>
+                    <field name="budget_line_id" domain="[('task_id', '=', task_id)]" attrs="{'readonly': [('state', '=', 'billed')]}"
+                           options="{'no_create': True}" optional="hide"/>
+                    <field name="total_budget" optional="hide"/>
+                    <field name="spent_budget" options="{'field_bg_color': 'budget_fields_color'}" optional="hide"/>
+                    <field name="percent_spent_budget" options="{'field_bg_color': 'budget_fields_color'}" optional="hide"/>
+                    <field name="budget_fields_color" invisible="1"/>
+                    <field name="planned_hours" optional="hide"/>
+                    <field name="actual_duration"
+                           options="{'field_bg_color': 'actual_duration_color'}"
+                           optional="hide"/>
+                    <field name="actual_duration_color" invisible="1"/>
+                    <button name="button_view_ts" type="object"
+                            icon="fa-arrows-alt" title="View Timesheet"
+                            attrs="{'invisible': [('id', '=', False)]}"/>
+                    <button name="action_close_timesheet" type="object"
+                            icon="fa-lock" title="Close Timesheet"
+                            attrs="{'invisible': [('action_status', '!=', False), ('action_status', '!=', 'Open')]}"/>
+                    <button name="action_open_timesheet" type="object"
+                            icon="fa-unlock" title="Open Timesheet"
+                            attrs="{'invisible': [('action_status', '!=', 'Closed')]}"/>
+                    <button name="button_analyze_day" type="object" icon="fa-clock-o" title="Analyze Day"
+                            attrs="{'invisible': [('is_first_of_day', '=', False)]}" groups="base.group_no_one"/>
+                    <field name="overlap" optional="hide"/>
+                    <field name="overlap_minute" optional="hide"/>
+                    <field name="action_status" optional="hide"/>
+                    <field name="overlap_fg_color" invisible="1"/>
+                    <field name="overlap_bg_color" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--  TIMESHEET QUICK ENTRY MENU   -->
+        <record id="microcom_quick_timesheet_tree" model="ir.ui.view">
+            <field name="name">microcom.timesheet.quick.tree</field>
+            <field name="model">microcom.timesheet</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom" js_class="quick_ts_list"
+                      decoration-muted="state != 'open'"
+                      decoration-danger="has_changes">
+                    <header>
+                        <button type="object" name="action_merge_events" icon="fa-compress"
+                                string="Merge Events"/>
+                        <button name="action_close_timesheet"
+                                type="object" string="Close Timesheets"
+                                icon="fa-lock" title="Close Timesheets"
+                                attrs="{'invisible': [('action_status', '!=', 'Open')]}"/>
+                        <button name="action_open_timesheet"
+                                type="object" string="Open Timesheets"
+                                icon="fa-unlock" title="Open Timesheets"
+                                attrs="{'invisible': [('action_status', '!=', 'Closed')]}"/>
+                    </header>
+                    <field name="state" invisible="1"/>
+                    <field name="has_changes" invisible="1"/>
+                    <field name="is_first_of_day" invisible="1"/>
+                    <field name="pk_event" invisible="1"/>
+                    <field name="event_id" invisible="1"/>
+                    <button name="%(quick_ts_create_action)d" type="action" icon="fa-clipboard"
+                            attrs="{'invisible':['|',('id', '=', False),('event_id','=',False)]}"
+                            title="Create an entry of the same event"/>
+                    <button name="button_update_day" type="object" icon="fa-globe" title="Sync whole day"
+                            attrs="{'invisible': [('is_first_of_day', '=', False)]}"/>
+                    <button name="button_do_nothing" type="object" icon="fa-unlink" title="Not synced"
+                            attrs="{'invisible': [('has_changes', '=', False)]}"/>
+                    <field name="user_id" invisible="1"/>
+                    <field name="user_ref" readonly="1" string="User" invisible="1"/>
+                    <field name="partner_id" attrs="{'readonly': [('state', '!=', 'open')]}"
+                           options="{'no_create': True, 'field_bg_color': 'line_bg_color',
+                              'field_label_color': 'line_label_color'}" optional="show"/>
+                    <field name="line_bg_color" invisible="1"/>
+                    <field name="line_label_color" invisible="1"/>
+                    <field name="task_name" invisible="1"/>
+                    <field name="project_name" invisible="1"/>
+                    <field name="task_id_domain" invisible="1"/>
+                    <field name="project_id_domain" invisible="1"/>
+                    <field name="project_id" domain="project_id_domain"
+                           attrs="{'readonly': [('state', '!=', 'open')]}"
+                           optional="hide"/>
+                    <field name="task_id" domain="task_id_domain"
+                           attrs="{'readonly': [('state', '!=', 'open')]}"
+                           context="{'default_partner_id': partner_id, 'default_project_id': project_id}"/>
+                    <field name="name" attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                    <field name="description"
+                           attrs="{'readonly': [('state', '!=', 'open')]}" optional="hide"/>
+                    <field name="date" attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                    <field name="start_minute" invisible="1"/>
+                    <field name="end_minute" invisible="1"/>
+                    <field name="start_time" attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                    <field name="end_time" attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                    <field name="duration_time" attrs="{'readonly': [('state', '!=', 'open')]}"
+                           options="{'field_bg_color': 'overlap_bg_color', 'field_label_color': 'overlap_fg_color'}"/>
+                    <field name="billing_code_id" attrs="{'readonly': [('state', '!=', 'open')]}"
+                           options="{'no_create': True}"/>
+                    <field name="budget_line_id" domain="[('task_id', '=', task_id)]"
+                           attrs="{'readonly':[('state', '!=', 'open')]}"
+                           options="{'no_create': True}" optional="hide"/>
+                    <field name="total_budget" optional="hide"/>
+                    <field name="spent_budget" options="{'field_bg_color': 'budget_fields_color'}" optional="hide"/>
+                    <field name="percent_spent_budget" options="{'field_bg_color': 'budget_fields_color'}" optional="hide"/>
+                    <field name="budget_fields_color" invisible="1"/>
+                    <field name="followup_id" attrs="{'readonly': [('state', '!=', 'open')]}"
+                           domain="[('task_id', '=', task_id), ('state', '=', 'open')]"
+                           context="{'show_user_code':True}" optional="show"/>
+                    <field name="has_transport_info" optional="show"/>
+                    <button name="button_view_ts" type="object"
+                            icon="fa-arrows-alt" class="js_switch_view" title="View Timesheet"
+                            attrs="{'invisible': [('id', '=', False)]}"/>
+                    <button name="action_close_timesheet" type="object"
+                            icon="fa-lock" title="Close Timesheet"
+                            attrs="{'invisible': [('action_status', '!=', False), ('action_status', '!=', 'Open')]}"/>
+                    <button name="action_open_timesheet" type="object"
+                            icon="fa-unlock" title="Open Timesheet"
+                            attrs="{'invisible': [('action_status', '!=', 'Closed')]}"/>
+                    <button name="button_analyze_day" type="object" icon="fa-clock-o" title="Analyze Day"
+                            attrs="{'invisible': [('is_first_of_day', '=', False)]}" groups="base.group_no_one"/>
+<!--                    <field name="has_rsde" string="R&amp;D"/>-->
+                    <field name="duration_minute"
+                           widget="minute_time"
+                           sum="Duration" optional="hide"
+                           force_save="1" readonly="1"
+                           string="Total"
+                    />
+                    <field name="overlap" optional="hide"/>
+                    <field name="overlap_minute" optional="hide"/>
+                    <field name="action_status" optional="hide"/>
+                    <field name="overlap_fg_color" invisible="1"/>
+                    <field name="overlap_bg_color" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="microcom_quick_timesheet_action" model="ir.actions.act_window">
+            <field name="name">Quick Timesheet</field>
+            <field name="res_model">microcom.timesheet</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="microcom_quick_timesheet_tree"/>
+            <field name="domain">[('user_id', '=', uid)]</field>
+            <field name="context">{'search_default_open':1, 'show_user_code':True}</field>
+        </record>
+
+        <menuitem id="microcom_quick_timesheet_menu"
+                  name="Quick Timesheet"
+                  action="microcom_quick_timesheet_action"
+                  parent="menu_project_microcom_ts"
+                  sequence="80"/>
+
+        <record id="microcom_quick_timesheet_admin_action" model="ir.actions.act_window">
+            <field name="name">Quick Timesheet Admin</field>
+            <field name="res_model">microcom.timesheet</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="microcom_admin_quick_timesheet_tree"/>
+            <field name="context">{'search_default_open':1, 'timesheet_admin': True}</field>
+        </record>
+
+        <menuitem id="microcom_quick_timesheet_admin_menu"
+                  name="Quick Timesheet Admin"
+                  action="microcom_quick_timesheet_admin_action"
+                  parent="uranos_ts.uranos_ts_menu"
+                  sequence="80" groups="uranos_ts.group_uranos_approval"/>
+
+        <!--  TIMESHEET FULL ENTRY MENU   -->
+        <record id="microcom_timesheet_search" model="ir.ui.view">
+            <field name="name">microcom.timesheet.search</field>
+            <field name="model">microcom.timesheet</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="task_id"/>
+                    <field name="user_ref" filter_domain="[('user_ref', '=ilike', self)]" string="Employee Code"/>
+                    <field name="user_id"/>
+                    <field name="date"/>
+                    <field name="pk_request" filter_domain="[('pk_request', 'ilike', self)]"/>
+                    <field name="pk_event" filter_domain="[('pk_event', 'ilike', self)]"/>
+                    <field name="project_department_id"/>
+                    <separator/>
+                    <filter string="My TS" name="assigned_to_me" domain="[('user_id','=',uid)]"/>
+                    <separator/>
+                    <filter string="My Department" name="mydepartment"
+                            domain="[('user_id.partner_id.department_id.partner_ids.user_ids.id', '=', uid)]"
+                            help="My Department"/>
+                    <separator/>
+                    <filter string="Open" name="open" domain="[('state','=','open')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Employee" name="groupby_employee" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter string="Client" name="groupby_client" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Project" name="groupby_project" domain="[]"
+                                context="{'group_by':'project_id'}"/>
+                        <filter string="Department" name="groupby_project_department" domain="[]"
+                                context="{'group_by':'project_department_id'}"/>
+                        <filter string="Task" name="groupby_task" domain="[]" context="{'group_by':'task_id'}"/>
+                        <filter string="Billing Group" name="groupby_billing_group" domain="[]"
+                                context="{'group_by':'billing_group_id'}"
+                                groups="microcom_tasks.group_project_supervisor,uranos_ts.group_uranos_approval,uranos_ts.group_uranos_ts_admin"/>
+                        <filter string="Billing Letter" name="groupby_billing_letter" domain="[]"
+                                context="{'group_by':'billing_code_letter'}"
+                                groups="microcom_tasks.group_project_supervisor,uranos_ts.group_uranos_approval,uranos_ts.group_uranos_ts_admin"/>
+                        <filter string="Day" name="groupby_day" domain="[]" context="{'group_by':'date:day'}"/>
+                        <filter string="Week" name="groupby_week" domain="[]" context="{'group_by':'date:week'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="microcom_full_timesheet_tree" model="ir.ui.view">
+            <field name="name">microcom.timesheet.full.tree</field>
+            <field name="model">microcom.timesheet</field>
+            <field name="inherit_id" ref="microcom_quick_timesheet_tree"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <tree position="attributes">
+                    <attribute name="editable"/>
+                </tree>
+
+                <field name="duration_time" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="duration_time" position="after">
+                    <field name="duration_minute" widget="minute_time" sum="Duration"/>
+                </field>
+
+                <button name="%(quick_ts_create_action)d" position="replace">
+                    <button name="full_ts_quick_create" icon="fa-clipboard" type="object"
+                            attrs="{'invisible':['|',('id', '=', False),('event_id','=',False)]}"
+                            title="Create an entry of the same event"/>
+                </button>
+                <button name="button_view_ts" position="attributes">
+                    <attribute name="class"></attribute>
+                </button>
+
+            </field>
+        </record>
+
+
+        <record id="microcom_full_timesheet_tree_ro" model="ir.ui.view">
+            <field name="name">microcom.timesheet.full.tree.readonly</field>
+            <field name="model">microcom.timesheet</field>
+            <field name="inherit_id" ref="microcom_quick_timesheet_tree"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <tree position="attributes">
+                    <attribute name="editable"/>
+                    <attribute name="default_order">date desc, start_minute desc, id desc</attribute>
+                </tree>
+
+                <field name="duration_time" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="duration_time" position="after">
+                    <field name="duration_minute" widget="minute_time" sum="Duration"/>
+                </field>
+                <header position="replace">
+                    <header/>
+                </header>
+
+                <button name="%(quick_ts_create_action)d" position="replace">
+                </button>
+                <button name="button_view_ts" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="action_open_timesheet" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="action_close_timesheet" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+            </field>
+        </record>
+
+       <!--  __________________________________Full Timesheet Admin tree__________________________________________ -->
+
+        <record id="microcom_full_timesheet_tree_admin" model="ir.ui.view">
+            <field name="name">microcom.timesheet.full.tree</field>
+            <field name="model">microcom.timesheet</field>
+            <field name="inherit_id" ref="microcom_full_timesheet_tree"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="before">
+                    <field name="user_id" optional="show"/>
+                </field>
+                <field name="task_id" position="before">
+                    <field name="pk_request" optional="show"/>
+                    <field name="pk_event" optional="show"/>
+                    <field name="pk_action" optional="show"/>
+                </field>
+                <field name="billing_code_id" position="after">
+                    <field name="billing_time_reel" optional="show" sum="Sale hours"/>
+                    <field name="billing_rate" optional="show"/>
+                    <field name="billing_amount" optional="show" sum="Sale $"/>
+                    <field name="billing_time" optional="show" sum="Cost Hours"/>
+                    <field name="pay_rate_work" optional="show"/>
+                    <field name="billing_cost_bm" optional="show" sum="Cost + BM"/>
+                    <field name="profit" optional="show" sum="Profit"/>
+                    <field name="statement_id" optional="show"/>
+                    <field name="request_stage_id" optional="show"/>
+                </field>
+            </field>
+        </record>
+
+       <!--  __________________________________Full Timesheet Admin search -->
+        <record id="microcom_full_timesheet_admin_search" model="ir.ui.view">
+            <field name="name">microcom.timesheet.search</field>
+            <field name="model">microcom.timesheet</field>
+            <field eval="99" name="priority"/>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="task_id"/>
+                    <field name="user_ref" filter_domain="[('user_ref', '=ilike', self)]" string="Employee Code"/>
+                    <field name="user_id"/>
+                    <field name="date"/>
+                    <field name="pk_request" filter_domain="[('pk_request', 'ilike', self)]"/>
+                    <field name="pk_event" filter_domain="[('pk_event', 'ilike', self)]"/>
+                    <separator/>
+                    <filter string="My TS" name="assigned_to_me" domain="[('user_id','=',uid)]"/>
+                    <separator/>
+                    <filter string="My Department" name="mydepartment"
+                            domain="[('user_id.partner_id.department_id.partner_ids.user_ids.id', '=', uid)]" help="My Department"/>
+                    <separator/>
+                    <filter string="Open" name="open" domain="[('state','=','open')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Employee" name="groupby_employee" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter string="Client" name="groupby_client" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Project" name="groupby_project" domain="[]" context="{'group_by':'project_id'}"/>
+                        <filter string="Task" name="groupby_task" domain="[]" context="{'group_by':'task_id'}"/>
+                        <filter string="Statement" name="group_by_statement" domain="" context="{'group_by':'statement_id'}"/>
+                        <filter string="Date" name="groupby_day" domain="[]" context="{'group_by':'date:day'}"/>
+                        <filter string="Fiscal Year" name="group_by_fiscal_year" domain="" context="{'group_by':'fiscal_year'}"/>
+                        <filter string="Fiscal Quarter" name="group_by_fiscal_quarter" domain="" context="{'group_by':'fiscal_quarter'}"/>
+                        <filter string="Total" name="group_by_total" domain="" context="{'group_by':'total'}"/>
+                        <filter string="Client Category" name="group_client_category" domain="" context="{'group_by':'client_category_id'}"/>
+                        <filter string="Project Category" name="group_project_category" domain="" context="{'group_by':'project_category_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="microcom_full_timesheet_form" model="ir.ui.view">
+            <field name="name">microcom.timesheet.form</field>
+            <field name="model">microcom.timesheet</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="button_synchronize" type="object" string="Sync Event" class="btn-primary"/>
+                        <button name="button_import_day" type="object" string="Sync Whole Day" class="btn-default"/>
+                        <button name="close_request_button" type="object" string="Close Task" class="btn-default"
+                                attrs="{'invisible':['|', ('pk_request', '=', 0), ('is_task_open', '=', False)]}"/>
+                        <button name="reopen_request_button" type="object" string="Reopen Request" class="btn-default"
+                                attrs="{'invisible':['|', ('pk_request', '=', 0), ('is_task_open', '=', True)]}"/>
+                        <field name="state" widget="statusbar" options="{'clickable': False}"/>
+                    </header>
+                    <sheet>
+                        <group id='top'>
+                            <group>
+                                <field name="user_id" readonly="1" force_save="1"/>
+                                <field name="task_name" invisible="1"/>
+                                <field name="project_name" invisible="1"/>
+                                <field name="task_id_domain" invisible="1"/>
+                                <field name="project_id_domain" invisible="1"/>
+                                <field name="partner_id"
+                                       options="{'no_create': True}"
+                                       attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                                <field name="project_id" domain="project_id_domain"
+                                       options="{'no_create': True}"
+                                       attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                                <field name="task_id" domain="task_id_domain"
+                                       context="{'default_partner_id': partner_id, 'default_project_id': project_id}"
+                                       attrs="{'readonly': [('state', '!=', 'open')]}" />
+                                <field name="followup_id"
+                                       domain="[('task_id', '=', task_id), ('state', '=', 'open')]"
+                                       attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                                <field name="pk_followup" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="date" attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                                <field name="start_minute" invisible="1"/>
+                                <field name="end_minute" invisible="1"/>
+                                <field name="duration_minute" invisible="1"/>
+                                <field name="start_time" attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                                <field name="end_time" attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                                <field name="duration_time" attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                                <field name="billing_code_id"
+                                       options="{'no_create': True}" string="Billing Code"
+                                       attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                            </group>
+                        </group>
+                        <field name="id" invisible="1"/>
+                        <notebook>
+                            <page string="Work/Action" >
+                                <group>
+                                    <field name="name"
+                                           attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                                    <field name="description"
+                                           attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                                    <field name="internal_comment"
+                                           attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                                </group>
+                            </page>
+                            <page string="Other information">
+                                <group>
+                                    <field name="pk_event" readonly="1"/>
+                                    <field name="pk_action" readonly="1"/>
+                                    <field name="pk_request" readonly="1"/>
+                                    <field name="pk_billing" readonly="1"/>
+                                    <field name="uranos_action_id" readonly="1"/>
+                                    <field name="uranos_changes"/>
+                                    <field name="is_task_open" invisible="1"/>
+                                </group>
+                            </page>
+                            <page string="Travel Info" attrs="{'invisible':[('id', '=', False)]}">
+                                <group>
+                                    <field name="event_id" options="{'no_open': True}"/>
+                                    <field name="has_transport_info"/>
+                                </group>
+                                <group>
+                                    <group>
+                                        <field name="time_start_on_site"
+                                               attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                                        <field name="time_end_on_site"
+                                               attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                                        <field name="event_start_minute" invisible="1" force_save="1"/>
+                                        <field name="event_end_minute" invisible="1" force_save="1"/>
+                                        <field name="event_duration_minute" widget="minute_time" readonly="1" force_save="1"/>/>
+                                        <field name="user_id" invisible="1"/>
+                                        <field name="line_bg_color" invisible="1"/>
+                                        <field name="start_address"
+                                               attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                                        <field name="destination_address"
+                                               attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                                        <field name="return_address"
+                                               attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                                        <field name="request_km_refund"
+                                               attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                                        <field name="start_km"
+                                               attrs="{'readonly': [('state', '!=', 'open')], 'invisible': [('request_km_refund', '=', False)]}"/>
+                                        <field name="return_km"
+                                               attrs="{'readonly': [('state', '!=', 'open')], 'invisible': [('request_km_refund', '=', False)]}"/>
+                                    </group>
+                                    <group>
+                                        <label for="pk_travel_expense"/>
+                                        <div class="oe_inline">
+                                            <field name="pk_travel_expense" invisible="1"/>
+                                            <button name="button_clear_travel_expense"
+                                                    type="object" icon="fa-trash"
+                                                    class="oe_inline" string="Clear Travel Expense"/>
+                                        </div>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="microcom_full_timesheet_form_admin" model="ir.ui.view">
+            <field name="name">microcom.timesheet.form.admin</field>
+            <field name="model">microcom.timesheet</field>
+            <field name="inherit_id" ref="microcom_full_timesheet_form"/>
+            <field name="arch" type="xml">
+<!--                   take the readonly conditions in the fields-->
+                <field name="partner_id" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+                <field name="project_id" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+                <field name="task_id" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+                <field name="followup_id" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+
+                <field name="date" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+                <field name="start_time" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+                <field name="end_time" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+                <field name="duration_time" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+                <field name="billing_code_id" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+
+                <field name="name" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+                <field name="description" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+                <field name="internal_comment" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+
+                <field name="time_start_on_site" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+                <field name="time_end_on_site" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+                <field name="start_address" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+                <field name="destination_address" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+                <field name="return_address" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+                <field name="start_km" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+                <field name="return_km" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
+            </field >
+        </record>
+
+        <record id="microcom_full_timesheet_form_ro" model="ir.ui.view">
+            <field name="name">microcom.timesheet.form.readonly</field>
+            <field name="model">microcom.timesheet</field>
+            <field name="inherit_id" ref="microcom_full_timesheet_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form position="attributes">
+                    <attribute name="create">0</attribute>
+                    <attribute name="edit">0</attribute>
+                    <attribute name="delete">0</attribute>
+                </form>
+            </field>
+        </record>
+
+        <record id="microcom_full_timesheet_action" model="ir.actions.act_window">
+            <field name="name">Full Timesheet</field>
+            <field name="res_model">microcom.timesheet</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('microcom_full_timesheet_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('microcom_full_timesheet_form')})]"/>
+            <field name="domain">[('user_id','=',uid)]</field>
+        </record>
+
+        <record id="microcom_full_timesheet_action_ro" model="ir.actions.act_window">
+            <field name="name">Full Timesheet</field>
+            <field name="res_model">microcom.timesheet</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('microcom_full_timesheet_tree_ro')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('microcom_full_timesheet_form_ro')})]"/>
+            <field name="domain">[('user_id','=',uid)]</field>
+        </record>
+
+        <record id="microcom_full_timesheet_create_action" model="ir.actions.act_window">
+            <field name="name">Full Timesheet Create</field>
+            <field name="res_model">microcom.timesheet</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="microcom_full_timesheet_form"/>
+            <field name="domain">[('user_id','=',uid)]</field>
+        </record>
+
+        <menuitem id="microcom_full_timesheet_menu"
+                  name="Full Timesheet"
+                  action="microcom_full_timesheet_action"
+                  parent="menu_project_microcom_ts"
+                  sequence="90"/>
+
+        <record id="microcom_full_timesheet_action_admin" model="ir.actions.act_window">
+            <field name="name">Full Timesheet</field>
+            <field name="res_model">microcom.timesheet</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('microcom_full_timesheet_tree_admin')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('microcom_full_timesheet_form_admin')})]"/>
+            <field name="search_view_id" ref="microcom_full_timesheet_admin_search"/>
+        </record>
+
+        <menuitem id="microcom_full_timesheet_admin_menu"
+                  name="Full Timesheet Admin"
+                  action="microcom_full_timesheet_action_admin"
+                  parent="uranos_ts.uranos_ts_menu"
+                  sequence="81" groups="uranos_ts.group_uranos_approval"/>
+
+        <record id="synchronize_timesheet_action" model="ir.actions.server">
+            <field name="name">Synchronize Timesheets</field>
+            <field name="model_id" ref="model_microcom_timesheet"/>
+            <field name="binding_model_id" ref="model_microcom_timesheet"/>
+            <field name="state">code</field>
+            <field name="code">action = records.button_synchronize()</field>
+        </record>
+        <!-- _______timesheet billing code form view -->
+
+        <!--  TIMESHEET FULL ENTRY MENU   -->
+        <record id="microcom_timesheet_billing_code_form" model="ir.ui.view">
+            <field name="name">microcom.timesheet.billing.form</field>
+            <field name="model">microcom.timesheet.billing</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="pk_typebilling"/>
+                                <field name="group_id"/>
+                            </group>
+                            <group>
+                                <field name="type"/>
+                                <field name="sale_price" groups="project.group_project_manager"/>
+
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="microcom_timesheet_billing_code_action" model="ir.actions.act_window">
+            <field name="name">Billing Code</field>
+            <field name="res_model">microcom.timesheet.billing</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="microcom_timesheet_billing_code_menu"
+                  name="Billing Code"
+                  action="microcom_timesheet_billing_code_action"
+                  parent="project.menu_project_config"
+                  sequence="100"/>
+    </data>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_employee_form">
+        <field name="name">view.employee.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <field name="birthday" position="replace">
+                <field name="birthday" groups="base.group_erp_manager"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

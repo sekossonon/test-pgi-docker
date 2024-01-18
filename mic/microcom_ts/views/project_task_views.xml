@@ -1,0 +1,233 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="view_task_search_form" model="ir.ui.view">
+            <field name="name">project.task.search.form</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_search_form"/>
+            <field name="arch" type="xml">
+                <field name="user_ids" position="replace">
+                    <field name="user_ids"
+                           filter_domain="['|', ('user_ids.name', 'ilike', self), ('user_ids.partner_id.ref', '=ilike', self), ('user_ids.active', 'in', [True, False])]"/>
+                    <field name="user_id"
+                           filter_domain="['|', ('user_id.name', 'ilike', self), ('user_id.partner_id.ref', '=ilike', self), ('user_id.active', 'in', [True, False])]"/>
+                </field>
+            </field>
+        </record>
+
+<!--        <record model="ir.ui.view" id="view_task_tree2">
+            <field name="name">Project Task Tree Inherit</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_tree2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[last()]" position="after">
+                    <field name="mic_overtime"  widget="float_time" optional="show" sum="Overtime"/>
+                </xpath>
+            </field>
+        </record>-->
+
+
+        <record model="ir.ui.view" id="uranos_project_task_form_view">
+            <field name="name">Project Task Uranos Form</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="uranos_ts.uranos_project_task_form_view"/>
+            <field name="arch" type="xml">
+                <header position="inside">
+                    <button name="button_stop_event" type="object" string="Stop Action" class="btn-default"
+                            attrs="{'invisible':[('open_ts_event', '=', False)]}"
+                            groups="microcom_ts.group_microcom_ts"/>
+                    <button name="button_create_ts_event" type="object" string="Start Action" class="btn-default"
+                            attrs="{'invisible':['|', ('open_ts_event', '!=', False), ('is_open', '!=', True)]}"
+                            groups="microcom_ts.group_microcom_ts"/>
+                    <button name="close_request_button" type="object" string="Close Task" class="btn-default"
+                            attrs="{'invisible':['|', ('request_pk', '=', 0), ('is_open', '=', False)]}"/>
+                    <button name="reopen_request_button" type="object" string="Reopen Request" class="btn-default"
+                            attrs="{'invisible':['|', ('request_pk', '=', 0), ('is_open', '=', True)]}"/>
+                </header>
+                <div name="button_box" position="inside">
+                    <field name="partner_timesheet_hours" invisible="1"/>
+                    <button class="oe_stat_button" type="action" name="%(microcom_quick_timesheet_action)d"
+                            context="{'search_default_task_id': id, 'default_task_id': id, 'default_partner_id': partner_id}"
+                            icon="fa-clock-o">
+                        <field string="Timesheet" name="timesheet_count" widget="statinfo"/>
+                    </button>
+                    <button name="action_view_partner_timesheet"
+                            class="oe_stat_button"
+                            icon="fa-clock-o"
+                            type="object"
+                            attrs="{'invisible': [('partner_timesheet_hours', '=', False)]}"
+                    >
+                        <div class="o_stat_info">
+                            <span class="o_stat_text">
+                                Customer<br/>
+                                History
+                            </span>
+                        </div>
+                    </button>
+                </div>
+                <xpath expr="//field[@name='project_id']" position="after">
+                    <field name="open_ts_event" invisible="1"/>
+                    <field name="is_open" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='tag_ids']" position="before">
+                    <field name="user_can_edit_budget" invisible="1"/>
+                    <field name="no_budget_required" attrs="{'readonly': [('user_can_edit_budget', '!=', True)]}"/>
+                </xpath>
+                <notebook position="inside">
+                    <page string="Budget">
+                        <group>
+                            <group>
+                                <field name="budget_template_id"/>
+                            </group>
+                        </group>
+                        <button name="button_save_as_template" type="object" string="Save new Template"/>
+                        <field name="budget_line_ids" context="{'default_task_id': active_id}">
+                            <tree string="Budget" editable="bottom">
+                                <field name="id" invisible="1"/>
+                                <field name="task_id" invisible="1"/>
+                                <field name="name"/>
+                                <field name="employee_ids" widget="many2many_tags"/>
+                                <field name="percentage"/>
+                                <field name="budget_line_ids" options="{'no_create':true}" widget="many2many_tags" domain="[('task_id', '=', task_id), ('id', '!=', id)]"/>
+                                <button name="button_recompute_hours" attrs="{'invisible':[('budget_line_ids','=',[])]}" type="object" icon="fa-refresh" title="Refresh"/>
+                                <field name="planned_hours" sum="total_planned" options="{'field_bg_color':'planned_hours_bg_color'}"/>
+                                <field name="max_hours" sum="total_max" options="{'field_bg_color':'max_hours_bg_color'}"/>
+                                <field name="planned_hours_bg_color" invisible="1" />
+                                <field name="max_hours_bg_color" invisible="1"/>
+                                <field name="billing_code_id"/>
+                                <field name="allowed_stage_ids" widget="many2many_tags" invisible="1"/>
+                                <field name="stage_ids" domain="[('id', 'in', allowed_stage_ids)]" options="{'no_create':true}" widget="many2many_tags"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="FollowUp">
+                        <button name="button_synchronize_followup" type="object" string="Sync" class="btn-default"/>
+                        <field name="followup_ids">
+                            <tree string="FollowUp" editable="bottom" delete="false" decoration-muted="state != 'open'">
+                                <field name="task_id" invisible="1"/>
+                                <field name="has_changes" invisible="1"/>
+                                <field name="is_main" invisible="1"/>
+                                <field name="deadline_minute" invisible="1"/>
+                                <field name="pk_followup" readonly="1"/>
+                                <field name="user_id"
+                                       attrs="{'readonly': ['|', ('is_main', '=', True), ('state', '!=', 'open')]}"/>
+                                <field name="name" attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                                <field name="date_deadline"
+                                       attrs="{'readonly': ['|', ('is_main', '=', True), ('state', '!=', 'open')]}"/>
+                                <field name="deadline_time" attrs="{'readonly': [('state', '!=', 'open')]}"/>
+                                <field name="state" readonly="1"/>
+                                <field name="billing_code_id"/>
+                                <field name="duration_minute" widget="minute_time"/>
+                                <field name="mic_overtime" optional="show" widget="float_time"/>
+                                <button name="button_close_followup" type="object" icon="fa-lock" help="Close"
+                                        title="Close followup"
+                                        attrs="{'invisible': ['|', ('is_main', '=', True), ('state', '!=', 'open')]}"/>
+                                <button name="button_open_followup" type="object" icon="fa-unlock" help="Open"
+                                        title="Open followup"
+                                        attrs="{'invisible': [('state', '=', 'open')]}"/>
+                                <button name="button_do_nothing" type="object" icon="fa-unlink" title="Not synced"
+                                        attrs="{'invisible': [('has_changes', '=', False)]}"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record id="project.action_view_all_task" model="ir.actions.act_window">
+            <field name="context">{'search_default_my_tasks': 1, 'search_default_open_tasks': 1, 'all_task': 0,
+                'default_user_ids': [(4, uid)], 'search_default_stage': 1}
+            </field>
+        </record>
+
+        <record id="edit_project" model="ir.ui.view">
+            <field name="name">project.project.form</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="user_can_edit_budget" invisible="1"/>
+                    <field name="no_budget_required" attrs="{'readonly': [('user_can_edit_budget', '!=', True)]}"/>
+                </field>
+
+                <notebook position="inside">
+                    <page name="timesheet" string="Taux de facturation">
+                        <field name="invoice_rate_ids" context="{'default_partner_id': partner_id}">
+                            <tree editable="bottom">
+                                <field name="project_id" invisible="1"/>
+                                <field name="partner_id" invisible="1"/>
+                                <field name="employee_id" required="1"/>
+                                <field name="billing_code_id"/>
+                                <field name="travel_billing_code_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record id="project_project_view_form_simplified" model="ir.ui.view">
+            <field name="name">project.project.view.from.simplified</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.project_project_view_form_simplified"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <group>
+                        <group>
+                            <!--<field name="id" invisible="1"/>-->
+                            <field name="department_id" required="1"/>
+                            <field name="project_category_id" required="1"/>
+                        </group>
+                        <group/>
+                    </group>
+                </field>
+            </field>
+        </record>
+
+
+        <!--  budget template  -->
+        <record id="task_budget_template_code_form" model="ir.ui.view">
+            <field name="name">task.budget.template.form</field>
+            <field name="model">task.budget.template</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                        </group>
+                        <field name="line_ids">
+                            <tree string="Budget" editable="bottom">
+                                <field name="id" invisible="1"/>
+                                <field name="template_id" invisible="1"/>
+                                <field name="name"/>
+                                <field name="employee_ids" widget="many2many_tags"/>
+                                <field name="billing_code_id"/>
+                                <field name="percentage"/>
+                                <field name="template_line_ids" options="{'no_create':true}" widget="many2many_tags" domain="[('template_id', '=', template_id), ('id', '!=', id)]"/>
+                                <button name="button_recompute_hours" type="object" icon="fa-refresh" attrs="{'invisible':[('template_line_ids', '=', [])]}" title="Refresh"/>
+                                <field name="planned_hours" sum="total_planned"/>
+                                <field name="max_hours" sum="total_max"/>
+                                <field name="stage_ids" widget="many2many_tags"/>
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="task_budget_template_action" model="ir.actions.act_window">
+            <field name="name">Budget Templates</field>
+            <field name="res_model">task.budget.template</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="task_budget_template_menu"
+                  name="Budget Templates"
+                  action="task_budget_template_action"
+                  parent="project.menu_project_config"
+                  sequence="110"/>
+    </data>
+</odoo>

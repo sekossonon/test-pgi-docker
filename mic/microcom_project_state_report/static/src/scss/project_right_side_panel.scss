@@ -1,0 +1,33 @@
+$o-rightpanel-p: $o-horizontal-padding;
+$o-rightpanel-p-small: $o-horizontal-padding*2.5;
+$o-rightpanel-p-tiny: $o-horizontal-padding*4.0;
+
+.o_project_state {
+    background-color: white;
+}
+
+.o_controller_with_rightpanel {
+    flex: 0 0 auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    max-width: 65%;
+    min-width: 65%;
+}
+
+.o_state_right_panel {
+    flex: 0 0 37%;
+    padding: $o-rightpanel-p-small $o-rightpanel-p $o-rightpanel-p*2 $o-rightpanel-p;
+    position: fixed;
+    max-width: 30%;
+    min-width: 30%;
+}
+
+.project_state_right_panel_detail {
+    flex: 0 0 57%;
+    padding: $o-rightpanel-p-tiny $o-rightpanel-p $o-rightpanel-p*2 $o-rightpanel-p;
+    position: fixed;
+    max-width: 30%;
+    min-width: 30%;
+}

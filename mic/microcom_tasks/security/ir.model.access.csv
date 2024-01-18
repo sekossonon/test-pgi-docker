@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_microcom_task_project_task_checkline,access.microcom.task.project.task.checkline,model_project_task_checkline,,1,1,1,1
+access_account_analytic_account_supervisor,account.analytic.account,analytic.model_account_analytic_account,microcom_tasks.group_project_supervisor,1,1,1,0
+access_microcom_task_project_task_quality_control_item,access.microcom.task.project.task.quality.control.item,model_project_task_quality_control_item,,1,1,1,1
+access_project_project_supervisor,project.project,project.model_project_project,microcom_tasks.group_project_supervisor,1,1,1,0
+access_project_task_type_supervisor,project.task.type manager,project.model_project_task_type,microcom_tasks.group_project_supervisor,1,1,1,1
+access_report_project_task_supervisor,report.project.task.user,project.model_report_project_task_user,microcom_tasks.group_project_supervisor,1,1,1,1
+access_project_tags_supervisor,project.project_tags_manager,project.model_project_tags,microcom_tasks.group_project_supervisor,1,1,1,0
+access_manage_project_task_process,access_manage_project_task_process,model_project_task_process,microcom_tasks.group_project_supervisor,1,1,1,1
+access_user_project_task_process,access_user_project_task_process,model_project_task_process,project.group_project_user,1,0,0,0

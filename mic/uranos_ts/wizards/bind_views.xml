@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+    <record id="task_bind_request_form" model="ir.ui.view">
+        <field name='name'>project.task.bind.request</field>
+        <field name='model'>project.task.bind.request</field>
+        <field name='arch' type='xml'>
+            <form string='Bind Request'>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="task_id"/>
+                            <field name="partner_id"/>
+                            <field name="description"/>
+                            <field name="internal_comment_ts"/>
+                        </group>
+                        <group>
+                            <field name="uranos_request_id"
+                                domain="[('partner_id', '=', partner_id), ('status', '=', 'Open')]"/>
+                            <field name="uranos_description"/>
+                            <field name="uranos_internal_comment"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name='button_bind_request' string='Bind Request' class='oe_highlight' type='object'/>
+                    <button special="cancel" string="Cancel" type="object" class="btn btn-default oe_inline"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</data>
+</odoo>

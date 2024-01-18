@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="project_task_type_tree_dashboard" model="ir.ui.view">
+        <field name="name">project.task.type.tree.dashboard</field>
+        <field name="model">project.task.type</field>
+        <field name="inherit_id" ref="project.task_type_tree_inherited"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[last()]" position="after">
+                <field name="display_on_dashboard"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="project_task_type_form_dashboard" model="ir.ui.view">
+        <field name="name">project.task.type.form.dashboard</field>
+        <field name="model">project.task.type</field>
+        <field name="inherit_id" ref="project.task_type_edit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='fold']" position="after">
+                <field name="display_on_dashboard"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

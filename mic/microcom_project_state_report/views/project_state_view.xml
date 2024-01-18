@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="microcom_project_state_view_search" model="ir.ui.view">
+        <field name="name">microcom.project.state.view.search</field>
+        <field name="model">project.project</field>
+        <field name="arch" type="xml">
+            <search string="Search State">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="favorite_user_ids" string="Favorite of user:"/>
+                <separator/>
+                <filter string="My Projects" name="own_projects" domain="[('user_id', '=', uid)]"/>
+                <filter string="My Favorite Projects" name="my_favorite_projects"
+                        domain="[('favorite_user_ids', 'in', [uid])]"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>

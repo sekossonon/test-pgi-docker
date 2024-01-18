@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+project_sprint_user,project.sprint.user,model_project_sprint,project.group_project_user,1,1,1,1
+project_sprint_line_user,project.sprint.user.line,model_project_sprint_line,project.group_project_user,1,1,1,1
+project_team_user,project.team.user,model_project_team,project.group_project_user,1,1,1,1
+project_daily_user,project.daily.user,model_project_daily,project.group_project_user,1,1,1,1
+project_daily_line_user,project.daily.line.user,model_project_daily_line,project.group_project_user,1,1,1,1

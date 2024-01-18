@@ -1,0 +1,9 @@
+[flake8]
+max-line-length = 130
+max-complexity = 16
+# B = bugbear
+select = C,E,F,W,B,CFQ
+extend-ignore = E203,W503,B023,CFQ002, CFQ003, CFQ004
+per-file-ignores=
+    __init__.py:F401
+    __manifest__.py:B018

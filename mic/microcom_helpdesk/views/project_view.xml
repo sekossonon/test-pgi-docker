@@ -1,0 +1,313 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="edit_project" model="ir.ui.view">
+        <field name="name">project.project.form</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="before">
+                <field name="project_type" readonly="1"/>
+            </field>
+            <field name="user_id" position="before">
+                <field name="department_id" required="1"/>
+                <field name="validator_ids" attrs="{'invisible':[('project_type', '!=', 'helpdesk')]}" widget="many2many_tags" options="{'no_create': True,'no_create_edit': True,'no_open': True}"/>
+            </field>
+            <!-- TODO allow archiving for group_project_supervisor only -->
+<!--            <xpath expr="//button[@name='toggle_active']" position="attributes">-->
+<!--                <attribute name="groups">microcom_tasks.group_project_supervisor</attribute>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+
+    <record id="view_project_project_filter" model="ir.ui.view">
+        <field name="name">project.project.filter</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_project_filter"/>
+        <field name="arch" type="xml">
+            <filter name="my_projects" position="after">
+                <filter string="My Department" name="mydepartment" domain="[('department_id.partner_ids.user_ids.id', '=', uid)]" help="My Department"/>
+                <separator/>
+                <filter string="Helpdesk" name="project_type_helpdesk"
+                        domain="[('project_type', '=', 'helpdesk')]" help="Project type is Helpdesk"/>
+                <filter string="Project" name="project_type_project"
+                        domain="[('project_type', '=', 'project')]" help="Project type is Project"/>
+                <separator/>
+            </filter>
+            <field name="partner_id" position="after">
+                <field name="department_id"/>
+            </field>
+            <filter name="Partner" position="after">
+                    <filter string="Department" name="group_department" context="{'group_by': 'department_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+        <record id="project.open_view_project_all_group_stage"
+                model="ir.actions.act_window">
+            <field name="context">{'search_default_groupby_stage': 1, 'search_default_mydepartment': 1}</field>
+        </record>
+
+    <record id="view_task_search_form" model="ir.ui.view">
+        <field name="name">project.task.search.form</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_search_form"/>
+        <field name="arch" type="xml">
+            <filter name="activities_upcoming_all" position="after">
+                <field string="Department" name="department_id"/>
+                <filter string="My Department" name="department_my"
+                    domain="[('department_id.partner_ids.user_ids.id', '=', uid)]"/>
+                <separator/>
+                <filter string="Project Type Helpdesk" name="project_type_helpdesk"
+                        domain="[('project_type', '=', 'helpdesk')]" help="Project type is Helpdesk"/>
+                <filter string="Project" name="project_type_project"
+                        domain="[('project_type', '=', 'project')]" help="Project type is Project"/>
+                <separator/>
+            </filter>
+            <group position="inside">
+                <filter name="department" string="Department" context="{'group_by':'department_id'}"/>
+            </group>
+        </field>
+    </record>
+
+    <record id="quick_create_task_form" model="ir.ui.view">
+        <field name="name">project.task.form.quick_create</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.quick_create_task_form"/>
+        <field name="arch" type="xml">
+            <field name="project_id" position="after">
+                <field name="source_id" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_project_kanban" model="ir.ui.view">
+        <field name="name">project.project.kanban</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_kanban"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="before">
+                    <field name="description"/>
+                    <field name="new_tickets_count"/>
+                    <field name="inprogress_count"/>
+                    <field name="late_to_start_count"/>
+                    <field name="late_to_end_count"/>
+                    <field name="project_type"/>
+            </field>
+            <xpath expr="//div[hasclass('o_kanban_card_content')]" position="inside">
+                <div class="o_kanban_record_body">
+                    <field name="description"/>
+                </div>
+            </xpath>
+            <xpath expr="//div[hasclass('o_project_kanban_main')]" position="after">
+                <div attrs="{'invisible':[('project_type', '!=', 'helpdesk')]}">
+                    <div class="mb4">
+                        <a name="show_new_tickets" type="object" ><t t-esc="record.new_tickets_count.raw_value"/> New Tickets</a>
+                    </div>
+                    <div class="mb4">
+                        <a name="show_inprogress_tickets" type="object" ><t t-esc="record.inprogress_count.raw_value"/> Tickets In progress</a>
+                    </div>
+                    <div class="mb4">
+                        <a name="show_should_be_started_tickets" type="object" ><t t-esc="record.late_to_start_count.raw_value"/> Tickets should have started</a>
+                    </div>
+                    <div class="mb4">
+                        <a name="show_should_be_ended_tickets" type="object" ><t t-esc="record.late_to_end_count.raw_value"/> Tickets Should be done</a>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_task_form2_inherited" model="ir.ui.view">
+        <field name="name">project.task.form.inherited</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="uranos_ts.uranos_project_task_form_view"/>
+        <field name="arch" type="xml">
+            <field name="user_ids" position="after">
+                <field name="project_type" invisible="1"/>
+                <field name="ticket_date" readonly="1" attrs="{'invisible':[('project_type', '!=', 'helpdesk')]}"/>
+                <field name="source_id" attrs="{'required':[('project_type', '=', 'helpdesk')], 'invisible':[('project_type', '!=', 'helpdesk')]}"/>
+                <field name="ticket_type_id" attrs="{'required':[('project_type', '=', 'helpdesk')], 'invisible':[('project_type', '!=', 'helpdesk')]}"/>
+                <field name="ticket_subtype_id" attrs="{'invisible':[('project_type', '!=', 'helpdesk')]}"/>
+                <field name="assignment_delay_id" attrs="{'required':[('project_type', '=', 'helpdesk')], 'invisible':[('project_type', '!=', 'helpdesk')]}"/>
+                <field name="assignment_deadline" attrs="{'invisible':[('project_type', '!=', 'helpdesk')]}"/>
+            </field>
+            <field name="partner_id" position="replace">
+            </field>
+            <field name="email_from" position="replace">
+            </field>
+            <field name="project_id" position="attributes">
+                <attribute name="options">{'no_create': True}</attribute>
+            </field>
+            <field name="project_id" position="before">
+                <field name="ticket_number" readonly="1"  attrs="{'invisible':[('project_type', '!=', 'helpdesk')]}"/>
+            </field>
+            <field name="user_id" position="before">
+                <field name="partner_id" required="1"/>
+                <field name="contact_id" domain="contact_domain_field" attrs="{'invisible':[('project_type', '!=', 'helpdesk')],'required':[('project_type', '=', 'helpdesk')]}" context="{'default_is_company': False, 'default_parent_id':partner_id}"/>
+                <field name="show_all_contacts" attrs="{'invisible':[('project_type', '!=', 'helpdesk')],'required':[('project_type', '=', 'helpdesk')]}"/>
+                <field name="contact_domain_field" invisible="1"/>
+                <field name="email_from" readonly="1" attrs="{'invisible':[('project_type', '!=', 'helpdesk')]}"/>
+                <field name="phone_from" readonly="1" attrs="{'invisible':[('project_type', '!=', 'helpdesk')]}"/>
+            </field>
+            <notebook position="inside">
+                <page string="Attachments">
+                    <field name="all_attachment_ids"/>
+                </page>
+            </notebook>
+            <!-- TODO allow archiving for group_project_supervisor only -->
+<!--            <xpath expr="//button[@name='toggle_active']" position="attributes">-->
+<!--                <attribute name="groups">microcom_tasks.group_project_supervisor</attribute>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+
+    <record id="view_task_kanban" model="ir.ui.view">
+        <field name="name">project.task.kanban.inherited</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="arch" type="xml">
+            <kanban position="attributes">
+                <attribute name="on_create"></attribute>
+            </kanban>
+            <field name="priority" position="after">
+                <field name="ticket_type_id"/>
+                <field name="partner_id"/>
+                <field name="ticket_date"/>
+                <field name="project_type"/>
+                <field name="assignment_deadline"/>
+                <field name="assigned"/>
+            </field>
+            <xpath expr="//div[hasclass('o_kanban_record_body')]" position="after">
+                <div class="oe_kanban_details" attrs="{'invisible':[('project_type','!=', 'helpdesk')]}">
+                    <ul>
+                        <li t-if="record.ticket_date.raw_value"><strong>Open date: </strong><field name="ticket_date"/></li>
+                        <t t-if="record.assignment_deadline.raw_value and record.assignment_deadline.raw_value lt (new Date())" t-set="red">oe_kanban_text_red</t>
+                        <span t-if="!record.assigned.raw_value" t-attf-class="#{red || ''}"><i><strong>Assign Deadline: </strong><field name="assignment_deadline"/></i></span>
+                        <li t-if="record.partner_id.raw_value"><strong>Partner: </strong><field name="partner_id"/></li>
+                        <li t-if="record.ticket_type_id.raw_value"><strong>Type: </strong><field name="ticket_type_id"/></li>
+                    </ul>
+                </div>
+                                            
+            </xpath>
+        </field>
+    </record>
+    <record id="action_project_helpdesk" model="ir.actions.act_window">
+        <field name="name">Helpdesk</field>
+        <field name="res_model">project.project</field>
+        <field name="context">{'default_project_type':'helpdesk', 'search_default_project_type_helpdesk':1, 'default_label_tasks': 'Tickets', 'search_default_mydepartment':1}</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="view_id" ref="project.view_project_kanban"/>
+        <field name="search_view_id" ref="project.view_project_project_filter"/>
+    </record>
+
+    <record id="action_task_tickets" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">project.task</field>
+        <field name="context">{'default_project_type':'helpdesk', 'search_default_project_type_helpdesk':1}</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" ref="project.view_task_search_form"/>
+    </record>
+
+    <menuitem id="menu_helpdesk" name="Helpdesk" groups="project.group_project_user" sequence="25" web_icon="microcom_helpdesk,static/description/icon.png"/>
+    <menuitem id="menu_project_helpdesk" action="action_project_helpdesk" name="Helpdesk" sequence="10" parent="menu_helpdesk"/>
+    <menuitem id="menu_helpdesk_search" name="Search" sequence="11" parent="menu_helpdesk"/>
+    <menuitem id="helpdesk_ticket_tasks" action="action_task_tickets" name="All Tickets" sequence="10" parent="menu_helpdesk_search"/>
+    <menuitem id="menu_helpdesk_setting" name="Setting" sequence="90" parent="menu_helpdesk"/>
+
+    <!-- __________________Quick TS Menu_____________________________ -->
+
+    <menuitem name="Quick TS"
+        id="menu_helpdesk_microcom_ts"
+        parent="menu_helpdesk"
+        sequence="30" groups="microcom_ts.group_microcom_ts"/>
+
+    <menuitem id="microcom_quick_timesheet_menu"
+              name="Quick Timesheet"
+              action="microcom_ts.microcom_quick_timesheet_action"
+              parent="menu_helpdesk_microcom_ts"
+              sequence="80"/>
+
+    <menuitem id="microcom_full_timesheet_menu"
+              name="Full Timesheet"
+              action="microcom_ts.microcom_full_timesheet_action"
+              parent="menu_helpdesk_microcom_ts"
+              sequence="90"/>
+
+    <menuitem id="microcom_timesheet_synchronize_menu"
+              name="Synchronize Timesheet"
+              action="microcom_ts.microcom_timesheet_synchronize_action"
+              parent="menu_helpdesk_microcom_ts"
+              sequence="99"/>
+
+    <menuitem id="microcom_timesheet_import_request_menu"
+              name="Import Request"
+              action="microcom_ts.microcom_timesheet_import_request_action"
+              parent="menu_helpdesk_microcom_ts"
+              sequence="95"/>
+
+    <!-- ___________________Hide Helpdesk from project____________________________ -->
+
+    <record id="project.open_view_project_all" model="ir.actions.act_window">
+        <field name="context">{'default_project_type':'project', 'search_default_project_type_project':1}</field>
+    </record>
+
+    <record id="project.action_view_task" model="ir.actions.act_window">
+        <field name="context">{'default_project_type':'project', 'search_default_project_type_project':1}</field>
+    </record>
+
+    <!-- __________________New Views_____________________________ -->
+
+    <record id="action_task_source" model="ir.actions.act_window">
+        <field name="name">Sources</field>
+        <field name="res_model">task.source</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Sources"
+        id="menu_task_source"
+        parent="menu_helpdesk_setting"
+        action="action_task_source"
+        sequence="11"/>
+
+    <record id="action_task_ticket_type" model="ir.actions.act_window">
+        <field name="name">Ticket Types</field>
+        <field name="res_model">task.ticket.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Ticket Types"
+        id="menu_task_ticket_type"
+        parent="menu_helpdesk_setting"
+        action="action_task_ticket_type"
+        sequence="12"/>
+
+    <record id="action_task_ticket_subtype" model="ir.actions.act_window">
+        <field name="name">Ticket Subtypes</field>
+        <field name="res_model">task.ticket.subtype</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Ticket Subtypes"
+        id="menu_task_ticket_type"
+        parent="menu_helpdesk_setting"
+        action="action_task_ticket_subtype"
+        sequence="13"/>
+
+    <record id="action_task_assignment_delay" model="ir.actions.act_window">
+        <field name="name">Assigment delay</field>
+        <field name="res_model">project.task.assignment.delay</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Assignment delay"
+        id="menu_task_assignment_delay"
+        parent="menu_helpdesk_setting"
+        action="action_task_assignment_delay"
+        sequence="14"/>
+
+        <menuitem id="helpdesk_project_task_followup_menu"
+                  name="FollowUps"
+                  action="microcom_ts.project_task_followup_action"
+                  parent="menu_helpdesk_search"
+                  sequence="20"/>
+</odoo>

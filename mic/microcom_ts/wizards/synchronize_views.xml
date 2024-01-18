@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+    <!-- synchronize requests of day -->
+    <record id="microcom_timesheet_synchronize_form" model="ir.ui.view">
+        <field name='name'>microcom.timesheet.synchronize</field>
+        <field name='model'>microcom.timesheet.synchronize</field>
+        <field name='arch' type='xml'>
+            <form string='Synchronize'>
+                <sheet>
+                    <group>
+                        <field name="date"/>
+                        <field name="user_id" invisible="0"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name='synchronize_day' string='Synchronize' class='oe_highlight' type='object'/>
+                    <button special="cancel" string="Cancel" type="object" class="btn btn-default oe_inline"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="microcom_timesheet_synchronize_action" model="ir.actions.act_window">
+        <field name="name">Synchronize Timesheet</field>
+        <field name="res_model">microcom.timesheet.synchronize</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="microcom_timesheet_synchronize_menu"
+              name="Synchronize Timesheet"
+              action="microcom_timesheet_synchronize_action"
+              parent="menu_project_microcom_ts"
+              sequence="99"/>
+
+    <!-- import request -->
+    <record id="microcom_timesheet_import_request_form" model="ir.ui.view">
+        <field name='name'>microcom.timesheet.import.request</field>
+        <field name='model'>microcom.timesheet.import.request</field>
+        <field name='arch' type='xml'>
+            <form string='Import Request'>
+                <sheet>
+                    <group>
+                        <field name="partner_id"/>
+                        <field name="uranos_request_id" domain="([('partner_id','=', partner_id),
+                                                                  ('task_id', '=', False),
+                                                                  ('status', '=', 'Open')])"/>
+                        <field name="project_id" required="1"
+                            domain="(['|', ('partner_id','=', partner_id), ('partner_id', '=', False)])"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name='import_request' string='Import' class='oe_highlight' type='object'/>
+                    <button special="cancel" string="Cancel" type="object" class="btn btn-default oe_inline"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="microcom_timesheet_import_request_action" model="ir.actions.act_window">
+        <field name="name">Import Request</field>
+        <field name="res_model">microcom.timesheet.import.request</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="microcom_timesheet_import_request_menu"
+              name="Import Request"
+              action="microcom_timesheet_import_request_action"
+              parent="menu_project_microcom_ts"
+              sequence="95"/>
+
+    <!-- close request -->
+    <record id="microcom_timesheet_close_form" model="ir.ui.view">
+        <field name='name'>microcom.timesheet.close</field>
+        <field name='model'>microcom.timesheet.close.request</field>
+        <field name='arch' type='xml'>
+            <form string='Close Request'>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="task_id" readonly="1"/>
+                            <field name="microcom_timesheet_id" domain="[('task_id', '=', task_id), ('user_id', '=', uid), ('state', '=', 'open')]"/>
+                            <!-- <field name="followup_id" domain="[('task_id', '=', task_id)]" required="1"/> -->
+                            <field name="allowed_stage_ids" invisible="1"/>
+                            <field name="stage_id" domain="[('id', 'in', allowed_stage_ids)]"/>
+                            <field name="mode" widget="radio" invisible="1"/>
+                            <div class="row"/>
+                            <div class="row" attrs="{'invisible': [('microcom_timesheet_id', '!=', False)]}">
+                                <span>Close/reopen will create a new entry.</span>
+                            </div>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="button_close_request" string="Close Task" class="oe_highlight" type="object"
+                        attrs="{'invisible':[('mode','!=', 'close')]}"/>
+                    <button name="button_close_request" string="Reopen Request" class="oe_highlight" type="object"
+                        attrs="{'invisible':[('mode','!=', 'open')]}"/>
+                    <button special="cancel" string="Cancel" type="object" class="btn btn-default oe_inline"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</data>
+</odoo>

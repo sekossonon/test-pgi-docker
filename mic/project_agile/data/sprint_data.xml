@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Sequences for project.sprint -->
+        <record id="seq_project_sprint" model="ir.sequence">
+            <field name="name">Sprint</field>
+            <field name="code">project.sprint</field>
+            <field name="prefix">sprint_%(year)s_</field>
+            <field name="padding">2</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="project_sprint_backlog" model="project.sprint">
+            <field name="name">Backlog</field>
+        </record>
+    </data>
+</odoo>

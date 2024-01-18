@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<template>
+    <t t-name="microcom_project_state_report.ProjectStateButton">
+        <div class="input-group button">
+            <div>
+                <button
+                        type="button"
+                        class="ml4 btn btn-primary o_report_my_projects"
+                        title="My Projects"
+                >My projects
+                </button>
+                <button
+                        type="button"
+                        class="btn btn-primary o_report_my_favorite mr4"
+                        title="My Favorite Projects"
+                >My Favorite Projects
+                </button>
+                <i class='fa fa-refresh o_report_refresh ml4' type="button"/>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="microcom_project_state_report.client_action.ControlProject">
+        <div class="o_project_state_buttons">
+            <t t-call="microcom_project_state_report.ProjectStateButton"/>
+        </div>
+    </t>
+
+</template>

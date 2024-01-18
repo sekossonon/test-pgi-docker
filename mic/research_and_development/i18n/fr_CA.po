@@ -1,0 +1,570 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* research_and_development
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-31 14:36+0000\n"
+"PO-Revision-Date: 2023-10-31 14:36+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: research_and_development
+#: model:ir.model.constraint,message:research_and_development.constraint_rsde_tags_name_uniq
+#: model:ir.model.constraint,message:research_and_development.constraint_uncertainty_or_innovation_tags_name_uniq
+msgid "A tag with the same name already exists."
+msgstr "Une balise avec le même nom existe déjà."
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__message_needaction
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__message_needaction
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__message_needaction
+msgid "Action Needed"
+msgstr "Action requise."
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__message_attachment_count
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__message_attachment_count
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__message_attachment_count
+msgid "Attachment Count"
+msgstr "Nombre de pièces jointes."
+
+#. module: research_and_development
+#: model:ir.model,name:research_and_development.model_microcom_rsde
+msgid "Ce modèle représente des informations de recherche et de description."
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_tags__color
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation_tags__color
+msgid "Color"
+msgstr "Couleur"
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__rsde_conclusion_description
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__rsde_conclusion_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__conclusion_learning_reuse
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__rsde_conclusion_description
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__rsde_conclusion_id
+msgid "Conclusion, learning, reuse"
+msgstr "Conclusion, apprentissage, réutilisation."
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__conclusion_learning_reuse_lines
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__rsde_conclusion_lines
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__rsde_conclusion_lines
+msgid "Conclusion, learning, reuse line"
+msgstr "Conclusion, apprentissage, réutilisation."
+
+#. module: research_and_development
+#: model_terms:ir.actions.act_window,help:research_and_development.action_idea_or_hypothesis
+msgid "Create the first Idea."
+msgstr "Créez la première idée."
+
+#. module: research_and_development
+#: model_terms:ir.actions.act_window,help:research_and_development.action_research_and_development
+#: model_terms:ir.actions.act_window,help:research_and_development.action_uncertainty_or_innovation
+msgid "Create the first Research &amp; Dev."
+msgstr "Créez la première recherche et développement."
+
+#. module: research_and_development
+#: model_terms:ir.actions.act_window,help:research_and_development.action_innovation_tags
+#: model_terms:ir.actions.act_window,help:research_and_development.action_research_and_development_tags
+msgid "Create the first Tags."
+msgstr "Créez les premières balises."
+
+#. module: research_and_development
+#: model_terms:ir.actions.act_window,help:research_and_development.action_uncertainty_or_innovation
+msgid "Create the first Uncertainty or innovation"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__create_uid
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_conclusion__create_uid
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_obstacle__create_uid
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__create_uid
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_tags__create_uid
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__create_uid
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_work__create_uid
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__create_uid
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation_tags__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__create_date
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_conclusion__create_date
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_obstacle__create_date
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__create_date
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_tags__create_date
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__create_date
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_work__create_date
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__create_date
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation_tags__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_conclusion__date
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_obstacle__date
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__date
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_work__date
+msgid "Date"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_conclusion__description
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_obstacle__description
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_work__description
+msgid "Description"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__summary
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__details
+msgid "Details of idea or hypothesis"
+msgstr "Détails de l'idée ou de l'hypothèse"
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__display_name
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_conclusion__display_name
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_obstacle__display_name
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__display_name
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_tags__display_name
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__display_name
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_work__display_name
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__display_name
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation_tags__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__message_follower_ids
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__message_follower_ids
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__message_partner_ids
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__message_partner_ids
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__from_default_get
+msgid "From default"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__has_message
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__has_message
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__hide_grids
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__hide_grids
+msgid "Hide History Grids"
+msgstr "Masquer l'historique (grilles)"
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_conclusion__hypothese_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_obstacle__hypothese_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_work__hypothese_id
+msgid "Hypothese"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_conclusion__user_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_obstacle__user_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_work__user_id
+msgid "I.E"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_conclusion__id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_obstacle__id
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_tags__id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_work__id
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__id
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation_tags__id
+msgid "ID"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.actions.act_window,name:research_and_development.action_idea_or_hypothesis
+#: model:ir.ui.menu,name:research_and_development.idea_or_hypothesis_menu
+msgid "Idea Or Hypothesis"
+msgstr "Idée ou hypothèse."
+
+#. module: research_and_development
+#: model_terms:ir.ui.view,arch_db:research_and_development.ir_idea_hypothesis_form
+msgid "Idea and hypothesis"
+msgstr "Idée et hypothèse."
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__idea_or_hypothesis_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__idea_or_hypothesis_id
+#: model_terms:ir.ui.view,arch_db:research_and_development.research_and_development_search_view
+msgid "Idea or hypothesis"
+msgstr "Idée ou hypothèse."
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__hypothesis_lines
+msgid "Idee or Hypothese"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,help:research_and_development.field_idea_hypothesis__message_needaction
+#: model:ir.model.fields,help:research_and_development.field_microcom_rsde__message_needaction
+#: model:ir.model.fields,help:research_and_development.field_uncertainty_or_innovation__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,help:research_and_development.field_idea_hypothesis__message_has_error
+#: model:ir.model.fields,help:research_and_development.field_idea_hypothesis__message_has_sms_error
+#: model:ir.model.fields,help:research_and_development.field_microcom_rsde__message_has_error
+#: model:ir.model.fields,help:research_and_development.field_microcom_rsde__message_has_sms_error
+#: model:ir.model.fields,help:research_and_development.field_uncertainty_or_innovation__message_has_error
+#: model:ir.model.fields,help:research_and_development.field_uncertainty_or_innovation__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__incertitude_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__incertitude_id
+msgid "Incertitude or Innovation"
+msgstr "Incertitude ou innovation"
+
+#. module: research_and_development
+#: model:ir.actions.act_window,name:research_and_development.action_innovation_tags
+#: model:ir.ui.menu,name:research_and_development.innovation_tags_menu
+msgid "Innovation Tags"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__message_is_follower
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__message_is_follower
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis____last_update
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_conclusion____last_update
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_obstacle____last_update
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde____last_update
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_tags____last_update
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard____last_update
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_work____last_update
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation____last_update
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation_tags____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__write_uid
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_conclusion__write_uid
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_obstacle__write_uid
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__write_uid
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_tags__write_uid
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__write_uid
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_work__write_uid
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__write_uid
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation_tags__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__write_date
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_conclusion__write_date
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_obstacle__write_date
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__write_date
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_tags__write_date
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__write_date
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_work__write_date
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__write_date
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation_tags__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__message_main_attachment_id
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__message_main_attachment_id
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__message_has_error
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__message_has_error
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__message_ids
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__message_ids
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__name
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_conclusion__name
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_obstacle__name
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_tags__name
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_work__name
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation_tags__name
+msgid "Name"
+msgstr "Nom"
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__message_needaction_counter
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__message_needaction_counter
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__message_has_error_counter
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__message_has_error_counter
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,help:research_and_development.field_idea_hypothesis__message_needaction_counter
+#: model:ir.model.fields,help:research_and_development.field_microcom_rsde__message_needaction_counter
+#: model:ir.model.fields,help:research_and_development.field_uncertainty_or_innovation__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,help:research_and_development.field_idea_hypothesis__message_has_error_counter
+#: model:ir.model.fields,help:research_and_development.field_microcom_rsde__message_has_error_counter
+#: model:ir.model.fields,help:research_and_development.field_uncertainty_or_innovation__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__rsde_obstacle_description
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__rsde_obstacle_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__obstacle_or_accomplishment
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__rsde_obstacle_description
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__rsde_obstacle_id
+msgid "Obstacle or accomplishment"
+msgstr "Obstacle ou accomplissement"
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__obstacle_or_accomplishment_lines
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__rsde_obstacle_lines
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__rsde_obstacle_lines
+msgid "Obstacle or accomplishment line"
+msgstr "Ligne Obstacle ou accomplissement."
+
+#. module: research_and_development
+#: model:ir.actions.act_window,name:research_and_development.action_research_and_development
+#: model:ir.actions.act_window,name:research_and_development.r_d_wizard_action
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_conclusion__rsde_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_obstacle__rsde_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_tags__r_d_ids
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__rsde_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_work__rsde_id
+#: model:ir.ui.menu,name:research_and_development.research_and_development_parent_menu
+#: model_terms:ir.ui.view,arch_db:research_and_development.microcom_full_timesheet_tree_inherit
+#: model_terms:ir.ui.view,arch_db:research_and_development.microcom_quick_timesheet_tree_inherit
+#: model_terms:ir.ui.view,arch_db:research_and_development.research_and_development_form
+#: model_terms:ir.ui.view,arch_db:research_and_development.research_and_development_form_detailed
+#: model_terms:ir.ui.view,arch_db:research_and_development.research_and_development_tree
+#: model_terms:ir.ui.view,arch_db:research_and_development.research_and_development_tree_detailed
+#: model_terms:ir.ui.view,arch_db:research_and_development.task_view_inherit
+msgid "R&D"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.actions.act_window,name:research_and_development.action_research_and_development_tags
+#: model:ir.model,name:research_and_development.model_rsde_tags
+msgid "R&D Tags"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_timesheet__rsde_lines
+#: model:ir.model.fields,field_description:research_and_development.field_project_task__rsde_lines
+msgid "Research And Development Line"
+msgstr "Ligne de recherche et développement."
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__message_has_sms_error
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__message_has_sms_error
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__conclusion
+msgid "Summary or final conclusion"
+msgstr "Conclusion ou hypothèse"
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__tag_ids
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__tag_ids
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__tag_ids
+msgid "Tag uncertainty or innovation"
+msgstr "Tag incertitude ou innovation"
+
+#. module: research_and_development
+#: model_terms:ir.ui.view,arch_db:research_and_development.innovation_tags_tree
+#: model_terms:ir.ui.view,arch_db:research_and_development.research_development_tags_tree
+msgid "Tags"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model,name:research_and_development.model_project_task
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_conclusion__task_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_obstacle__task_id
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__task_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__task_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_work__task_id
+msgid "Task"
+msgstr "Tâche"
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_tags__task_ids
+msgid "Tasks"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_conclusion__timesheet_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_obstacle__timesheet_id
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__timesheet_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__timesheet_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_work__timesheet_id
+#: model_terms:ir.ui.view,arch_db:research_and_development.research_and_development_form_detailed
+msgid "Timesheet"
+msgstr ""
+
+#. module: research_and_development
+#: model_terms:ir.ui.view,arch_db:research_and_development.ir_idea_hypothesis_form
+#: model_terms:ir.ui.view,arch_db:research_and_development.uncertainty_or_innovation_form
+msgid "Title..."
+msgstr "Titre..."
+
+#. module: research_and_development
+#: model:ir.model.fields,help:research_and_development.field_rsde_tags__color
+msgid ""
+"Transparent tags are not visible in the kanban view of your projects and "
+"tasks."
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.ui.menu,name:research_and_development.uncertainty_innovation_menu
+#: model_terms:ir.ui.view,arch_db:research_and_development.uncertainty_or_innovation_tree
+msgid "Uncertainty or Innovation"
+msgstr "Incertitude ou innovation"
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__incertitude_id
+msgid "Uncertainty or innovation"
+msgstr "Incertitude ou innovation"
+
+#. module: research_and_development
+#: model:ir.model,name:research_and_development.model_uncertainty_or_innovation_tags
+msgid "Uncertainty or innovation Tags"
+msgstr "Incertitude ou d'innovation Tag"
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__name
+msgid "Uncertainty or innovation"
+msgstr "Incertitude et innovation"
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__user_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__user_id
+#: model:ir.model.fields,help:research_and_development.field_rsde_conclusion__user_id
+#: model:ir.model.fields,help:research_and_development.field_rsde_obstacle__user_id
+#: model:ir.model.fields,help:research_and_development.field_rsde_work__user_id
+msgid "User"
+msgstr "Utilisateur"
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__website_message_ids
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__website_message_ids
+#: model:ir.model.fields,field_description:research_and_development.field_uncertainty_or_innovation__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,help:research_and_development.field_idea_hypothesis__website_message_ids
+#: model:ir.model.fields,help:research_and_development.field_microcom_rsde__website_message_ids
+#: model:ir.model.fields,help:research_and_development.field_uncertainty_or_innovation__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__rsde_work_description
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__rsde_work_id
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__rsde_work_description
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__rsde_work_id
+msgid "Work or progress"
+msgstr "Travail ou progrès."
+
+#. module: research_and_development
+#: model:ir.model.fields,field_description:research_and_development.field_idea_hypothesis__work_or_progres_lines
+#: model:ir.model.fields,field_description:research_and_development.field_microcom_rsde__rsde_work_lines
+#: model:ir.model.fields,field_description:research_and_development.field_rsde_wizard__rsde_work_lines
+msgid "Work or progress line"
+msgstr "Ligne de travail ou de progression."
+
+#. module: research_and_development
+#: model:ir.model,name:research_and_development.model_idea_hypothesis
+msgid "idea.hypothesis"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model,name:research_and_development.model_microcom_timesheet
+msgid "microcom.timesheet"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model,name:research_and_development.model_rsde_conclusion
+msgid "rsde.conclusion"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model,name:research_and_development.model_rsde_obstacle
+msgid "rsde.obstacle"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model,name:research_and_development.model_rsde_wizard
+msgid "rsde.wizard"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.model,name:research_and_development.model_rsde_work
+msgid "rsde.work"
+msgstr ""
+
+#. module: research_and_development
+#: model:ir.actions.act_window,name:research_and_development.action_uncertainty_or_innovation
+msgid "uncertainty or innovation"
+msgstr "Incertitude ou innovation"
+
+#. module: research_and_development
+#: model:ir.model,name:research_and_development.model_uncertainty_or_innovation
+msgid "uncertainty.or.innovation"
+msgstr ""

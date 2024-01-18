@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="microcom_quick_timesheet_tree_inherit" model="ir.ui.view">
+        <field name="name">microcom.timesheet.tree.inherit</field>
+        <field name="model">microcom.timesheet</field>
+        <field name="inherit_id" ref="microcom_ts.microcom_quick_timesheet_tree"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="display_timesheet_alert_description"
+                       widget="timesheet_alert"
+                       class="o_display_timesheet_alert_description"
+                />
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="user_timesheet_alert_id" invisible="1"/>
+                <field name="color_ts" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="default_focus">1</attribute>
+                <attribute name="class">focus_field</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="microcom_timesheet_search_inherit" model="ir.ui.view">
+        <field name="name">microcom.timesheet.search.inherit</field>
+        <field name="model">microcom.timesheet</field>
+        <field name="inherit_id" ref="microcom_ts.microcom_timesheet_search"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='task_id']" position="after">
+                <field name="partner_id"/>
+            </xpath>
+
+            <xpath expr="//filter[@name='assigned_to_me']" position="after">
+                <filter string="In progress"
+                        name="display_timesheet_alert_description"
+                        domain="[('display_timesheet_alert_description','!=', 'nothing')]"/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+</odoo>

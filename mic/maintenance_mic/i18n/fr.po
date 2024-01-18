@@ -1,0 +1,44 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* maintenance_mic
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-20 15:32+0000\n"
+"PO-Revision-Date: 2022-12-20 10:33-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 3.0.1\n"
+
+#. module: maintenance_mic
+#: model:ir.model,name:maintenance_mic.model_maintenance_equipment
+msgid "Equipment"
+msgstr "Équipement"
+
+#. module: maintenance_mic
+#: model:ir.model.fields,field_description:maintenance_mic.field_maintenance_equipment_internal_code
+msgid "IMD"
+msgstr "IMD"
+
+#. module: maintenance_mic
+#: model:ir.model.fields,field_description:maintenance_mic.field_maintenance_equipment_owner
+msgid "Owner"
+msgstr "Propriétaire"
+
+#. module: maintenance_mic
+#: model:ir.model.fields,field_description:maintenance_mic.field_maintenance_equipment_owner_partner_id
+msgid "Owner (Customer)"
+msgstr "Propriétaire (Client)"
+
+#. module: maintenance_mic
+#: code:addons/maintenance_mic/models/maintenance.py:23
+#, python-format
+msgid "Unassigned"
+msgstr "Non assigné"

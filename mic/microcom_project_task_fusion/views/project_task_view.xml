@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_task_fusion_form" model="ir.ui.view">
+        <field name="name">view.task.fusion.form</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="%(microcom_project_task_fusion.project_task_fusion_wizard_action)d"
+                        type="action"
+                        string="Mege Tasks"
+                        groups="uranos_ts.group_uranos_approval"
+                />
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

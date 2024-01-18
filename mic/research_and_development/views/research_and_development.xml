@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="research_and_development_search_view" model="ir.ui.view">
+            <field name="name">rsde.search.view</field>
+            <field name="model">microcom.rsde</field>
+            <field name="arch" type="xml">
+                <search string="">
+                    <separator/>
+                    <filter string="Idea or hypothesis" name="idea_or_hypothesis"
+                            context="{'group_by':'idea_or_hypothesis_id'}"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="research_and_development_tree" model="ir.ui.view">
+            <field name="name">rsde.tree</field>
+            <field name="model">microcom.rsde</field>
+            <field name="arch" type="xml">
+                <tree string="R&amp;D">
+                    <field name="idea_or_hypothesis_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="research_and_development_tree_detailed" model="ir.ui.view">
+            <field name="name">rsde.tree.detailed</field>
+            <field name="model">microcom.rsde</field>
+            <field name="arch" type="xml">
+                <tree string="R&amp;D">
+                    <field name="task_id"/>
+                    <field name="idea_or_hypothesis_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="research_and_development_form" model="ir.ui.view">
+            <field name="name">rsde.form</field>
+            <field name="model">microcom.rsde</field>
+            <field name="arch" type="xml">
+                <form string="R&amp;D">
+                    <sheet>
+                        <group>
+                            <field name="incertitude_id"/>
+                            <field name="task_id"/>
+                            <field name="idea_or_hypothesis_id"
+                                   context="{'incertitude_id': incertitude_id}"/>
+                            <field name="tag_ids" widget="many2many_tags"  options="{'color_field': 'color'}" context="{'incertitude_id': incertitude_id}"/>
+                            <field name="timesheet_id" invisible="1"/>
+                            <field name="hide_grids"/>
+                            <field name="rsde_work_id"/>
+                            <field name="rsde_work_lines" attrs="{'invisible':[('hide_grids', '=', True)]}"
+                                   readonly="1" context="{'default_project_task_id': task_id}">
+                                <tree>
+                                    <field name="task_id" invisible="0"/>
+                                    <field name="user_id"/>
+                                    <field name="date"/>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                            <field name="rsde_obstacle_id"/>
+                            <field name="rsde_obstacle_lines"
+                                   attrs="{'invisible':[('hide_grids', '=', True)]}" readonly="1" context="{'default_project_task_id': task_id}">
+                                <tree>
+                                    <field name="task_id"/>
+                                    <field name="user_id"/>
+                                    <field name="date"/>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                            <field name="rsde_conclusion_id"/>
+                            <field name="rsde_conclusion_lines"
+                                   attrs="{'invisible':[('hide_grids', '=', True)]}" readonly="1" context="{'default_project_task_id': task_id}">
+                                <tree>
+                                    <field name="task_id"/>
+                                    <field name="user_id"/>
+                                    <field name="date"/>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="research_and_development_form_detailed" model="ir.ui.view">
+            <field name="name">rsde.form.detailed</field>
+            <field name="model">microcom.rsde</field>
+            <field name="arch" type="xml">
+                <form string="R&amp;D">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="action_show_timesheet"
+                                    icon="fa-clock-o" string="Timesheet">
+                            </button>
+                        </div>
+                        <group>
+                            <field name="task_id" readonly="1"/>
+                            <field name="idea_or_hypothesis_id" readonly="1"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_research_and_development" model="ir.actions.act_window">
+            <field name="name">R&amp;D</field>
+            <field name="res_model">microcom.rsde</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('research_and_development_tree_detailed')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('research_and_development_form_detailed')})]"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create the first Recherche et Developpement
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="research_and_development_parent_menu" name="R&amp;D" parent="project.menu_main_pm" sequence="8"/>
+
+
+    </data>
+</odoo>

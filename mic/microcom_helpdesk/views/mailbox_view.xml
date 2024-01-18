@@ -1,0 +1,192 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <menuitem name="Mails"
+        id="menu_project_mail_root"
+        parent="menu_helpdesk"
+        sequence="20"/>
+
+    <!-- mailbox -->
+
+    <record id="view_project_mailbox_filter" model="ir.ui.view">
+        <field name="name">project.mailbox.filter</field>
+        <field name="model">project.mailbox</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="fetchmail_server_id"/>
+                <field name="department_id"/>
+                <filter string="My Department" name="mydepartment" domain="[('department_id.partner_ids.user_ids.id', '=', uid)]" help="My Department"/>
+                <group expand="0" string="Group By">
+                    <filter string="Department" name="groupby_department_id" context="{'group_by':'department_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_project_mailbox_tree" model="ir.ui.view">
+        <field name="name">project.mailbox.tree</field>
+        <field name="model">project.mailbox</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="fetchmail_server_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_project_mailbox_mail" model="ir.actions.act_window">
+        <field name="name">Mails</field>
+        <field name="res_model">project.mail</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_draft': 1}</field>
+    </record>
+
+    <record id="view_project_mailbox_form" model="ir.ui.view">
+        <field name="name">project.mailbox.form</field>
+        <field name="model">project.mailbox</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="action" name="%(action_project_mailbox_mail)d"
+                            context="{'search_default_fetchmail_server_id': fetchmail_server_id}"
+                            icon="fa-clock-o" string="Mails">
+                            <!-- <field  string="Mail" name="mail_count" widget="statinfo"/> -->
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name"/>
+                        <field name="fetchmail_server_id"/>
+                        <field name="department_id"/>
+                        <field name="project_id"/>
+                        <field name="source_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_project_mailbox" model="ir.actions.act_window">
+        <field name="name">Mailboxes</field>
+        <field name="res_model">project.mailbox</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_mydepartment':1}</field>
+    </record>
+
+    <menuitem name="Mailboxes"
+        id="menu_project_mailbox"
+        parent="menu_project_mail_root"
+        action="action_project_mailbox"
+        sequence="20"
+        groups="microcom_tasks.group_project_supervisor"/>
+
+    <!-- mail -->
+
+    <record id="view_project_mail_filter" model="ir.ui.view">
+        <field name="name">project.mail.filter</field>
+        <field name="model">project.mail</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id"/>
+                <field name="project_id"/>
+                <field name="task_id"/>
+                <field name="email_to"/>
+                <field name="mailbox_id"/>
+                <separator/>
+                <filter string="New" name="draft" domain="[('state','=','draft')]"/>
+                <filter string="Assigned" name="assigned" domain="[('state','=','assigned')]"/>
+                <filter string="Done" name="done" domain="[('state','=','done')]"/>
+                <separator/>
+                <filter string="My Department" name="mydepartment" domain="[('project_id.department_id.partner_ids.user_ids.id', '=', uid)]" help="My Department"/>
+                <group expand="0" string="Group By">
+                    <filter string="Customer" name="groupby_partner_id" context="{'group_by':'partner_id'}"/>
+                    <filter string="Project" name="groupby_project_id" context="{'group_by':'project_id'}"/>
+                    <filter string="Task" name="groupby_task_id" context="{'group_by':'task_id'}"/>
+                    <filter string="Mail To" name="groupby_email_to" context="{'group_by':'email_to'}"/>
+                    <filter string="Mailbox" name="groupby_mailbox_id" context="{'group_by':'mailbox_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_project_mail_tree" model="ir.ui.view">
+        <field name="name">project.mail.tree</field>
+        <field name="model">project.mail</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="mailbox_id"/>
+                <field name="author_id"/>
+                <field name="subject"/>
+                <field name="date"/>
+                <field name="project_id"/>
+                <field name="task_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_project_mail_form" model="ir.ui.view">
+        <field name="name">project.mail.form</field>
+        <field name="model">project.mail</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="button_create_task" type="object" string="Create Task" class="btn-primary"
+                        attrs="{'invisible': ['|', '|', ('state', '!=', 'draft'), ('project_id', '=', False), ('task_id', '!=', False)]}"/>
+                    <button name="button_create_task" type="object" string="Create Task" class="btn-default"
+                        attrs="{'invisible': ['|', '|', ('state', '!=', 'draft'), ('project_id', '=', False), ('task_id', '=', False)]}"/>
+                    <button name="button_join_task" type="object" string="Join Task" class="btn-primary"
+                        attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('task_id', '=', False)]}"/>
+                    <button name="button_ignore" type="object" string="Ignore" class="btn-primary"
+                        attrs="{'invisible': ['|', '|', ('state', '!=', 'draft'), ('project_id', '!=', False), ('task_id', '!=', False)]}"/>
+                    <button name="button_ignore" type="object" string="Ignore" class="btn-default"
+                        attrs="{'invisible': ['|', ('state', '!=', 'draft'), '!', '|', ('project_id', '!=', False), ('task_id', '!=', False)]}"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="subject" readonly="1"/>
+                            <field name="date" readonly="1"/>
+                            <field name="email_from" readonly="1"/>
+                            <field name="email_to" readonly="1"/>
+                            <field name="email_cc" readonly="1"/>
+                            <field name="original_message_id" readonly="0" groups="base.group_no_one"/>
+                        </group>
+                        <group>
+                            <field name="author_id" readonly="1"/>
+                            <field name="partner_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="project_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="task_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="fetchmail_server_id" readonly="1" groups="base.group_no_one"/>
+                            <field name="mailbox_id" readonly="1" groups="base.group_no_one"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Body">
+                            <field name="body" readonly="1"/>
+                        </page>
+                        <page string="Attachments">
+                            <field name="attachment_ids" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_project_mail" model="ir.actions.act_window">
+        <field name="name">Mails</field>
+        <field name="res_model">project.mail</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_draft': 1, 'search_default_mydepartment': 1}</field>
+    </record>
+
+    <menuitem name="Incoming Mails"
+        id="menu_project_mail"
+        parent="menu_project_mail_root"
+        action="action_project_mail"
+        sequence="10"/>
+
+
+</odoo>

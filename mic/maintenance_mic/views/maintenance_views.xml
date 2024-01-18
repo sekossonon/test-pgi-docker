@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- equiment : views -->
+    <record id="hr_equipment_view_form" model="ir.ui.view">
+        <field name="name">equipment.form</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+        <field name="arch" type="xml">
+            <field name="location" position="replace"/>
+            <field name="technician_user_id" position="after">
+                <field name="internal_code"/>
+            </field>
+            <field name="owner_user_id" position="after">
+                <field name="owner_partner_id"/>
+                <field name="location" string="Used in location"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_equipment_view_kanban" model="ir.ui.view">
+        <field name="name">equipment.kanban</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_kanban"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="internal_code"/>
+            </field>
+            <field name="owner_user_id" position="after">
+                <field name="owner"/>
+            </field>
+            <div t-if="record.serial_no.raw_value" position="before">
+                <div t-if="record.internal_code.raw_value"><small><field name="internal_code"/></small></div>
+            </div>
+            <div class="o_kanban_record_body" position="replace">
+                <div class="o_kanban_record_body">
+                    <div t-if="record.serial_no.raw_value"><field name="serial_no"/></div>
+                    <div><field name="owner"/></div>
+                </div>
+            </div>
+        </field>
+    </record>
+
+    <record id="hr_equipment_view_tree" model="ir.ui.view">
+        <field name="name">equipment.tree</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="internal_code"/>
+            </field>
+            <field name="owner_user_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="owner_user_id" position="after">
+                <field name="owner"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_equipment_view_search" model="ir.ui.view">
+        <field name="name">equipment.search</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_search"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="internal_code"/>
+            </field>
+            <field name="owner_user_id" position="replace">
+                <field name="owner"/>
+                <field name="owner_partner_id"/>
+                <field name="owner_user_id" string="owner (user)"/>
+            </field>
+            <filter context="{'group_by': 'owner_user_id'}" position="replace">
+                <filter name="group_by_owner" string='Owner' domain="[]" context="{'group_by': 'owner'}"/>
+                <filter name="group_by_owner_user_id" string='Owner (user only)' domain="[]" context="{'group_by': 'owner_user_id'}"/>
+                <filter name="group_by_owner_partner_id" string='Owner (customer only)' domain="[]" context="{'group_by': 'owner_partner_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+</odoo>

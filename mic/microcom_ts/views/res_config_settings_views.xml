@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.project</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="50"/>
+            <field name="inherit_id" ref="project.res_config_settings_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='project_time']" position="after">
+                        <h2>Timesheets Closing dates</h2>
+                        <div class="row mt16 o_settings_container" name="default_taxes_setting_container">
+                            <div class="row mt16">
+                                <label string="Date minimale permise" for="minimum_date" class="col-lg-3 o_light_label"/>
+                                <field name="minimum_date"/>
+                            </div>
+                            <div class="row">
+                                <label string="Date minimale permise pour admin" for="minimum_admin_date" class="col-lg-3 o_light_label"/>
+                                <field name="minimum_admin_date"/>
+                            </div>
+                        </div>
+                </xpath>
+            </field>
+        </record>
+</odoo>

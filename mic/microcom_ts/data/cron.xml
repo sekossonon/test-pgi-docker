@@ -1,0 +1,27 @@
+<odoo>
+
+    <record model="ir.cron" id="microcom_timesheet_billing_patch_billing_types">
+        <field name="name">Import Billing Codes</field>
+        <field name="active" eval="False"/>
+        <field name="model_id" ref="model_microcom_timesheet_billing"/>
+        <field name="state">code</field>
+        <field name="code">model._patch_billing_types()</field>
+    </record>
+
+    <record model="ir.cron" id="microcom_task_synchronize_followup">
+        <field name="name">Synchronize follow up</field>
+        <field name="active" eval="False"/>
+        <field name="model_id" ref="model_project_task"/>
+        <field name="state">code</field>
+        <field name="code">model._nightly_synchronize_followup()</field>
+    </record>
+
+    <record model="ir.cron" id="microcom_timesheet_synchronise_all">
+        <field name="name">Synchronize All Timesheet vs Uranos</field>
+        <field name="active" eval="False"/>
+        <field name="model_id" ref="model_microcom_timesheet"/>
+        <field name="state">code</field>
+        <field name="code">model.synchronize_all()</field>
+    </record>
+
+</odoo>

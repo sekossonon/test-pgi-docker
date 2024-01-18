@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_microcom_timesheet_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.microcom.timesheet</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <field name="partner_timesheet_hours" invisible="1"/>
+                <button name="action_view_partner_timesheet"
+                        class="oe_stat_button"
+                        icon="fa-clock-o"
+                        type="object"
+                        attrs="{'invisible': [('partner_timesheet_hours', '=', False)]}"
+                >
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">
+                            Customer<br/>
+                            History
+                        </span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="microcom_ts.TimesheetDashboard" owl="1">
+        <div class="o_timesheet_dashboard container-fluid py-4 border-bottom bg-white">
+            <div class="row justify-content-between gap-3 gap-lg-0">
+                <div class="col-12 col-lg-5 col-xl-5 col-xxl-4 flex-grow-1 flex-lg-grow-0 flex-shrink-0">
+                    <div class="grid gap-4">
+                        <div class="g-col-3 g-col-sm-2 d-flex align-items-center py-2 justify-content-end text-end justify-content-lg-start text-lg-start">
+                            Tasks
+                        </div>
+                        <div class="g-col-9 g-col-sm-10 grid gap-1">
+                            <div class="g-col-4 p-0" t-on-click="setSearchContext" title="All Tasks"
+                                 filter_name="all_tasks" name="project_task_all">
+                                <a href="#"
+                                   class="btn btn-primary w-100 h-100 border-0 rounded-0 text-capitalize fw-normal">
+                                    <div class="fs-2" t-out="timesheetData['all_open']"/>Open
+                                </a>
+                            </div>
+                            <div class="g-col-4 p-0" t-on-click="setSearchContext" title="All Tasks Late"
+                                 filter_name="late" name="project_task_all_late">
+                                <a href="#"
+                                   class="btn btn-primary w-100 h-100 border-0 rounded-0 text-capitalize fw-normal">
+                                    <div class="fs-2" t-out="timesheetData['all_late']"/>Late
+                                </a>
+                            </div>
+                            <div class="g-col-4 p-0" t-on-click="setSearchContext" title="Overtime"
+                                 filter_name="overtime" name="project_task_all_overtime">
+                                <a href="#"
+                                   class="btn btn-primary w-100 h-100 border-0 rounded-0 text-capitalize fw-normal">
+                                    <div class="fs-2" t-out="timesheetData['all_overtime']"/>Overtime
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid gap-4">
+                        <div class="g-col-3 g-col-sm-2 d-flex align-items-center py-2 justify-content-end text-end justify-content-lg-start text-lg-start">
+                            <span t-out="timesheetData['user_code']"/>
+                        </div>
+                        <div class="g-col-9 g-col-sm-10 grid gap-2">
+                            <div class="g-col-4 p-0" t-on-click="setSearchContext" title="My Tasks"
+                                 filter_name="my_tasks" name="project_my_task">
+                                <a href="#"
+                                   class="btn btn-light d-flex align-items-center w-100 h-100 p-0 border-0 bg-100 fw-normal">
+                                    <div class="w-100 p-2" t-out="timesheetData['my_task']"/>
+                                </a>
+                            </div>
+                            <div class="g-col-4 p-0" t-on-click="setSearchContext" title="My Late"
+                                 filter_name="late,my_tasks" name="project_my_task_late">
+                                <a href="#"
+                                   class="btn btn-light d-flex align-items-center w-100 h-100 p-0 border-0 bg-100 fw-normal">
+                                    <div class="w-100 p-2" t-out="timesheetData['my_last']"/>
+                                </a>
+                            </div>
+                            <div class="g-col-4 p-0" t-on-click="setSearchContext" title="My overtime"
+                                 filter_name="my_overtime,my_tasks" name="project_my_task_overtime">
+                                <a href="#"
+                                   class="btn btn-light d-flex align-items-center w-100 h-100 p-0 border-0 bg-100 fw-normal">
+                                    <div class="w-100 p-2" t-out="timesheetData['my_overtime']"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-12 col-lg-7 col-xl-6 col-xxl-5 flex-shrink-0">
+                    <div class="grid gap-4">
+                        <div class="g-col-3 g-col-sm-2 d-flex align-items-center py-2 justify-content-end text-end justify-content-lg-start text-lg-start">
+                            Followups
+                        </div>
+                        <div class="g-col-9 g-col-sm-10 grid gap-2">
+                            <div class="g-col-4 p-0" t-on-click="setSearchContext" title="My Followups"
+                                 filter_name="all_Followups" name="project_task_my_followup">
+                                <a href="#"
+                                   class="btn btn-light w-100 h-100 border-0 rounded-0 text-capitalize fw-normal">
+                                    <div class="fs-2" t-out="timesheetData['all_followup']"/>Open.
+                                </a>
+                            </div>
+                            <div class="g-col-4 p-0" t-on-click="setSearchContext" title="My Late"
+                                 filter_name="my_Followups_late" name="project_task_my_followup_late">
+                                <a href="#"
+                                   class="btn btn-light w-100 h-100 border-0 rounded-0 text-capitalize fw-normal">
+                                    <div class="fs-2" t-out="timesheetData['late_followups']"/>Late.
+                                </a>
+                            </div>
+                            <div class="g-col-4 p-0" t-on-click="setSearchContext" title="My Future"
+                                 filter_name="my_future" name="project_task_my_followup_future">
+                                <a href="#"
+                                   class="btn btn-light w-100 h-100 border-0 rounded-0 text-capitalize fw-normal">
+                                    <div class="fs-2" t-out="timesheetData['all_future_followups']"/>Today.
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid gap-4">
+                        <div class="g-col-3 g-col-sm-2 d-flex align-items-center py-2 justify-content-end text-end justify-content-lg-start text-lg-start">
+                            Three to come
+                        </div>
+                        <div class="g-col-9 g-col-sm-10 grid gap-2">
+                            <div class="g-col-4 p-0" t-att-title="timesheetData['future_followups'][0]['complete_name']" t-on-click="setSearchContext"
+                                 filter_name="next_1" name="future_followups"
+                                 t-att-data-res-id="timesheetData['future_followups'][0]['id']"
+                            >
+                                <a href="#"
+                                   class="btn btn-light d-flex align-items-center w-100 h-100 p-0 border-0 bg-100 fw-normal">
+                                    <div class="w-100 p-2">
+                                        <div t-out="timesheetData['future_followups'][0]['date']"
+                                             style="color: blue;"/>
+                                        <div t-out="timesheetData['future_followups'][0]['name']"/>
+                                    </div>
+
+                                </a>
+                            </div>
+                            <div class="g-col-4 p-0" t-att-title="timesheetData['future_followups'][1]['complete_name']" t-on-click="setSearchContext"
+                                 filter_name="next_2" name="future_followups"
+                                 t-att-data-res-id="timesheetData['future_followups'][1]['id']"
+                            >
+                                <a href="#"
+                                   class="btn btn-light d-flex align-items-center w-100 h-100 p-0 border-0 bg-100 fw-normal">
+                                    <div class="w-100 p-2">
+                                        <div t-out="timesheetData['future_followups'][1]['date']"
+                                             style="color: blue;"/>
+                                        <div t-out="timesheetData['future_followups'][1]['name']"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="g-col-4 p-0" t-att-title="timesheetData['future_followups'][2]['complete_name']" t-on-click="setSearchContext"
+                                 filter_name="next_3" name="future_followups"
+                                 t-att-data-res-id="timesheetData['future_followups'][2]['id']"
+                            >
+                                <a href="#"
+                                   class="btn btn-light d-flex align-items-center w-100 h-100 p-0 border-0 bg-100 fw-normal">
+                                    <div class="w-100 p-2">
+                                        <div t-out="timesheetData['future_followups'][2]['date']"
+                                             style="color: blue;"/>
+                                        <div t-out="timesheetData['future_followups'][2]['name']"/>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

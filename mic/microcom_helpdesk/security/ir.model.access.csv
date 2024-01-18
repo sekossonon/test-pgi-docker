@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_task_source,access.task.source,model_task_source,project.group_project_user,1,1,1,1
+access_task_ticket_type,access.task.type.ticket,model_task_ticket_type,project.group_project_user,1,1,1,1
+access_task_ticket_subtype,access.task.subtype.ticket,model_task_ticket_subtype,project.group_project_user,1,1,1,1
+access_project_task_assignment_delay_user,access.project.task.assignment.delay,model_project_task_assignment_delay,project.group_project_user,1,1,1,1
+access_project_mailbox,access.project.mailbox,model_project_mailbox,project.group_project_user,1,1,1,1
+access_project_mail,access.project.mail,model_project_mail,project.group_project_user,1,1,1,1

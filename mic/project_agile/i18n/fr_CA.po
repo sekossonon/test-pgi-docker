@@ -1,0 +1,388 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_agile
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-06 16:26+0000\n"
+"PO-Revision-Date: 2022-02-06 11:43-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr\n"
+"X-Generator: Poedit 3.0\n"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_completed_percent
+msgid "% Completed"
+msgstr "% complété"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_line_task_completed_percent
+msgid "% completed"
+msgstr "% complété"
+
+#. module: project_agile
+#: model:ir.ui.menu,name:project_agile.menu_project_agile
+msgid "Agile"
+msgstr "Agile"
+
+#. module: project_agile
+#: model:ir.ui.view,arch_db:project_agile.view_project_sprint_line_search_form
+msgid "Assigned to"
+msgstr "Assigné à"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_line_backlog
+msgid "Backlog"
+msgstr "Backlog"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_team_create_daily_automatic
+msgid "Create daily automatically"
+msgstr "Create daily automatically"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_line_create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_line_create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_team_create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_line_create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_line_create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_team_create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: project_agile
+#: model:ir.actions.act_window,name:project_agile.view_project_daily_action
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_line_daily_id
+#: model:ir.ui.menu,name:project_agile.project_daily_menu
+#: model:ir.ui.view,arch_db:project_agile.view_project_daily_form
+msgid "Daily"
+msgstr "Daily"
+
+#. module: project_agile
+#: model:ir.ui.view,arch_db:project_agile.view_project_daily_line_form
+msgid "Daily Line"
+msgstr "Daily Line"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_daily_line_ids
+msgid "Daily Lines"
+msgstr "Daily Lines"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_team_daily_default_time
+msgid "Daily default hour"
+msgstr "Heure par défaut (Daily)"
+
+#. module: project_agile
+#: model:ir.ui.view,arch_db:project_agile.view_project_sprint_line_search_form
+msgid "Danger"
+msgstr "Danger"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_date
+msgid "Date"
+msgstr "Date "
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_date_end
+msgid "Date End"
+msgstr "Date de fin"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_date_start
+msgid "Date Start"
+msgstr "Date de début"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_line_display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_line_display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_team_display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_r_d_doubt
+msgid "Doubt"
+msgstr "Incertitude"
+
+#. module: project_agile
+#: selection:project.sprint.line,remaining_status:0
+msgid "Ending"
+msgstr "Presque terminé"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_line_executed
+msgid "Executed"
+msgstr "Éxécuté"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_difference_explanation
+msgid "Explanation "
+msgstr "Explication"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_r_d_exploration_path
+msgid "Exploration Path"
+msgstr "Chemin d'exploration"
+
+#. module: project_agile
+#: model:ir.ui.view,arch_db:project_agile.view_task_form2_inherited
+msgid "Gap between estimation and real"
+msgstr "Écart entre estimation et réel "
+
+#. module: project_agile
+#: model:ir.ui.view,arch_db:project_agile.view_project_sprint_line_search_form
+msgid "Group By"
+msgstr "Regrouper par"
+
+#. module: project_agile
+#: selection:project.sprint.line,remaining_status:0
+msgid "Half"
+msgstr "Moitié"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_id
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_line_id
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_id
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_line_id
+#: model:ir.model.fields,field_description:project_agile.field_project_team_id
+msgid "ID"
+msgstr "Identifiant"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_daily___last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_line___last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint___last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_line___last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_team___last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_line_write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_line_write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_team_write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_line_write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_line_write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_team_write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_difference_learning
+msgid "Learning"
+msgstr "Apprentissage "
+
+#. module: project_agile
+#: selection:project.sprint.line,remaining_status:0
+msgid "Manually"
+msgstr "Manuellement"
+
+#. module: project_agile
+#: model:ir.ui.view,arch_db:project_agile.view_project_sprint_line_search_form
+msgid "My Tasks"
+msgstr "Mes tâches"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_name
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_name
+#: model:ir.model.fields,field_description:project_agile.field_project_team_name
+msgid "Name"
+msgstr "Nom"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_line_next_day
+msgid "Next day"
+msgstr "Prochain jour"
+
+#. module: project_agile
+#: selection:project.sprint.line,remaining_status:0
+msgid "Overdue"
+msgstr "En retard"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_line_planned
+msgid "Planned"
+msgstr "Prévu"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_line_planned_hours
+msgid "Planned hours"
+msgstr "Heures prévues"
+
+#. module: project_agile
+#: model:ir.ui.view,arch_db:project_agile.view_project_sprint_line_kanban
+msgid "Planned:"
+msgstr "Prévu:"
+
+#. module: project_agile
+#: model:ir.ui.view,arch_db:project_agile.view_task_form2_inherited
+msgid "R&D"
+msgstr "R&D"
+
+#. module: project_agile
+#: model:ir.ui.view,arch_db:project_agile.view_project_daily_form
+msgid "Random"
+msgstr "Aléatoire "
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_line_real_hours
+msgid "Real hours"
+msgstr "Heures réelles"
+
+#. module: project_agile
+#: model:ir.ui.view,arch_db:project_agile.view_project_sprint_line_kanban
+msgid "Real:"
+msgstr "Réel:"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_difference_research
+msgid "Research"
+msgstr "Recherche"
+
+#. module: project_agile
+#: model:ir.actions.server,name:project_agile.project_daily_cron_ir_actions_server
+#: model:ir.cron,cron_name:project_agile.project_daily_cron
+#: model:ir.cron,name:project_agile.project_daily_cron
+msgid "Scrum daily, add new Daily log"
+msgstr "Scrum quotidien, ajouter un nouveau journal"
+
+#. module: project_agile
+#: model:ir.actions.act_window,name:project_agile.view_project_sprint_action
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_line_sprint_id
+#: model:ir.ui.menu,name:project_agile.project_sprint_menu
+#: model:ir.ui.view,arch_db:project_agile.view_project_sprint_line_search_form
+#: model:ir.ui.view,arch_db:project_agile.view_task_form2_inherited
+msgid "Sprint"
+msgstr "Sprint"
+
+#. module: project_agile
+#: model:ir.actions.act_window,name:project_agile.view_project_sprint_line_action
+#: model:ir.actions.act_window,name:project_agile.view_project_sprint_line_button_action
+#: model:ir.ui.menu,name:project_agile.project_sprint_line_menu
+#: model:ir.ui.view,arch_db:project_agile.view_project_sprint_form
+#: model:ir.ui.view,arch_db:project_agile.view_project_sprint_line_form
+#: model:ir.ui.view,arch_db:project_agile.view_project_sprint_line_search_form
+msgid "Sprint Line"
+msgstr "Sprint Line"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_sprint_line_ids
+#: model:ir.model.fields,field_description:project_agile.field_project_task_sprint_line_ids
+#: model:ir.ui.view,arch_db:project_agile.view_task_form2_inherited
+msgid "Sprint Lines"
+msgstr "Sprint Lines"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_start_time
+msgid "Start Time"
+msgstr "Heure de début"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_difference_startup
+msgid "Start-up"
+msgstr "Mise en route"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_line_remaining_status
+msgid "Status"
+msgstr "Statut"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_task
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_line_task_id
+msgid "Task"
+msgstr "Tâche"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_line_count
+msgid "Tasks"
+msgstr "Tâches"
+
+#. module: project_agile
+#: model:ir.actions.act_window,name:project_agile.view_project_team_action
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_team_id
+#: model:ir.ui.menu,name:project_agile.project_team_menu
+msgid "Team"
+msgstr "Équipe"
+
+#. module: project_agile
+#: model:ir.ui.view,arch_db:project_agile.view_project_sprint_line_search_form
+msgid "Unassigned"
+msgstr "Non assigné"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_difference_unexpected
+msgid "Unexpected"
+msgstr "Imprévu"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_line_user_id
+#: model:ir.model.fields,field_description:project_agile.field_project_sprint_line_user_id
+msgid "User"
+msgstr "Utilisateur"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_team_user_ids
+msgid "Users"
+msgstr "Utilisateurs"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_r_d_what_learned
+msgid "What we learned"
+msgstr "Ce qu'on a appris"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_daily_line_problems
+msgid "problems"
+msgstr "problèmes"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_daily
+msgid "project.daily"
+msgstr "project.daily"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_daily_line
+msgid "project.daily.line"
+msgstr "project.daily.line"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_sprint
+msgid "project.sprint"
+msgstr "project.sprint"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_sprint_line
+msgid "project.sprint.line"
+msgstr "project.sprint.line"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_team
+msgid "project.team"
+msgstr "project.team"

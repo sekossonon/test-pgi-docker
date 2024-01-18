@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+    <record id="uranos_timesheet_analyse_form" model="ir.ui.view">
+        <field name='name'>uranos.timesheet.analyse</field>
+        <field name='model'>uranos.timesheet.analyse</field>
+        <field name='arch' type='xml'>
+            <form string='Analyse timesheet overlap'>
+                <sheet>
+                    <group>
+                        <field name="to_analyse"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name='analyse_timesheet' string='Analyse' class='oe_highlight' type='object'/>
+                    <button special="cancel" string="Cancel" type="object" class="btn btn-default oe_inline"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="uranos_timesheet_analyse_action" model="ir.actions.act_window">
+        <field name="name">Analyse Timesheet Overlap</field>
+        <field name="res_model">uranos.timesheet.analyse</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="uranos_timesheet_analyse_menu"
+              name="Analyse Timesheet Overlap"
+              action="uranos_timesheet_analyse_action"
+              parent="menu_uranos_supervision"
+              sequence="40"/>
+
+</data>
+</odoo>

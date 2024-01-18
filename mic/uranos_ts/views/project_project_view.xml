@@ -1,0 +1,328 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="uranos_project_form_view">
+            <field name="name">Project Uranos Form</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page name="budget" sting="Budget">
+                        <group>
+                            <group>
+                                <separator string="Budget in $" colspan="4"/>
+                                <field name="high_level_budget_min" string="Min"/>
+                                <field name="high_level_budget_max" string="Max"/>
+                                <separator string="Budget in hours" colspan="4"/>
+                                <field name="high_level_hour_min" string="Min"/>
+                                <field name="high_level_hour_max" string="Max"/>
+                                <separator string="Budget from tasks in hours" colspan="4"/>
+                                <field name="task_duration_min" groups='uranos_ts.group_uranos_ts' string="Min"/>
+                                <field name="task_duration_max" groups='uranos_ts.group_uranos_ts' string="Max"/>
+                                <separator string="" colspan="4"/>
+                                <field name="percentage_type" groups='uranos_ts.group_uranos_ts'/>
+                            </group>
+                            <group>
+                                <separator string="Spent" colspan="4"/>
+                                <field name="duration_total" groups='uranos_ts.group_uranos_ts'/>
+                                <field name="sale_total" groups='uranos_ts.group_uranos_ts_admin'/>
+                                <separator string="Remaining in hours" colspan="4"/>
+                                <field name="duration_remaining_min" groups='uranos_ts.group_uranos_ts' string="Min"/>
+                                <field name="duration_remaining_max" groups='uranos_ts.group_uranos_ts' string="Max"/>
+                                <separator string="Remaining in $" colspan="4"/>
+                                <field name="sale_remaining_min" groups='uranos_ts.group_uranos_ts_admin' string="Min"/>
+                                <field name="sale_remaining_max" groups='uranos_ts.group_uranos_ts_admin' string="Max"/>
+                            </group>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+         <record id="view_project_kanban" model="ir.ui.view">
+            <field name="name">project.project.kanban</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('o_kanban_card_content')]" position="inside">
+                    <div class="o_kanban_record_body">
+                        <field name="sale_percentage" widget="progressbar"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_task_form2_inherited">
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project_agile.view_task_form2_inherited"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='real_hours']" position="after">
+                    <field name="uranos_real_hours"/>
+                    <field name="total_real_hours"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- sprint -->
+
+        <record id="view_project_sprint_form" model="ir.ui.view">
+            <field name="name">project.sprint.form</field>
+            <field name="model">project.sprint</field>
+            <field name="inherit_id" ref="project_agile.view_project_sprint_form"/>
+            <field name="arch" type="xml">
+                <sheet position="before">
+                    <header>
+                        <button name="add_missing_lines" type="object" string="Missing Lines" class="btn-default"/>
+                    </header>
+                </sheet>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_project_sprint_line_form">
+            <field name="name">project.sprint.line.form</field>
+            <field name="model">project.sprint.line</field>
+            <field name="inherit_id" ref="project_agile.view_project_sprint_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='real_hours']" position="after">
+                    <field name="uranos_real_hours"/>
+                    <field name="total_real_hours"/>
+                </xpath>
+                <sheet position="inside">
+                    <notebook>
+                        <page string="Timesheet" groups="uranos_ts.group_uranos_ts_admin">
+                            <field name="any_action_ids" readonly="1">
+                                <tree string="Action Lines">
+                                    <field name="request_name"/>
+                                    <field name="name"/>
+                                    <field name="date_time_start_event"/>
+                                    <field name="date_time_end_event"/>
+                                    <field name="billing_time"/>
+                                    <field name="billing_type"/>
+                                </tree>
+                                <form string="Action Lines">
+                                    <group>
+                                        <field name="request_name"/>
+                                        <field name="name"/>
+                                        <field name="date_time_start_event"/>
+                                        <field name="date_time_end_event"/>
+                                        <field name="billing_time"/>
+                                        <field name="billing_type"/>
+                                        <field name="description"/>
+                                        <field name="internal_comment"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="My Timesheet">
+                            <field name="own_action_ids" editable="bottom">
+                                <tree string="Action Lines">
+                                    <field name="request_name"/>
+                                    <field name="name"/>
+                                    <field name="date_time_start_event"/>
+                                    <field name="date_time_end_event"/>
+                                    <field name="billing_time"/>
+                                    <field name="billing_type"/>
+                                </tree>
+                                <form string="Action Lines">
+                                    <group>
+                                        <field name="request_name"/>
+                                        <field name="name"/>
+                                        <field name="date_time_start_event"/>
+                                        <field name="date_time_end_event"/>
+                                        <field name="billing_time"/>
+                                        <field name="billing_type"/>
+                                        <field name="description"/>
+                                        <field name="internal_comment"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_project_sprint_line_tree">
+            <field name="name">project.sprint.line.tree</field>
+            <field name="model">project.sprint.line</field>
+            <field name="inherit_id" ref="project_agile.view_project_sprint_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='real_hours']" position="replace">
+                    <field name="real_hours" invisible="1"/>
+                    <field name="uranos_real_hours" invisible="1"/>
+                    <field name="total_real_hours"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_project_sprint_line_kanban">
+            <field name="model">project.sprint.line</field>
+            <field name="inherit_id" ref="project_agile.view_project_sprint_line_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='real_hours']" position="after">
+                    <field name="total_real_hours"/>
+                </xpath>
+                <xpath expr="//t[@t-esc='record.real_hours.raw_value']/.." position="replace">
+                    <span>
+                        <t t-esc="record.total_real_hours.raw_value"/>
+                        /
+                        <t t-esc="record.planned_hours.raw_value"/>
+                    </span>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_project_sprint_line_sprint_end_kanban">
+            <field name="model">project.sprint.line</field>
+            <field name="inherit_id" ref="project_agile.view_project_sprint_line_sprint_end_kanban"/>
+            <field name="arch" type="xml">
+                <progressbar field="remaining_status" position="attributes">
+                    <attribute name="sum_field">total_real_hours</attribute>
+                </progressbar>
+            </field>
+        </record>
+
+    <!--        form view for client category-->
+        <record model="ir.ui.view" id="view_form_client_category">
+            <field name="name">form.client.category</field>
+            <field name="model">res.partner.microcom.category</field>
+            <field name="arch" type="xml">
+                <form string="Client Category">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    <!--        tree view for client category-->
+        <record model="ir.ui.view" id="view_tree_client_category">
+            <field name="name">tree.client.category</field>
+            <field name="model">res.partner.microcom.category</field>
+            <field name="arch" type="xml">
+                <tree string="Client Category">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+    <!--        action for client category-->
+        <record id="action_client_category_list" model="ir.actions.act_window">
+            <field name="name">Client Category</field>
+            <field name="res_model">res.partner.microcom.category</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    <!--        menu item for client category-->
+        <menuitem id="menu_client_category_list" name="Client Category" parent="project.menu_project_config" action="action_client_category_list" sequence="10"/>
+
+    <!--        form view for project category-->
+        <record model="ir.ui.view" id="view_form_project_category">
+            <field name="name">form.project.category</field>
+            <field name="model">project.microcom.category</field>
+            <field name="arch" type="xml">
+                <form string="Project Category">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+<!--        tree view for project category-->
+        <record model="ir.ui.view" id="view_tree_project_category">
+            <field name="name">tree.project.category</field>
+            <field name="model">project.microcom.category</field>
+            <field name="arch" type="xml">
+                <tree string="Project Category">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+<!--        action for project category-->
+        <record id="action_project_category_list" model="ir.actions.act_window">
+            <field name="name">Project Category</field>
+            <field name="res_model">project.microcom.category</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+<!--        menu item for project category-->
+        <menuitem id="menu_project_category_list" name="Project Category" parent="project.menu_project_config" action="action_project_category_list" sequence="11"/>
+
+<!--    inherit res partner form view to add the new field-->
+        <record model="ir.ui.view" id="view_res_partner_form_inherit">
+            <field name="name">res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='category_id']" position="before">
+                    <field name="client_category_id"/>
+                </xpath>
+            </field>
+        </record>
+
+<!--        Inherit partner search view to add the new field-->
+        <record model="ir.ui.view" id="view_res_partner_search_inherit">
+            <field name="name">res.partner.search.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='group_country']" position="before">
+                    <filter name="client_category_id" string="Client Category" domain="[]" context="{'group_by':'client_category_id'}"/>
+                </xpath>
+               <xpath expr="//field[@name='name']" position="after">
+                    <field name="client_category_id" string="Client Category" filter_domain="[('client_category_id','ilike',self)]"/>
+               </xpath>
+            </field>
+        </record>
+
+<!--        Inherit project form view to add the new field-->
+        <record model="ir.ui.view" id="view_project_form_inherit">
+            <field name="name">project.form.inherit</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="before">
+                    <field name="project_category_id" required="1"/>
+                </xpath>
+            </field>
+        </record>
+
+<!--        Inherit project search view to add new field-->
+        <record model="ir.ui.view" id="view_project_search_inherit">
+            <field name="name">project.search.inherit</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project_project_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="project_category_id" string="Project Category" filter_domain="[('project_category_id','ilike',self)]"/>
+                </xpath>
+                <xpath expr="//filter[@name='Manager']" position="after">
+                    <filter string="Project Category" name="project_category" context="{'group_by':'project_category_id'}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

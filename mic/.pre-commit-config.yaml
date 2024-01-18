@@ -1,0 +1,47 @@
+exclude: (git_precommit_init.py|.ressources/)
+repos:
+# -   repo: https://github.com/pre-commit/pre-commit-hooks
+#     rev: v2.3.0
+#     hooks:
+#     -   id: check-yaml
+#     -   id: end-of-file-fixer
+#     -   id: trailing-whitespace
+#     -   id: check-merge-conflict
+#     -   id: debug-statements
+#     -   id: check-xml
+#     -   id: mixed-line-ending
+-   repo: https://github.com/pycqa/flake8
+    rev: b87034d22490583f99149f5d241750cc8f8e3a90
+    hooks:
+    -   id: flake8
+        additional_dependencies: [flake8-bugbear, flake8-functions]
+        args: [--config, ./.ressources/.flake8]
+-   repo: https://github.com/editorconfig-checker/editorconfig-checker.python
+    rev: 2.6.1
+    hooks:
+    -   id: editorconfig-checker
+-   repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v7.8.1
+    hooks:
+      - id: eslint
+        args: [-c, ./.ressources/.eslintrc.yml, --color]
+        # args: [-c, ./.ressources/.eslintrc.yml, --color, --fix]
+        verbose: true
+-   repo: https://github.com/awebdeveloper/pre-commit-stylelint
+    rev: 8f63da497580898a7e0ceef6bf9e72cc0af07828
+    hooks:
+    -   id: stylelint
+        additional_dependencies: ['stylelint@13.2.1', 'stylelint-config-standard@20.0.0']
+        args: [--config, ./.ressources/.stylelintrc]
+-   repo: https://github.com/PyCQA/bandit
+    rev: 1.7.4
+    hooks:
+    - id: bandit
+      args: [--exit-zero]
+      verbose: true
+-   repo: https://github.com/OCA/pylint-odoo
+    rev: v8.0.17
+    hooks:
+    -   id: pylint_odoo
+        args: [--rcfile=./.ressources/.pylintrc, --exit-zero]
+        verbose: true

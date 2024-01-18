@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--  GENERAL MENU   -->
+        <menuitem name="Agile"
+            id="menu_project_agile"
+            parent="project.menu_main_pm"
+            sequence="5" groups="base.group_no_one,project.group_project_user"/>
+
+        <!--  TEAM   -->
+        <record id="view_project_team_tree" model="ir.ui.view">
+            <field name="name">project.team.tree</field>
+            <field name="model">project.team</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name"/>
+                    <field name="user_ids" widget="many2many_tags"/>
+                    <field name="create_daily_automatic"/>
+                    <field name="daily_default_time"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_project_team_action" model="ir.actions.act_window">
+            <field name="name">Team</field>
+            <field name="res_model">project.team</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[]</field>
+        </record>
+        <menuitem id="project_team_menu"
+                  name="Team"
+                  action="view_project_team_action"
+                  parent="menu_project_agile"
+                  sequence="90"/>
+
+        <!--   Daily Line   -->
+        <record id="view_project_daily_line_tree" model="ir.ui.view">
+            <field name="name">project.daily.line.tree</field>
+            <field name="model">project.daily.line</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="user_id"/>
+                    <field name="summary"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_project_daily_line_form" model="ir.ui.view">
+            <field name="name">project.daily.line.form</field>
+            <field name="model">project.daily.line</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet string="Daily Line">
+                        <field name="user_id"/>
+                        <group>
+                            <field name="planned" readonly="1"/>
+                            <field name="executed"/>
+                            <field name="next_day"/>
+                            <field name="problems"/>
+                            <field name="backlog"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_project_daily_line_search_form" model="ir.ui.view">
+            <field name="name">project.daily.line.search.form</field>
+            <field name="model">project.daily.line</field>
+            <field name="arch" type="xml">
+               <search string="Daily Line">
+                   <field name="daily_id"/>
+                   <field name="user_id"/>
+                   <filter string="My Tasks" name="my_tasks" domain="[('user_id','=',uid)]"/>
+                   <separator/>
+                   <group expand="0" string="Group By">
+                       <filter string="Assigned to" name="User" context="{'group_by':'user_id'}"/>
+                       <filter string="Daily" name="Sprint" context="{'group_by':'daily_id'}"/>
+                   </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_project_daily_line_button_action" model="ir.actions.act_window">
+            <field name="name">Daily Line</field>
+            <field name="res_model">project.daily.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'search_default_daily_id': [active_id],
+                'default_daily_id': active_id,
+            }</field>
+            <field name="domain">[]</field>
+        </record>
+
+        <!--   Daily   -->
+        <record id="view_project_daily_tree" model="ir.ui.view">
+            <field name="name">project.daily.tree</field>
+            <field name="model">project.daily</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="date"/>
+                    <field name="team_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_project_daily_form" model="ir.ui.view">
+            <field name="name">project.daily.form</field>
+            <field name="model">project.daily</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="add_line_randomly" type="object" string="Random" class="btn-default"/>
+                        <button name="button_nothing" type="object" string="Refresh" class="btn-primary"/>
+                    </header>
+                    <sheet string="Daily">
+                        <div class="oe_button_box" name="button_box" groups="base.group_user">
+                            <button class="oe_stat_button" type="action"
+                                name="%(view_project_daily_line_button_action)d" icon="fa-tasks">
+                                <field string="Daily Line" name="line_count" widget="statinfo" options="{'label_field': 'label_tasks'}"/>
+                            </button>
+                        </div>
+                        <group>
+                            <field name="team_id"/>
+                            <field name="date"/>
+                            <field name="start_time"/>
+                            <field name="daily_line_ids"/>
+                            <field name="comment"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_project_daily_action" model="ir.actions.act_window">
+            <field name="name">Daily</field>
+            <field name="res_model">project.daily</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+        </record>
+        <menuitem id="project_daily_menu"
+                  name="Daily"
+                  action="view_project_daily_action"
+                  parent="menu_project_agile"
+                  sequence="10"/>
+
+    </data>
+</odoo>

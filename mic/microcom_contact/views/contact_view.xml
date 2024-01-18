@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="base_view_partner_form" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='is_company']" position="before">
+                        <h1>
+                            <field name="ref" placeholder="Code"/>
+                        </h1>
+                    </xpath>
+                    <xpath expr="//field[@id='individual']" position="attributes">
+                        <attribute name="readonly">1</attribute>
+                        <attribute name="default_focus">0</attribute>
+                    </xpath>
+                    <xpath expr="//page[@name='internal_notes']" position="inside">
+                        <field name="warning" placeholder="Put a warning note..."/>
+                    </xpath>
+                    <xpath expr="//group[@name='sale']" position="after">
+                        <group string="Timesheet" name="timesheet">
+                            <field name="security_level" groups="base.group_erp_manager"/>
+                            <field name="bill_to_id" context="{'show_ref': ''}"/>
+                            <field name="min_billing_time"/>
+                        </group>
+                    </xpath>
+                    <field name='parent_id' position="attributes">
+                        <attribute name="context">{'show_ref': '', 'default_is_company': True}</attribute>
+                    </field>
+
+                    <xpath expr="//field[@name='email']" position="after">
+                        <label for="without_email_address"/>
+                        <field name="without_email_address"/>
+                    </xpath>
+                    <xpath expr="//field[@name='email']" position="attributes">
+                        <attribute name="attrs">{'required': [('without_email_address', '=', False)]}</attribute>
+                    </xpath>
+
+                    <!--Contact / Address-->
+                    <xpath expr="//notebook//form//field[@name='email']" position="replace">
+                        <label for="email"/>
+                        <div class="o_row">
+                            <field name="email" attrs="{'required': [('without_email_address', '=', False)]}"/>
+                            <label for="without_email_address"/>
+                            <field name="without_email_address"/>
+                        </div>
+                    </xpath>
+
+                </data>
+            </field>
+        </record>
+
+        <record id="base_view_res_partner_filter" model="ir.ui.view">
+            <field name="name">Partners</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="priority">99</field>
+            <field name="arch" type="xml">
+                <field name='name' position="replace">
+                    <field name="name"
+                           filter_domain="['|','|','|',('name','ilike',self),('ref','ilike',self),('email','ilike',self),('parent_id','ilike',self)]"/>
+                    <field name="ref"
+                           filter_domain="[('ref','=ilike',self)]"/>
+                    <!--                phone now is in the parent view is not needed anymore-->
+                </field>
+            </field>
+        </record>
+
+        <record id="base_view_partner_tree" model="ir.ui.view">
+            <field name="name">res.partner.tree.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <field name="display_name" position="replace">
+                    <field name="ref"/>
+                    <field name="name"/>
+                    <field name="parent_id"/>
+                </field>
+                <field name="phone" position="after">
+                    <field name="mobile"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

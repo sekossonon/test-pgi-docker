@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="action_project_state" model="ir.actions.client">
+        <field name="name">Project Status</field>
+        <field name="res_model">microcom.project.state</field>
+        <field name="tag">project_state_client_action</field>
+    </record>
+
+    <menuitem action="action_project_state"
+              id="menu_projects_state"
+              name="Projects Status"
+              parent="project.menu_main_pm"
+              sequence="78"
+              groups="project.group_project_manager"
+    />
+
+</odoo>

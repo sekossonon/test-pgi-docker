@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id="view_uranos_action_form" model="ir.ui.view">
+            <field name="name">microcom_ts.uranos.action.form</field>
+            <field name="model">uranos.action</field>
+            <field name="inherit_id" ref="uranos_ts.view_uranos_action_form"/>
+            <field name="arch" type="xml">
+                <sheet position="before">
+                    <header>
+                        <button name="import_request_button" type="object" string="Import Request" class="btn-default"
+                            attrs="{'invisible':[('task_id', '!=', False)]}"/>
+                        <button name="close_request_button" type="object" string="Close Task" class="btn-default"
+                            attrs="{'invisible':['|', ('task_id', '=', False), ('request_status', '!=', 'Open')]}"/>
+                        <button name="reopen_request_button" type="object" string="Reopen Request" class="btn-default"
+                            attrs="{'invisible':['|', ('task_id', '=', False), ('request_status', '=', 'Open')]}"/>
+                        <field name="task_id" invisible="1"/>
+                    </header>
+                </sheet>
+            </field>
+        </record>
+
+        <record id="view_uranos_followup_form" model="ir.ui.view">
+            <field name="name">microcom_ts.uranos.followup.form</field>
+            <field name="model">uranos.followup</field>
+            <field name="inherit_id" ref="uranos_ts.view_uranos_followup_form"/>
+            <field name="arch" type="xml">
+                <sheet position="before">
+                    <header>
+                        <button name="import_request_button" type="object" string="Import Request" class="btn-default"
+                            attrs="{'invisible':[('task_id', '!=', False)]}"/>
+                        <button name="close_request_button" type="object" string="Close Task" class="btn-default"
+                            attrs="{'invisible':['|', ('task_id', '=', False), ('request_status', '!=', 'Open')]}"/>
+                        <button name="reopen_request_button" type="object" string="Reopen Request" class="btn-default"
+                            attrs="{'invisible':['|', ('task_id', '=', False), ('request_status', '=', 'Open')]}"/>
+                        <field name="request_status" invisible="1"/>
+                    </header>
+                </sheet>
+            </field>
+        </record>
+
+    </data>
+</openerp>

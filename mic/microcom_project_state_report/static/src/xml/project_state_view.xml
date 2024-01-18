@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="project_state">
+        <div class="o_project_state">
+            <t t-set="ProjectState" t-value="widget.ProjectState"/>
+            <t t-set="ProjectUpdate" t-value="widget.ProjectUpdate"/>
+            <t t-set="ProjectLinked" t-value="widget.ProjectLinked"/>
+            <div class="o_controller_with_rightpanel">
+                <table class="table o_table_project_state">
+                    <t t-call="project_state_schedule"/>
+                    <t t-call="project_state_right_panel"/>
+                </table>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="project_nocontent_helper">
+        <div class="o_view_nocontent">
+            <div class="o_nocontent_help">
+                <p class="o_view_nocontent_smiling_face">
+                    No project status yet. Create Your project.
+                </p>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="project_state_right_panel" class="o_panel">
+            <div t-if="ProjectLinked">
+                <div class="o_state_right_panel pt-0 bg-view border-start overflow-auto">
+                    <div t-foreach="ProjectLinked" t-as="project_linked" style="margin-bottom:60px;">
+                            <div class="mt-2" style="float:left">
+                                <a href="#" t-esc="project_linked.name"
+                                   class="o_open_project_form mb-2"
+                                   t-att-data-res-id="project_linked.id"
+                                />
+                                <br/>
+                                <a href="#" t-esc="project_linked.partner_id[1]"
+                                   class="o_open_partner_form mt-2"
+                                   t-att-data-res-id="project_linked.partner_id[0]"
+                                />
+                            </div>
+                            <div class="btn btn-secondary" style="float:right">
+                                <strong>
+                                    <a href="#"
+                                       class="o_add_note"
+                                       t-att-data-res-id="project_linked.id"
+                                    >Add Note</a>
+                                </strong>
+                            </div>
+
+                    </div>
+                    <div t-foreach="ProjectUpdate" t-as="project_update">
+                    <div class="list-group mb-4">
+                        <div class="list-group-item list-group-item-action d-flex cursor-pointer">
+                            <div class="o_project_update_show_detail d-flex justify-content-between ps-4 w-100"
+                                 t-att-data-res-id="project_update.id"
+                                 t-att-data-project-id="project_update.project_id[0]"
+                            >
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="#"
+                                       t-esc="project_update.date"
+                                    />
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <t t-esc="project_update.name"/>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center ms-3">
+                                <a t-att-data-res-id="project_update.id"
+                                   t-att-data-project-id="project_update.project_id[0]"
+                                   class="o_onDeleteProjectUpdate"
+                                   title="Delete ProjectUpdate"><i class="fa fa-trash"/></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="project_state_schedule" class="">
+        <tr t-foreach="ProjectState" t-as="record">
+            <td bgcolor="green" class="o_project_state_detail">
+                <tr class="bg-light">
+                    <th>
+                        <a>
+                            <t t-esc="record.date_start"/>
+                            <h6>Started project</h6>
+                        </a>
+                    </th>
+                    <th>
+                        <a>
+                            <t t-esc="record.user_id[1]"/>
+                            <h6>Manager</h6>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#" class="o_open_partner_form"
+                           t-att-data-res-id="record.partner_id[0]">
+                            <t t-esc="record.partner_id[1]"/>
+                            <h6>Partner</h6>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#" class="o_open_project_form"
+                           t-att-data-res-id="record.id"
+                        >
+                            <t t-esc="record.name"/>
+                            <h6>Project</h6>
+                         </a>
+                    </th>
+                    <th>
+                        <a href="#" class="o_project_state_click"
+                           t-att-data-res-id="record.id"
+                           t-att-data-model="'project.project'"
+                        >
+                            <i class="fa fa-refresh"/>
+                         </a>
+                    </th>
+                </tr>
+            </td>
+        </tr>
+    </t>
+
+</templates>

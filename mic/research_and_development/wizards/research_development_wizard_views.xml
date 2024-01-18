@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="rsde_wizard_form" model="ir.ui.view">
+            <field name="name">R&amp;D</field>
+            <field name="model">rsde.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="task_id" invisible="1"/>
+                            <field name="timesheet_id" invisible="1"/>
+                            <field name="incertitude_id"/>
+                            <field name="tag_domain" invisible="1"/>
+                            <field name="tag_ids" widget="many2many_tags"  options="{'color_field': 'color'}"
+                                context="{'default_incertitude_id': incertitude_id}" domain="tag_domain"/>
+                            <field name="filter_tags"/>
+                            <field name="idea_or_hypothesis_domain" invisible="1"/>
+                            <field name="idea_or_hypothesis_id"
+                                   context="{'default_incertitude_id': incertitude_id}" domain="idea_or_hypothesis_domain"/>
+                            <field name="hide_grids"/>
+                            <field name="rsde_work_description"/>
+                            <div class="o_row" colspan="2">
+                                <field name="rsde_work_lines" attrs="{'invisible':[('hide_grids', '=', True)]}">
+                                    <tree>
+                                        <field name="task_id" invisible="1"/>
+                                        <field name="rsde_id" invisible="1"/>
+                                        <field name="user_id"/>
+                                        <field name="date"/>
+                                        <field name="description"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <field name="rsde_obstacle_description"/>
+                            <div class="o_row" colspan="2">
+                                <field name="rsde_obstacle_lines" attrs="{'invisible':[('hide_grids', '=', True)]}">
+                                    <tree>
+                                        <field name="task_id" invisible="1"/>
+                                        <field name="user_id"/>
+                                        <field name="date"/>
+                                        <field name="description"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <field name="rsde_conclusion_description"/>
+                            <div class="o_row" colspan="2">
+                                <field name="rsde_conclusion_lines" attrs="{'invisible':[('hide_grids', '=', True)]}">
+                                    <tree>
+                                        <field name="task_id" invisible="1"/>
+                                        <field name="user_id"/>
+                                        <field name="date"/>
+                                        <field name="description"/>
+                                    </tree>
+                                </field>
+                            </div>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name='button_save' string='Save' class='oe_highlight' type='object'/>
+                        <button special="cancel" string="Cancel" type="object" class="btn btn-default oe_inline"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

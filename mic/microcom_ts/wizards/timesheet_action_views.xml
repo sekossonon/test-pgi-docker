@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+    <record id="microcom_timesheet_create_event_form" model="ir.ui.view">
+        <field name='name'>microcom.timesheet.create.event.wizard</field>
+        <field name='model'>microcom.timesheet.create.event</field>
+        <field name='arch' type='xml'>
+            <form string='Create Event'>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="internal_comment"/>
+                        <field name="task_id" invisible="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name='create_ts_event' string='Start Action' class='oe_highlight' type='object'/>
+                    <button special="cancel" string="Cancel" type="object" class="btn btn-default oe_inline"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="microcom_timesheet_task_wizard" model="ir.ui.view">
+        <field name='name'>microcom.timesheet.task.wizard</field>
+        <field name='model'>microcom.timesheet.task.wizard</field>
+        <field name='arch' type='xml'>
+            <form string='Change Task'>
+                <sheet>
+                    <group>
+                        <field name="partner_id"/>
+                        <field name="project_id" domain="[('partner_id', '=', 'partner_id')]"/>
+                        <field name="task_id" string="Select Task"/>
+                    </group>
+                    <notebook invisible="1">
+                        <page name="Timesheet Records">
+                            <field name="timesheet_ids">
+                                <tree>
+                                    <field name="user_ref"/>
+                                    <field name="partner_id"/>
+                                    <field name="task_id"/>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button name='button_change_task' string='Change Task' class='oe_highlight' type='object'/>
+                    <button special="cancel" string="Cancel" type="object" class="btn btn-default oe_inline"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="wizard_budget_template_form" model="ir.ui.view">
+        <field name='name'>wizard.budget.template</field>
+        <field name='model'>wizard.budget.template</field>
+        <field name='arch' type='xml'>
+            <form string='Create Event'>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name='button_save_as_template' string='Save' class='oe_highlight' type='object'/>
+                    <button special="cancel" string="Cancel" type="object" class="btn btn-default oe_inline"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</data>
+</odoo>

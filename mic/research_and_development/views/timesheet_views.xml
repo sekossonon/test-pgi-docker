@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="microcom_quick_timesheet_tree_inherit" model="ir.ui.view">
+            <field name="name">microcom.timesheet.quick.tree.inherit</field>
+            <field name="model">microcom.timesheet</field>
+            <field name="inherit_id" ref="microcom_ts.microcom_quick_timesheet_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='overlap']" position="before">
+                    <button name="action_show_rsde" type="object" icon="fa-lightbulb-o" title="R&amp;D" context="{'default_timesheet_id': active_id}"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+        <record id="microcom_full_timesheet_tree_inherit" model="ir.ui.view">
+            <field name="name">microcom.timesheet.full.tree.inherit</field>
+            <field name="model">microcom.timesheet</field>
+            <field name="inherit_id" ref="microcom_ts.microcom_full_timesheet_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//notebook" position="inside">
+                    <page name="rsde" string="R&amp;D">
+                        <field name="rsde_lines" readonly="0">
+                            <tree>
+                                <field name="user_id"/>
+                                <field name="date"/>
+                                <field name="incertitude_id"/>
+                                <field name="idea_or_hypothesis_id"/>
+                                <field name="rsde_work_id"/>
+                                <field name="rsde_obstacle_id"/>
+                                <field name="rsde_conclusion_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                 </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

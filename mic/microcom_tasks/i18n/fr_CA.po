@@ -1,0 +1,295 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* microcom_tasks
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-24 17:47+0000\n"
+"PO-Revision-Date: 2021-12-24 17:47+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,help:microcom_tasks.field_project_task_priority_microcom
+msgid "A task's priority indicates when the task should be done:\n"
+" 5 - Extremely High (Down situation. Should be done immediately)\n"
+" 4 - High (It is urgent but it can wait until we finish what we've started)\n"
+" 3 - Normal (Do in sequence order and after higher priority's tasks)\n"
+" 2 - Low (To do when there's a lack of tasks)\n"
+" 1 - Nice to have (Task not very time-consuming to be done while in the module)\n"
+" 0 - No priority set"
+msgstr ""
+
+#. module: microcom_tasks
+#: code:addons/microcom_tasks/models/project.py:41
+#, python-format
+msgid "Approved"
+msgstr "Approved"
+
+#. module: microcom_tasks
+#: model:ir.ui.view,arch_db:microcom_tasks.view_task_form2_inherited
+msgid "Checklist"
+msgstr "Checklist"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_checkline_comment
+msgid "Comment"
+msgstr "Commentaires"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_checkline_create_uid
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_quality_control_item_create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_checkline_create_date
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_quality_control_item_create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,help:microcom_tasks.field_project_task_legend_approved
+#: model:ir.model.fields,help:microcom_tasks.field_project_task_type_legend_approved
+msgid "Custom text"
+msgstr "Custom text"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_project_description
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_checkline_ids
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_quality_control_item_name
+msgid "Description"
+msgstr "Description"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_checkline_display_name
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_quality_control_item_display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_checkline_done
+msgid "Done"
+msgstr "Fait"
+
+#. module: microcom_tasks
+#: code:addons/microcom_tasks/models/project.py:64
+#: selection:project.task,priority_microcom:0
+#, python-format
+msgid "High"
+msgstr "High"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_checkline_id
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_quality_control_item_id
+msgid "ID"
+msgstr "Identifiant"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_project__is_deadline_required
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task__is_deadline_required
+msgid "Is deadline required"
+msgstr "Date limite obligatoire"
+
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_legend_approved
+msgid "Kanban Approved Explanation"
+msgstr "Explication de kanban approuvé"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_checkline___last_update
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_quality_control_item___last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_checkline_write_uid
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_quality_control_item_write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_checkline_write_date
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_quality_control_item_write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: microcom_tasks
+#: code:addons/microcom_tasks/models/project.py:63
+#: selection:project.task,priority_microcom:0
+#, python-format
+msgid "Low"
+msgstr "Low"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_max_hours
+msgid "Max"
+msgstr "Max"
+
+#. module: microcom_tasks
+#: code:addons/microcom_tasks/models/project.py:63
+#: selection:project.task,priority_microcom:0
+#, python-format
+msgid "Nice to have"
+msgstr "Nice to have"
+
+#. module: microcom_tasks
+#: code:addons/microcom_tasks/models/project.py:63
+#: selection:project.task,priority_microcom:0
+#, python-format
+msgid "None"
+msgstr "None"
+
+#. module: microcom_tasks
+#: code:addons/microcom_tasks/models/project.py:64
+#: selection:project.task,priority_microcom:0
+#, python-format
+msgid "Normal"
+msgstr "Normal"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_checkline_task_id
+msgid "Parent Task"
+msgstr "Tâche parente"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_priority_microcom
+msgid "Priority Microcom"
+msgstr "Priorité Microcom"
+
+#. module: microcom_tasks
+#: model:ir.model,name:microcom_tasks.model_project_project
+msgid "Project"
+msgstr "Projet"
+
+#. module: microcom_tasks
+#: model:ir.ui.view,arch_db:microcom_tasks.view_task_form2_inherited
+msgid "Pull Request Link"
+msgstr "Lien pull request"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_desc
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_pr_url
+msgid "Pull Request URL"
+msgstr "URL pull request"
+
+#. module: microcom_tasks
+#: model:ir.actions.act_window,name:microcom_tasks.quality_control_item_action_config_project_task
+#: model:ir.ui.menu,name:microcom_tasks.quality_control_item_config_activity_type
+msgid "Quality Control"
+msgstr "Contrôle de qualité"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_checkline_quality_control_item_id
+msgid "Quality Control Items"
+msgstr "Éléments de contrôle de qualité"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_checkline_sequence
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_quality_control_item_sequence
+msgid "Sequence"
+msgstr "Séquence"
+
+#. module: microcom_tasks
+#: model:ir.model,name:microcom_tasks.model_project_task
+msgid "Task"
+msgstr "Tâche"
+
+#. module: microcom_tasks
+#: model:ir.model,name:microcom_tasks.model_project_task_type
+msgid "Task Stage"
+msgstr "Étape de tâche"
+
+#. module: microcom_tasks
+#: model:ir.ui.view,arch_db:microcom_tasks.view_task_tree2
+msgid "Tasks"
+msgstr "Tâches"
+
+#. module: microcom_tasks
+#: code:addons/microcom_tasks/models/project.py:64
+#: selection:project.task,priority_microcom:0
+#, python-format
+msgid "Very High"
+msgstr "Very High"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_task_type_legend_approved
+msgid "Yellow Kanban Label"
+msgstr "Indicateur Kanban jaune"
+
+#. module: microcom_tasks
+#: model:ir.model,name:microcom_tasks.model_project_task_checkline
+msgid "project.task.checkline"
+msgstr "project.task.checkline"
+
+#. module: microcom_tasks
+#: model:ir.model,name:microcom_tasks.model_project_task_quality_control_item
+msgid "project.task.quality.control.item"
+msgstr "project.task.quality.control.item"
+
+#. module: microcom_tasks
+#: model:ir.model.fields.selection,name:microcom_tasks.selection__project_project__task_creation_restriction__managers
+msgid "Managers"
+msgstr "Chefs de Projets"
+
+#. module: microcom_tasks
+#: model:ir.model.fields.selection,name:microcom_tasks.selection__project_project__task_creation_restriction__managers_only
+msgid "Only Project Managers"
+msgstr "Seulement les Project Managers"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,field_description:microcom_tasks.field_project_project__task_creation_restriction
+msgid "Restrict task creation to"
+msgstr "Restreindre la création de tâches à"
+
+#. module: microcom_tasks
+#: model:ir.model.fields,help:microcom_tasks.field_project_project__task_creation_restriction
+msgid ""
+"Restricts the ability to create task to only the project responsible and/or all users with Project Manager privilege\n"
+"* None: any user can create the tasks on this project\n"
+"* Managers: Only the manager of if project and the users with Project Manager privilege can create tasks on this project\n"
+"* Project Managers: Only the users with Project Manager privilege can create tasks on this project\n"
+msgstr ""
+"Restreindre la capacité de créer des tâches à seulement le chef de project et/ou les Project Managers\n"
+"* Si indéfini: tout utilisateur peut créer des tâches sur ce projet\n"
+"* Chefs de Projets: Seulement le chef de ce project et les Utilisateurs qui on un privilege de Project Manager peuvent créer des tâches\n"
+"* Seulement les Project Managers: Seulement les Utilisateurs qui on un privilege de Project Manager peuvent créer des tâches\n"
+
+#. module: microcom_tasks
+#. odoo-python
+#: code:addons/microcom_tasks/models/project.py:0
+#, python-format
+msgid "You cannot create task on the project %s.\n"
+msgstr "Vous ne pouvez pas créer de tâche sur le projet %s.\n"
+
+#. module: microcom_tasks
+#. odoo-python
+#: code:addons/microcom_tasks/models/project.py:0
+#, python-format
+msgid ""
+"Only either the manager of this project or the project managers are allowed "
+"to do so"
+msgstr ""
+"Seulement le Chef d'équipe de ce projet ou les project managers sont autorisés "
+"à le faire"
+
+#. module: microcom_tasks
+#. odoo-python
+#: code:addons/microcom_tasks/models/project.py:0
+#, python-format
+msgid "You are not authorized to archive this task."
+msgstr "Vous n'êtes pas autorisé à archiver cette tâche."
+
+#. module: microcom_tasks
+#. odoo-python
+#: code:addons/microcom_tasks/models/project.py:0
+#, python-format
+msgid "Only the project managers are allowed to do so"
+msgstr "Seulement les Project Managers sont autorisés à le faire"

@@ -1,0 +1,698 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!-- Accounts -->
+
+        <record id="view_uranos_action_form" model="ir.ui.view">
+            <field name="name">uranos_ts.uranos.action.form</field>
+            <field name="model">uranos.action</field>
+            <field name="arch" type="xml">
+                <form string="Action">
+                   <sheet>
+                       <group>
+                           <group>
+                               <field name="customer_partner_id"/>
+                               <field name="employee_ref"/>
+                               <field name="name" placeholder="code"/>
+                               <field name="description"/>
+                               <field name="internal_comment"/>
+                               <field name="pk_action"/>
+                               <field name="pk_event"/>
+                           </group>
+                           <group>
+                               <field name="date_start_event"/>
+                               <field name="time_start_event"/>
+                               <field name="time_end_event"/>
+                               <field name="billing_time_reel"/>
+                               <field name="billing_rate" groups="uranos_ts.group_uranos_ts_admin"/>
+                               <field name="billing_amount" groups="uranos_ts.group_uranos_ts_admin"/>
+                               <field name="billing_type"/>
+                               <field name="billing_time"/>
+                               <field name="pay_rate_work" groups="uranos_ts.group_uranos_ts_admin"/>
+                               <field name="billing_cost_bm" groups="uranos_ts.group_uranos_ts_admin"/>
+                               <field name="profit" groups="uranos_ts.group_uranos_ts_admin"/>
+                               <field name="status"/>
+                               <field name="statement_id" groups="uranos_ts.group_uranos_ts_admin"/>
+                           </group>
+                       </group>
+
+                       <notebook>
+                           <page string="Request info">
+                               <group>
+                                   <field name="task_id"/>
+                                   <field name="pk_request"/>
+                                   <field name="request_name"/>
+                                   <field name="request_description"/>
+                                   <field name="request_internal_comment"/>
+                                   <field name="request_status"/>
+                               </group>
+                           </page>
+                           <page string="Request Actions" groups="uranos_ts.group_uranos_approval">
+                              <field name="request_action_ids" mode="tree">
+                                  <tree string="Actions">
+                                      <field name="employee_ref"/>
+                                      <field name="name"/>
+                                      <field name="description"/>
+                                      <field name="date_start_event"/>
+                                      <field name="time_start_event"/>
+                                      <field name="time_end_event"/>
+                                      <field name="billing_time"/>
+                                      <field name="status"/>
+                                  </tree>
+                              </field>
+                           </page>
+                           <page string="Request Follow up">
+                              <field name="followup_ids" mode="tree,kanban">
+                                  <form string="Follow up">
+                                      <group>
+                                          <field name="name"/>
+                                          <field name="description"/>
+                                          <field name="internal_comment"/>
+                                          <field name="pk_followup"/>
+                                          <field name="date_due"/>
+                                          <field name="time_due_str"/>
+                                          <field name="name"/>
+                                          <field name="duration_max_str"/>
+                                          <field name="default_billing"/>
+                                          <field name="budget_min_float" widget="float_time" sum="Total Min"/>
+                                          <field name="budget_max_float" widget="float_time" sum="Total Max"/>
+                                          <field name="budget_billing"/>
+                                          <field name="status"/>
+                                      </group>
+                                  </form>
+                                  <tree string="Follow up" editable="bottom">
+                                      <field name="pk_followup"/>
+                                      <field name="employee_str"/>
+                                      <field name="date_due"/>
+                                      <field name="time_due_str"/>
+                                      <field name="name"/>
+                                      <field name="duration_max_str"/>
+                                      <field name="default_billing"/>
+                                      <field name="budget_min_float" widget="float_time" sum="Total Min"/>
+                                      <field name="budget_max_float" widget="float_time" sum="Total Max"/>
+                                      <field name="budget_billing"/>
+                                      <field name="status"/>
+                                  </tree>
+                              </field>
+                           </page>
+                       </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_uranos_action_list" model="ir.ui.view">
+            <field name="name">uranos_ts.uranos.action.list</field>
+            <field name="model">uranos.action</field>
+            <field name="arch" type="xml">
+                <!--<tree string="Timesheet works" toolbar="1" >-->
+                <tree default_order="date_start_event desc, time_start_event desc" string="Timesheet works">
+                    <field name="customer_partner_id"/>
+                    <field name="pk_request"/>
+                    <field name="request_name"/>
+                    <field name="request_description"/>
+                    <field name="request_status"/>
+                    <field name="employee_ref"/>
+                    <field name="pk_event"/>
+                    <field name="date_start_event"/>
+                    <field name="time_start_event"/>
+                    <field name="time_end_event"/>
+                    <field name="pk_action"/>
+                    <field name="name" placeholder="code"/>
+                    <field name="description"/>
+                    <field name="billing_time_reel" groups="uranos_ts.group_uranos_ts_admin"/>
+                    <field name="billing_rate" groups="uranos_ts.group_uranos_ts_admin"/>
+                    <field name="billing_amount" groups="uranos_ts.group_uranos_ts_admin"/>
+                    <field name="billing_type"/>
+                    <field name="billing_time"/>
+                    <field name="pay_rate_work"/>
+                    <field name="billing_cost_bm" groups="uranos_ts.group_uranos_ts_admin"/>
+                    <field name="profit" groups="uranos_ts.group_uranos_ts_admin"/>
+                    <field name="status"/>
+                    <field name="statement_id" groups="uranos_ts.group_uranos_ts_admin"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_uranos_action_supervision_list" model="ir.ui.view">
+            <field name="name">uranos_ts.uranos.action.supervision.list</field>
+            <field name="model">uranos.action</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <tree string="Timesheet works" decoration-muted="status == 'Open' and overlap_minute == 0"
+                    decoration-danger="overlap_minute > 0" decoration-info="overlap_minute &lt; 0">
+                    <field name="error_flag" invisible="1"/>
+                    <button name="button_unmark_error" type="object" icon="fa-exclamation" help="Mark as resolved"
+                            title="Mark as resolved"
+                            attrs="{'invisible':[('error_flag', '=', 'ok')]}"/>
+                    <field name="employee_ref" string="Employee"/>
+                    <field name="customer_ref" string="Customer"/>
+                    <field name="pk_request"/>
+                    <field name="request_name"/>
+                    <field name="request_description"/>
+                    <field name="request_status"/>
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="date_start_event"/>
+                    <field name="time_start_event"/>
+                    <field name="time_end_event"/>
+                    <field name="billing_type"/>
+                    <field name="billing_time"/>
+                    <field name="overlap" invisible="1"/>
+                    <field name="overlap_minute" invisible="1"/>
+                    <field name="status"/>
+                    <button name="button_mark_error" type="object" icon="fa-exclamation-triangle" help="Mark an error"
+                        attrs="{'invisible':[('error_flag', '!=', 'ok')]}" title="Mark error" />
+                    <button name="button_supervise_timesheet" type="object" icon="fa-check-circle" help="Supervise this entry"
+                        attrs="{'invisible': [('status', '!=', 'Closed')]}" title="Supervise" />
+                    <button name="button_close_timesheet" type="object" icon="fa-lock" title="Close Timesheet" help="Close Timesheet"
+                        attrs="{'invisible': [('status', 'not in', ('Supervised','Open'))]}"/>
+                    <button name="button_open_timesheet" type="object" icon="fa-unlock" title="Open Timesheet" help="Re-Open Timesheet"
+                        attrs="{'invisible': [('status', 'not in', ('Closed'))]}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view__uranos_action_search" model="ir.ui.view">
+            <field name="name">uranos.action.search</field>
+            <field name="model">uranos.action</field>
+            <field name="arch" type="xml">
+                <search string="Uranos Work">
+                    <field name="name" filter_domain="['|','|','|','|','|','|','|','|',
+                                                      ('name','ilike',self),
+                                                      ('description','ilike',self),
+                                                      ('internal_comment','ilike',self),
+                                                      ('request_name','ilike',self),
+                                                      ('request_description','ilike',self),
+                                                      ('request_internal_comment','ilike',self),
+                                                      ('followup_ids.name','ilike',self),
+                                                      ('followup_ids.description','ilike',self),
+                                                      ('followup_ids.internal_comment','ilike',self),
+                                                      ]" string="All Name"/>
+                    <field name="work_name" filter_domain="['|', ('name','ilike',self),
+                                                                 ('description','ilike',self)]" string="Works name"/>
+                    <field name="customer_partner_id" string="Customer" filter_domain="['|', ('customer_partner_id.name','ilike',self), ('customer_partner_id.ref','ilike',self)]"/>
+                    <field name="followup_ids" string="Customer Code" filter_domain="[('customer_partner_id.ref','=ilike',self)]"/>
+                    <field name="request_id" string="Request" filter_domain="['|', ('request_id.name','ilike', self), ('request_id.description', 'ilike', self)]"/>
+                    <field name="employee_ref" string="Employee" filter_domain="[('employee_ref','=ilike',self)]"/>
+                    <field name="client_category_id" string="Client Category" filter_domain="[('client_category_id','ilike',self)]"/>
+                    <field name="project_category_id" string="Project Category" filter_domain="[('project_category_id','ilike',self)]"/>
+                    <field name="employee_department_id" string="Department"
+                        filter_domain="[('employee_department_id','=ilike',self)]"/>
+                    <filter string="My Department" name="mydepartment" domain="[('employee_department_id.partner_ids.user_ids.id', '=', uid)]" help="My Department"/>
+                    <separator/>
+                    <filter string="This Year"
+                            name="year" help="Only event for current year"
+                            domain="[
+                                ('date_start_event','&lt;=', time.strftime('%%Y-12-31')),
+                                ('date_start_event','&gt;=',time.strftime('%%Y-01-01'))
+                            ]"/>
+                    <filter name="month" string="This Month"
+                            domain="[
+                                '&amp;',
+                                ('date_start_event', '>=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d')),
+                                ('date_start_event', '&lt;=', (context_today() + relativedelta(months=1, day=1, days=-1)).strftime('%Y-%m-%d')),
+                            ]"/>
+                    <filter name="last_month" string="Last Month"
+                            domain="[
+                                '&amp;',
+                                ('date_start_event', '>=', (context_today() + relativedelta(months=-1, day=1)).strftime('%Y-%m-%d')),
+                                ('date_start_event', '&lt;=', (context_today() + relativedelta(day=1, days=-1)).strftime('%Y-%m-%d')),
+                            ]"/>
+                    <filter name="week" string="This Week"
+                            domain="[
+                                '&amp;',
+                                ('date_start_event', '>=', (context_today() + relativedelta(weeks=-1,days=1,weekday=0)).strftime('%Y-%m-%d')),
+                                ('date_start_event', '&lt;=', (context_today() + relativedelta(weekday=6)).strftime('%Y-%m-%d')),
+                            ]"/>
+                    <filter name="today" string="Today"
+                            domain="[
+                                ('date_start_event', '=', context_today().strftime('%Y-%m-%d')),
+                            ]"/>
+                    <separator/>
+                    <filter name="to_supervise" string="To Supervise"
+                            domain="[('status', 'in', ('Open', 'Closed'))]"/>
+                    <separator/>
+                    <filter name="flag_error" string="Flagged as error"
+                            domain="[('error_flag', '!=', 'ok')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Customer" name="group_by_customer" domain="" context="{'group_by':'customer_partner_id'}"/>
+                        <filter string="Employee" name="groupby_employee" domain="" context="{'group_by':'employee_ref'}"/>
+                        <filter string="Department" name="group_by_department" domain="" context="{'group_by':'employee_department_id'}"/>
+                        <filter string="Request" name="group_by_request" domain="" context="{'group_by':'request_id'}"/>
+                        <filter string="Work Code" name="group_by_request" domain="" context="{'group_by':'work_name'}"/>
+                        <filter string="Statement" name="group_by_statement" domain="" context="{'group_by':'statement_id'}"/>
+                        <filter string="Week" name="group_by_week" context="{'group_by':'date_start_event:week'}"/>
+                        <filter string="Month" name="group_by_month" context="{'group_by':'date_start_event:month'}"/>
+                        <filter string="Year" name="group_by_year" context="{'group_by':'date_start_event:year'}"/>
+                        <filter string="Day" name="group_by_day" context="{'group_by':'date_start_event:day'}"/>
+                        <filter string="Fiscal Year" name="group_by_fiscal_year" domain="" context="{'group_by':'fiscal_year'}"/>
+                        <filter string="Fiscal Quarter" name="group_by_fiscal_quarter" domain="" context="{'group_by':'fiscal_quarter'}"/>
+                        <filter string="Total" name="group_by_total" domain="" context="{'group_by':'total'}"/>
+                        <filter string="Project" name="group_project" domain="" context="{'group_by':'project_id'}"/>
+                        <filter string="Client Category" name="group_client_category" domain="" context="{'group_by':'client_category_id'}"/>
+                        <filter string="Project Category" name="group_project_category" domain="" context="{'group_by':'project_category_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_uranos_action_kanban" model="ir.ui.view">
+            <field name="name">uranos.action.kanban</field>
+            <field name="model">uranos.action</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" default_group_by="status">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                        <field name="customer_partner_id"/>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <field name="employee_ref"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                        <field name="request_name"/>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <field name="billing_time"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                        <field name="name"/>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <field name="billing_amount"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_uranos_action_pivot" model="ir.ui.view">
+             <field name="name">uranos.action.pivot</field>
+             <field name="model">uranos.action</field>
+             <field name="arch" type="xml">
+                 <pivot string="Timesheet Analysis" disable_linking="True">
+                     <field name="date_start_event" interval="year" type="col"/>
+                     <field name="customer_partner_id" type="row"/>
+                     <field name="billing_amount" type="measure"/>
+                 </pivot>
+             </field>
+        </record>
+
+        <record id="view_uranos_action_graph" model="ir.ui.view">
+             <field name="name">uranos.action.graph</field>
+             <field name="model">uranos.action</field>
+             <field name="arch" type="xml">
+                 <graph string="Timesheet Analysis">
+                     <field name="date_start_event" type="row"/>
+                     <field name="billing_amount" type="measure"/>
+                 </graph>
+             </field>
+        </record>
+
+        <record id="view_uranos_report_pivot" model="ir.ui.view">
+             <field name="name">uranos.action.report.pivot</field>
+             <field name="model">uranos_ts.report</field>
+             <field name="arch" type="xml">
+                 <pivot string="Timesheet Analysis" disable_linking="True">
+                     <field name="date" interval="year" type="col"/>
+                     <field name="customer_partner_id" type="row"/>
+                     <field name="billing_amount" type="measure"/>
+                 </pivot>
+             </field>
+        </record>
+
+        <record id="view_uranos_report_graph" model="ir.ui.view">
+             <field name="name">uranos.action.report.graph</field>
+             <field name="model">uranos_ts.report</field>
+             <field name="arch" type="xml">
+                 <graph string="Timesheet Analysis">
+                     <field name="date" type="row"/>
+                     <field name="billing_amount" type="measure"/>
+                 </graph>
+             </field>
+        </record>
+
+        <record id="action_uranos_action_form" model="ir.actions.act_window">
+            <field name="name">Work</field>
+            <field name="res_model">uranos.action</field>
+            <field name="view_mode">tree,form,kanban,pivot,graph</field>
+            <!-- <field name="search_view_id" ref="view_account_search"/> -->
+            <field name="view_id" ref="view_uranos_action_list"/>
+            <field name="groups_id" eval="[(4, ref('uranos_ts.group_uranos_ts_all'))]"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                No action to show.
+              </p>
+            </field>
+        </record>
+
+        <record id="action_uranos_action_supervision_form" model="ir.actions.act_window">
+            <field name="name">Work Supervision</field>
+            <field name="res_model">uranos.action</field>
+            <field name="view_mode">tree,form,kanban,pivot,graph</field>
+            <!-- <field name="search_view_id" ref="view_account_search"/> -->
+            <field name="view_id" ref="view_uranos_action_supervision_list"/>
+            <field name="groups_id" eval="[(4, ref('uranos_ts.group_uranos_approval'))]"/>
+            <field name="context">{'search_default_mydepartment': 1, 'search_default_to_supervise': 1, 'search_default_groupby_employee': 1}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                No action to show.
+              </p>
+            </field>
+        </record>
+
+        <record id="update_timesheet_overlap_action" model="ir.actions.server">
+            <field name="name">Update Timesheet Overlap</field>
+            <field name="model_id" ref="model_uranos_action"/>
+            <field name="binding_model_id" ref="model_uranos_action"/>
+            <field name="state">code</field>
+            <field name="code">action = records.action_analyze_timesheet()</field>
+        </record>
+
+        <record id="supervise_selected_timesheet_action" model="ir.actions.server">
+            <field name="name">Supervise Selected Timesheet</field>
+            <field name="model_id" ref="model_uranos_action"/>
+            <field name="binding_model_id" ref="model_uranos_action"/>
+            <field name="groups_id" eval="[Command.link(ref('uranos_ts.group_uranos_approval'))]"/>
+            <field name="state">code</field>
+            <field name="code">action = records.action_supervise_timesheet()</field>
+        </record>
+
+        <record id="view_uranos_action_search" model="ir.ui.view">
+            <field name="name">uranos.action.search</field>
+            <field name="model">uranos_ts.report</field>
+            <field name="arch" type="xml">
+                <search string="Timesheet Analysis">
+                    <field name="date"/>
+                    <filter string="This Year" name="year" domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                    <filter name="billed" string="Billed" domain="[('status','in', ['Billed'])]"/>
+                    <separator/>
+                    <field name="customer_partner_id"/>
+                    <field name="employee_partner_id"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Customer" name="customer" context="{'group_by':'customer_partner_id'}"/>
+                        <filter string="Employee" name="employee" context="{'group_by':'employee_partner_id'}"/>
+                        <filter string="Request" name="request" context="{'group_by':'pk_request'}"/>
+                        <filter name="status" string="Status" context="{'group_by':'status'}"/>
+                        <separator/>
+                        <filter name="group_by_event_month" string="Event Date Month" context="{'group_by':'date:month'}" help="Date of the event"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_uranos_followup_form" model="ir.ui.view">
+            <field name="name">uranos_ts.uranos.followup.form</field>
+            <field name="model">uranos.followup</field>
+            <field name="arch" type="xml">
+                <form string="Follow Up">
+                   <sheet>
+                       <group>
+                           <field name="pk_followup"/>
+                           <field name="employee_str"/>
+                           <field name="date_due"/>
+                           <field name="time_due_str"/>
+                           <field name="customer_partner_id"/>
+                           <field name="task_id"/>
+                           <field name="name"/>
+                           <field name="description"/>
+                           <field name="internal_comment"/>
+                           <field name="request_name"/>
+                           <field name="request_description"/>
+                           <field name="request_internal_comment"/>
+                           <field name="actual_duration_float" widget="float_time"/>
+                           <field name="duration_max_str"/>
+                           <field name="default_billing"/>
+                           <field name="budget_min_float" widget="float_time"/>
+                           <field name="budget_max_float" widget="float_time"/>
+                           <field name="budget_billing"/>
+                           <field name="status"/>
+                       </group>
+                       <field name="action_ids" mode="tree,kanban">
+                           <form string="Actions">
+                               <group>
+                                   <field name="pk_action"/>
+                                   <field name="date_start_event"/>
+                                   <field name="billing_time"/>
+                                   <field name="employee_ref"/>
+                                   <field name="name"/>
+                                   <field name="description"/>
+                                   <field name="internal_comment"/>
+                                   <field name="billing_type"/>
+                                   <field name="status"/>
+                               </group>
+                           </form>
+                           <tree string="Actions" editable="bottom">
+                               <field name="pk_action"/>
+                               <field name="date_start_event"/>
+                               <field name="billing_time"/>
+                               <field name="employee_ref"/>
+                               <field name="name"/>
+                               <field name="description"/>
+                               <field name="billing_type"/>
+                               <field name="status"/>
+                           </tree>
+                       </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_uranos_followup_list" model="ir.ui.view">
+            <field name="name">uranos_ts.uranos.followup.list</field>
+            <field name="model">uranos.followup</field>
+            <field name="arch" type="xml">
+                <!--<tree string="Timesheet Follow up" toolbar="1" >-->
+                <tree string="Timesheet Follow up">
+                    <field name="pk_followup"/>
+                    <field name="employee_str"/>
+                    <field name="date_due"/>
+                    <field name="time_due_str"/>
+                    <field name="customer_partner_id"/>
+                    <field name="request_name"/>
+                    <field name="name"/>
+                    <field name="duration_max_str"/>
+                    <field name="default_billing"/>
+                    <field name="actual_duration_float" widget="float_time" sum="Total"/>
+                    <field name="budget_min_float" widget="float_time" sum="Total Min"/>
+                    <field name="budget_max_float" widget="float_time" sum="Total Max"/>
+                    <field name="budget_billing"/>
+                    <field name="status"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_uranos_followup_kanban" model="ir.ui.view">
+            <field name="name">uranos.followup.kanban</field>
+            <field name="model">uranos.followup</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" default_group_by="employee_str">
+                    <field name="color" />
+                    <field name="actual_duration_float" />
+                    <progressbar field="type_priority" sum_field="actual_duration_float"
+                        colors='{"Extreme": "danger", "High": "warning", "Normal": "success", "Low": "info", "Spare time": "dark"}'/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_content oe_kanban_global_click">
+
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <field name="employee_str"/>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <field name="date_due"/>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <field name="time_due_str"/>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <field name="actual_duration_float" widget="float_time"/>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <strong class="col-xs-12">
+                                        <field name="customer_partner_id"/>
+                                    </strong>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        R
+                                        <field name="request_pk"/>
+                                        <field name="request_name"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <i class="col-xs-12">
+                                        F
+                                        <field name="pk_followup"/>
+                                        <field name="name"/>
+                                    </i>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_uranos_followup_pivot" model="ir.ui.view">
+             <field name="name">uranos.followup.pivot</field>
+             <field name="model">uranos.followup</field>
+             <field name="arch" type="xml">
+                 <pivot string="Follow up Analysis" disable_linking="True">
+                     <field name="date_due" interval="year" type="col"/>
+                     <field name="customer_partner_id" type="row"/>
+                     <field name="budget_max" type="measure"/>
+                 </pivot>
+             </field>
+        </record>
+
+        <record id="view_uranos_followup_graph" model="ir.ui.view">
+             <field name="name">uranos.followup.graph</field>
+             <field name="model">uranos.followup</field>
+             <field name="arch" type="xml">
+                 <graph string="Follow Up Analysis">
+                     <field name="date_due" type="row"/>
+                     <field name="budget_max" type="measure"/>
+                 </graph>
+             </field>
+        </record>
+
+        <!--
+        <record id="action_uranos_followup_form" model="ir.actions.act_window">
+            <field name="name">Followup</field>
+            <field name="res_model">uranos.followup</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,pivot,graph</field>
+            <field name="domain">[('status', '=', 'Open')]</field>
+            <field name="view_id" ref="view_uranos_followup_list"/>
+            <field name="groups_id" eval="[(4, ref('uranos_ts.group_uranos_ts'))]"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                No follow up to show.
+              </p>
+            </field>
+        </record>
+        -->
+
+        <record id="action_uranos_followup_admin_form" model="ir.actions.act_window">
+            <field name="name">Followup Admin</field>
+            <field name="res_model">uranos.followup</field>
+            <field name="view_mode">kanban,tree,form,pivot,graph</field>
+            <field name="domain">[('status', '=', 'Open')]</field>
+            <field name="view_id" ref="view_uranos_followup_kanban"/>
+            <field name="groups_id" eval="[(4, ref('uranos_ts.group_uranos_ts'))]"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                No follow up to show.
+              </p>
+            </field>
+        </record>
+
+        <record id="view_uranos_followup_search" model="ir.ui.view">
+            <field name="name">uranos.followup.search</field>
+            <field name="model">uranos.followup</field>
+            <field name="arch" type="xml">
+                <search string="Uranos Follow Up">
+                    <field name="name" filter_domain="['|','|','|','|','|',
+                                                      ('name','ilike',self),
+                                                      ('description','ilike',self),
+                                                      ('internal_comment','ilike',self),
+                                                      ('request_id.name','ilike',self),
+                                                      ('request_id.description','ilike',self),
+                                                      ('request_id.internal_comment','ilike',self),
+                                                      ]" string="All Name"/>
+                    <field name="name" filter_domain="['|', ('name','ilike',self),
+                                                            ('description','ilike',self)]" string="Follow Up name"/>
+                    <field name="customer_partner_id" string="Customer" filter_domain="['|', ('customer_partner_id.name','ilike',self), ('customer_partner_id.ref','ilike',self)]"/>
+                    <field name="action_ids" string="Customer Code" filter_domain="[('customer_partner_id.ref','=ilike',self)]"/>
+                    <field name="request_id" string="Request" filter_domain="['|', ('request_id.name','ilike', self), ('request_id.description', 'ilike', self)]"/>
+                    <field name="employee_str" string="Employee" filter_domain="[('employee_str','=ilike',self)]"/>
+                    <filter string="Open" name="Open" domain="[('status', '=', 'Open')]"/>
+                    <separator/>
+                    <filter string="This Year"
+                            name="year" help="Only event for current year"
+                            domain="[
+                                ('date_due','&lt;=', time.strftime('%%Y-12-31')),
+                                ('date_due','&gt;=',time.strftime('%%Y-01-01'))
+                            ]"/>
+                    <filter name="month" string="This Month"
+                            domain="[
+                                '&amp;',
+                                ('date_due', '>=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d')),
+                                ('date_due', '&lt;=', (context_today() + relativedelta(months=1, day=1, days=-1)).strftime('%Y-%m-%d')),
+                            ]"/>
+                    <filter name="week" string="This Week"
+                            domain="[
+                                '&amp;',
+                                ('date_due', '>=', (context_today() + relativedelta(weeks=-1,days=1,weekday=0)).strftime('%Y-%m-%d')),
+                                ('date_due', '&lt;=', (context_today() + relativedelta(weekday=6)).strftime('%Y-%m-%d')),
+                            ]"/>
+                    <filter name="today" string="Today"
+                            domain="[
+                                ('date_due', '=', context_today().strftime('%Y-%m-%d')),
+                            ]"/>
+                    <filter string="Late" name="late" domain="[('date_due','&lt;=',time.strftime('%%Y-%%m-%%d'))]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Customer" name="group_by_customer" domain="" context="{'group_by':'customer_partner_id'}"/>
+                        <filter string="Employee" name="group_by_employee" domain="" context="{'group_by':'employee_str'}"/>
+                        <filter string="Request" name="group_by_request" domain="" context="{'group_by':'request_id'}"/>
+                        <filter string="Due Date (Day)" name="group_by_due_day" domain="" context="{'group_by': 'date_due:day'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_uranos_report_all" model="ir.actions.act_window">
+            <field name="name">Timesheet Analysis</field>
+            <field name="res_model">uranos_ts.report</field>
+            <field name="view_mode">pivot,graph</field>
+            <field name="view_id"></field>  <!-- force empty -->
+            <field name="search_view_id" ref="view_uranos_action_search"/>
+            <field name="groups_id" eval="[(4, ref('uranos_ts.group_uranos_ts_admin'))]"/>
+<!--            <field name="context">{'search_default_Sales':1, 'group_by_no_leaf':1,'group_by':[]}</field>-->
+            <field name="help">This report performs analysis on your uranos Timesheet.</field>
+        </record>
+
+        <menuitem name="Uranos Timesheet"
+            id="uranos_ts_menu"
+            groups="uranos_ts.group_uranos_ts,uranos_ts.group_uranos_ts_admin"
+            web_icon="uranos_ts,static/description/icon.png"
+            sequence="40"/>
+
+        <menuitem id="menu_uranos_report"
+            name="Reporting"
+            parent="uranos_ts_menu"
+            sequence="90"
+            groups="uranos_ts.group_uranos_ts_admin"/>
+
+        <menuitem action="action_uranos_action_form" id="menu_action_uranos_action_form" parent="uranos_ts_menu" groups="uranos_ts.group_uranos_ts_all" sequence="0"/>
+
+        <menuitem id="menu_uranos_supervision" name="Work Supervision" parent="uranos_ts_menu" groups="uranos_ts.group_uranos_approval" sequence="0"/>
+        <menuitem action="action_uranos_action_supervision_form" id="menu_action_uranos_action_supervision_form" parent="menu_uranos_supervision" sequence="10"/>
+
+        <!--
+        <menuitem action="action_uranos_followup_form" id="menu_action_uranos_followup_form" parent="uranos_ts_menu" groups="uranos_ts.group_uranos_ts" sequence="10"/>
+        -->
+
+        <menuitem action="action_uranos_followup_admin_form" id="menu_action_uranos_followup_admin_form" parent="uranos_ts_menu" groups="uranos_ts.group_uranos_ts" sequence="10"/>
+
+        <menuitem id="menu_report_uranos_all"
+                  name="Timesheet"
+                  action="action_uranos_report_all"
+                  parent="menu_uranos_report"
+                  sequence="10"/>
+
+    </data>
+</openerp>

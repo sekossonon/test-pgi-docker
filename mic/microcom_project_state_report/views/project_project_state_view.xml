@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="project_project_stage_view_tree_inherit" model="ir.ui.view">
+        <field name="name">project_project_stage_view_tree</field>
+        <field name="model">project.project.stage</field>
+        <field name="inherit_id" ref="project.project_project_stage_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[last()]" position="after">
+                <field name="display_in_project_status"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

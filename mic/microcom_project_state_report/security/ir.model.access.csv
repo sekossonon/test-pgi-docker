@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+microcom_project_state_user,microcom.project.state.user,model_microcom_project_state,project.group_project_user,1,1,1,0
+microcom_project_state_manager,microcom.project.state.manager,model_microcom_project_state,project.group_project_manager,1,1,1,1

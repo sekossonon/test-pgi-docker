@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_employee_form" model="ir.ui.view">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page name="timesheet" string="Timesheet">
+                        <group>
+                            <group>
+                                <field name="billing_code_id"/>
+                                <field name="travel_billing_code_id"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                       
+                        <separator string="Taux Clients"/>
+                        <field name="client_billing_rate" context="{'default_billing_code_id': billing_code_id,'default_travel_billing_code_id':travel_billing_code_id}">
+                            <tree editable="bottom">
+                                <field name="partner_id"/>
+                                <field name="project_id" domain="[('partner_id','=',partner_id)]"/>
+                                <field name="employee_id" invisible="1"/>
+                                <field name="billing_code_id"/>
+                                <field name="travel_billing_code_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+</odoo>

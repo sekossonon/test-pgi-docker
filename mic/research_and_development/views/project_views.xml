@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="task_view_inherit" model="ir.ui.view">
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page name="r_d" string="R&amp;D" attrs="{'invisible': [('show_sprint', '=', False)]}">
+                        <field name="rsde_lines" readonly="1">
+                            <tree>
+                                <field name="user_id"/>
+                                <field name="date"/>
+                                <field name="incertitude_id"/>
+                                <field name="idea_or_hypothesis_id"/>
+                                <field name="rsde_work_id"/>
+                                <field name="rsde_obstacle_id"/>
+                                <field name="rsde_conclusion_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+    </data>
+</odoo>

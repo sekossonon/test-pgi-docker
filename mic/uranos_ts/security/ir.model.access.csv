@@ -1,0 +1,29 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_uranos_ts_action_user,uranos.action user,model_uranos_action,uranos_ts.group_uranos_ts,1,0,0,0
+access_uranos_ts_billing_user,uranos.billing user,model_uranos_billing,uranos_ts.group_uranos_ts,1,0,0,0
+access_uranos_ts_event_user,uranos.event user,model_uranos_event,uranos_ts.group_uranos_ts,1,0,0,0
+access_uranos_ts_request_user,uranos.request user,model_uranos_request,uranos_ts.group_uranos_ts,1,0,0,0
+access_uranos_ts_followup_user,uranos.followup user,model_uranos_followup,uranos_ts.group_uranos_ts,1,0,0,0
+access_uranos_ts_followup_contact_user,uranos.followup.contact user,model_uranos_followup_contact,uranos_ts.group_uranos_ts,1,0,0,0
+access_uranos_ts_report_user,uranos_ts.report user,model_uranos_ts_report,uranos_ts.group_uranos_ts,0,0,0,0
+access_uranos_ts_import_user,uranos.import user,model_uranos_import,uranos_ts.group_uranos_ts,0,0,0,0
+access_project_microcom_category_user,project.microcom.category user,model_project_microcom_category,uranos_ts.group_uranos_ts,1,0,0,0
+access_res_partner_microcom_category_user,res.partner.microcom.category user,model_res_partner_microcom_category,uranos_ts.group_uranos_ts,1,0,0,0
+
+access_uranos_ts_action_admin,uranos.action admin,model_uranos_action,uranos_ts.group_uranos_ts_admin,1,0,0,0
+access_uranos_ts_billing_admin,uranos.billing admin,model_uranos_billing,uranos_ts.group_uranos_ts_admin,1,0,0,0
+access_uranos_ts_event_admin,uranos.event admin,model_uranos_event,uranos_ts.group_uranos_ts_admin,1,0,0,0
+access_uranos_ts_request_admin,uranos.request admin,model_uranos_request,uranos_ts.group_uranos_ts_admin,1,0,0,0
+access_uranos_ts_followup_admin,uranos.followup admin,model_uranos_followup,uranos_ts.group_uranos_ts_admin,1,0,0,0
+access_uranos_ts_followup_contact_admin,uranos.followup.contact admin,model_uranos_followup_contact,uranos_ts.group_uranos_ts_admin,1,0,0,0
+access_uranos_ts_report_admin,uranos_ts.report admin,model_uranos_ts_report,uranos_ts.group_uranos_ts_admin,1,0,0,0
+access_uranos_ts_import_admin,uranos.import admin,model_uranos_import,uranos_ts.group_uranos_ts_admin,1,1,1,1
+access_project_microcom_category_admin,project.microcom.category admin,model_project_microcom_category,uranos_ts.group_uranos_ts_admin,1,1,1,1
+access_res_partner_microcom_category_admin,res.partner.microcom.category admin,model_res_partner_microcom_category,uranos_ts.group_uranos_ts_admin,1,1,1,1
+
+access_uranos_ts_uranos_request,uranos.request admin,model_uranos_request,uranos_ts.group_uranos_ts_admin,1,1,1,1
+
+access_uranos_timesheet_analyse_admin,access_uranos_timesheet_analyse admin,model_uranos_timesheet_analyse,uranos_ts.group_uranos_ts_admin,1,1,1,1
+access_uranos_followup_action_user,access_uranos_followup_action user,model_uranos_followup_action,uranos_ts.group_uranos_ts,1,0,0,0
+access_uranos_ts_action_supervise,access_uranos_action supervise,model_uranos_action,uranos_ts.group_uranos_approval,1,1,0,0
+access_project_task_fusion_wizard,project.task.fusion.wizard,model_project_task_fusion_wizard,,1,1,1,1

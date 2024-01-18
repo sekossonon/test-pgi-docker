@@ -1,0 +1,25 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+microcom_timesheet_user,microcom.timesheet.user,model_microcom_timesheet,project.group_project_user,1,1,1,1
+microcom_timesheet_synchronize_user,microcom.timesheet.synchronize.user,model_microcom_timesheet_synchronize,project.group_project_user,1,1,1,1
+microcom_timesheet_close_user,microcom.timesheet.close.request.user,model_microcom_timesheet_close_request,project.group_project_user,1,1,1,1
+microcom_timesheet_billing_user,microcom.timesheet.billing.user,model_microcom_timesheet_billing,project.group_project_user,1,0,0,0
+microcom_timesheet_event_user,microcom.timesheet.event.user,model_microcom_timesheet_event,project.group_project_user,1,1,1,1
+
+microcom_timesheet_billing_admin,microcom.timesheet.billing.user,model_microcom_timesheet_billing,project.group_project_manager,1,1,1,1
+microcom_timesheet_event_admin,microcom.timesheet.event.user,model_microcom_timesheet_event,project.group_project_manager,1,1,1,1
+access_project_task_followup_user,project.task.followup user,model_project_task_followup,base.group_user,1,1,1,0
+
+access_microcom_timesheet_import_request_ts_user,microcom.timesheet.import.request ts user,microcom_ts.model_microcom_timesheet_import_request,microcom_ts.group_microcom_ts,1,1,1,1
+access_microcom_timesheet_create_event_ts_user,microcom.timesheet.create.event ts user,microcom_ts.model_microcom_timesheet_create_event,microcom_ts.group_microcom_ts,1,1,1,1
+access_timesheet_invoice_rate,timesheet.invoice.rate,model_timesheet_invoice_rate,base.group_user,1,1,1,0
+
+access_microcom_timesheet_task_wizard_admin,microcom_timesheet_task_wizard amin,microcom_ts.model_microcom_timesheet_task_wizard,uranos_ts.group_uranos_ts_admin,1,1,1,1
+access_microcom_timesheet_task_wizard_supervisor,microcom_timesheet_task_wizard supervisor,microcom_ts.model_microcom_timesheet_task_wizard,microcom_tasks.group_project_supervisor,1,1,1,1
+
+access_microcom_timesheet_billing_group_ts_amin,microcom.timesheet.billing.group ts user,microcom_ts.model_microcom_timesheet_billing_group,uranos_ts.group_uranos_ts_admin,1,1,1,1
+access_microcom_timesheet_billing_group_user,microcom.timesheet.billing.group ts user,microcom_ts.model_microcom_timesheet_billing_group,project.group_project_user,1,0,0,0
+
+access_task_budget,project.task.budget.line,model_project_task_budget_line,project.group_project_user,1,1,1,1
+access_task_budget_template,task.budget.template,model_task_budget_template,project.group_project_user,1,1,1,1
+access_task_budget_template_line,task.budget.template.line,model_task_budget_template_line,project.group_project_user,1,1,1,1
+access_wizard_budget_template,wizard.budget.template,model_wizard_budget_template,project.group_project_user,1,1,1,1

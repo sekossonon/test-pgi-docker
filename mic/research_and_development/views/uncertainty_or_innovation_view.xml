@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="uncertainty_or_innovation_tree" model="ir.ui.view">
+            <field name="name">uncertainty.or.innovation.tree</field>
+            <field name="model">uncertainty.or.innovation</field>
+            <field name="arch" type="xml">
+                <tree string="Uncertainty or Innovation">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="uncertainty_or_innovation_form" model="ir.ui.view">
+            <field name="name">uncertainty.or.innovation.form</field>
+            <field name="model">uncertainty.or.innovation</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name" placeholder="Title..."/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="tag_ids" widget="many2many_tags"  options="{'color_field': 'color'}"/>
+                                <field name="details"/>
+                            </group>
+                            <field name="hypothesis_lines"/>
+
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_uncertainty_or_innovation" model="ir.actions.act_window">
+            <field name="name">uncertainty or innovation</field>
+            <field name="res_model">uncertainty.or.innovation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('uncertainty_or_innovation_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('uncertainty_or_innovation_form')})]"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                Create the first Uncertainty or innovation
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="research_and_development_parent_menu" name="R&amp;D" parent="project.menu_main_pm" sequence="8"/>
+
+        <menuitem id="uncertainty_innovation_menu"
+                  name="Uncertainty or Innovation"
+                  action="action_uncertainty_or_innovation"
+                  parent="research_and_development_parent_menu"
+                  sequence="1"/>
+
+        <record id="ir_idea_hypothesis_form" model="ir.ui.view">
+            <field name="name">idea.hypothesis.form</field>
+            <field name="model">idea.hypothesis</field>
+            <field name="arch" type="xml">
+                <form string="Idea and hypothesis">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name" placeholder="Title..."/></h1>
+                        </div>
+                        <group>
+                            <field name="summary"/>
+                            <field name="conclusion"/>
+                            <div class="o_row" colspan="2">
+                                <field name="work_or_progres_lines" readonly="1">
+                                    <tree>
+                                        <field name="user_id"/>
+                                        <field name="date"/>
+                                        <field name="description"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div class="o_row" colspan="2">
+                                <field name="obstacle_or_accomplishment_lines" readonly="1">
+                                    <tree>
+                                        <field name="user_id"/>
+                                        <field name="date"/>
+                                        <field name="description"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <div class="o_row" colspan="2">
+                                <field name="conclusion_learning_reuse_lines" readonly="1">
+                                    <tree>
+                                        <field name="user_id"/>
+                                        <field name="date"/>
+                                        <field name="description"/>
+                                    </tree>
+                                </field>
+                            </div>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="ir_idea_hypothesis_tree" model="ir.ui.view">
+            <field name="name">idea.hypothesis.tree</field>
+            <field name="model">idea.hypothesis</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name"/>
+<!--                    <field name="color" widget="color_picker"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_idea_or_hypothesis" model="ir.actions.act_window">
+            <field name="name">Idea Or Hypothesis</field>
+            <field name="res_model">idea.hypothesis</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create the first Idea.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="idea_or_hypothesis_menu"
+                  name="Idea Or Hypothesis"
+                  action="action_idea_or_hypothesis"
+                  parent="project.menu_project_config"
+                  sequence="29"/>
+
+
+        <record id="innovation_tags_tree" model="ir.ui.view">
+            <field name="name">uncertainty.or.innovation.tags.tree</field>
+            <field name="model">uncertainty.or.innovation.tags</field>
+            <field name="arch" type="xml">
+                <tree string="Tags" editable="top" sample="1" multi_edit="1" default_order="name">
+                    <field name="name"/>
+                    <field name="color" widget="color_picker" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_innovation_tags" model="ir.actions.act_window">
+            <field name="name">Innovation Tags</field>
+            <field name="res_model">uncertainty.or.innovation.tags</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create the first Tags.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="innovation_tags_menu"
+                  name="Innovation Tags"
+                  action="action_innovation_tags"
+                  parent="project.menu_project_config"
+                  sequence="31"/>
+
+    </data>
+</odoo>

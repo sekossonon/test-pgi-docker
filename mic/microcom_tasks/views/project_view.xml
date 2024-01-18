@@ -1,0 +1,233 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="edit_project" model="ir.ui.view">
+            <field name="name">project.project.form</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="description"/>
+                </field>
+                <group name="group_tasks_managment" position="inside">
+                    <group name="task_tab" string="Task Tabs">
+                        <field name="process_ids" widget="many2many_tags"/>
+                        <field name="show_checklist"/>
+                    </group>
+                </group>
+                <field name="user_id" position="after">
+                    <field name="is_deadline_required" />
+                </field>
+                <field name="privacy_visibility" position="after">
+                    <field name="task_creation_restriction" widget="selection"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_project_kanban" model="ir.ui.view">
+            <field name="name">project.project.kanban</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project_kanban"/>
+            <field name="arch" type="xml">
+                <div groups="project.group_project_manager" position="attributes">
+                    <attribute name="groups">microcom_tasks.group_project_supervisor</attribute>
+                </div>
+            </field>
+        </record>
+
+        <record id="view_task_tree2" model="ir.ui.view">
+            <field name="name">project.task.tree.inherit_mic</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_tree2"/>
+            <field name="arch" type="xml">
+                <xpath expr="." position="replace">
+                    <tree decoration-bf="message_needaction==True"
+                          decoration-danger="date_deadline and (date_deadline&lt;current_date)" string="Tasks">
+                        <field name="message_needaction" invisible="1"/>
+                        <field name="sequence" invisible="not context.get('seq_visible', False)"/>
+                        <field name="id"/>
+                        <field name="project_id" invisible="context.get('user_invisible', False)"/>
+                        <field name="name"/>
+                        <field name="priority_microcom"/>
+                        <field name="stage_id" invisible="context.get('set_visible',False)"/>
+                        <field name="kanban_state"/>
+                        <field name="planned_hours" invisible="context.get('set_visible',False)"/>
+                        <field name="portal_user_names" string="User Names"
+                               invisible="context.get('user_invisible', False)"/>
+                        <field name="create_date"/>
+                        <field name="planned_hours" invisible="context.get('set_visible',False)"
+                               groups="project.group_time_work_estimation_tasks"/>
+                        <field name="date_deadline" invisible="context.get('deadline_visible',True)"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_task_form2_inherited" model="ir.ui.view">
+            <field name="name">project.task.form.inherited</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="groups_id" eval="[(6, 0, [])]"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='project_id']" position="after">
+                    <field name="microcom_sequence" readonly="1" force_save="1"/>
+                </xpath>
+
+                <field name="description" position="replace">
+                    <label for="customer_description"/>
+                    <div>
+                        <field name="customer_description"/>
+                    </div>
+                    <hr/>
+                    <label for="description"/>
+                    <div>
+                        <field name="description" type="html"/>
+                    </div>
+                </field>
+                <field name="date_deadline" position="after">
+                    <field name="priority_microcom" widget="priority"/>
+                </field>
+                <field name="date_deadline" position="before">
+                    <field name="planned_hours"/>
+                    <field name="max_hours"/>
+                    <field name="is_deadline_required" invisible="1"/>
+                </field>
+                <field name="date_deadline" position="attributes">
+                    <attribute name="attrs">{'required': [('is_deadline_required', '=', True)]}</attribute>
+                </field>
+                <xpath expr="//page[@name='extra_info']" position="after">
+                    <page name="checklist" string="Checklist" attrs="{'invisible': [('show_checklist', '=', False)]}">
+                        <field name="show_checklist" invisible="1"/>
+                        <group>
+                            <field name="show_url" invisible="1"/>
+                            <field name="pr_url" string="Pull Request Link" widget="url"
+                                   attrs="{'invisible': [('show_url', '=', False)]}"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="process_id"/>
+                            </group>
+                        </group>
+                        <field name="checkline_ids">
+                            <tree editable="bottom" default_order="sequence">
+                                <field name="sequence" widget="handle"/>
+                                <field name="done"/>
+                                <field name="quality_control_item_id"/>
+                                <field name="comment"/>
+                            </tree>
+                        </field>
+
+
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_task_kanban" model="ir.ui.view">
+            <field name="name">project.task.kanban</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_kanban"/>
+            <field name="arch" type="xml">
+                <!--Adding approval value to the progressbar-->
+                <xpath expr="//progressbar[@field='kanban_state']" position="replace">
+                    <progressbar field="kanban_state"
+                                 colors='{"done": "success", "blocked": "danger", "approval":"warning"}'/>
+                </xpath>
+                <field name="legend_done" position="before">
+                    <field name="legend_approved"/>
+                </field>
+                <field name="sequence" position="after">
+                    <field name="planned_hours"/>
+                </field>
+                <field name="priority" position="after">
+                    <field name="priority_microcom"/>
+                </field>
+                <xpath expr="//t//div[@class='o_kanban_record_bottom']" position="before">
+                    <div name="planned_div">
+                        <field name="planned_hours"/>
+                    </div>
+                </xpath>
+                <!--use our priority_microcom-->
+                <xpath expr="//t//field[@widget='priority']" position="replace">
+                    <field name="priority_microcom" widget="priority"/>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="project_partner_id"/>
+                    <field name="microcom_sequence"/>
+                </xpath>
+
+                <xpath expr="//strong[@class='o_kanban_record_title']" position="before">
+                    <div class="o_microcom_sequence">
+                        <field name="microcom_sequence"/>
+                        <field name="id_to_char" invisible="1"/>
+                    </div>
+                </xpath>
+
+                <xpath expr="//t[@t-if='record.partner_id.value']" position="replace">
+                    <!--I have to keep the "if" because it's followed by an "else". -->
+                    <t t-if="record.partner_id.value">
+                        <span t-if="record.partner_id.value != record.project_partner_id.value">
+                            <field name="partner_id"/>
+                        </span>
+                    </t>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="project_task_view_search_microcom" model="ir.ui.view">
+            <field name="name">project.task.search.microcom</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_search_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='tag_ids']" position="before">
+                    <field name="microcom_sequence"
+                           filter_domain="['|',('microcom_sequence', '=ilike', self), ('id_to_char', '=', self)]]"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="task_type_edit" model="ir.ui.view">
+            <field name="name">project.task.type.form</field>
+            <field name="model">project.task.type</field>
+            <field name="inherit_id" ref="project.task_type_edit"/>
+            <field name="arch" type="xml">
+                <!--Add ability to change message for approved state-->
+                <xpath expr="//label[@for='legend_normal']" position="before">
+                    <label for="legend_approved" string=" " class="o_status_yellow"/>
+                    <field name="legend_approved" nolabel="1"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_quality_control_item_tree" model="ir.ui.view">
+            <field name="name">project.task.quality.control.item.tree</field>
+            <field name="model">project.task.quality.control.item</field>
+            <field eval="2" name="priority"/>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="quality_control_item_action_config_project_task" model="ir.actions.act_window">
+            <field name="name">Quality Control</field>
+            <field name="res_model">project.task.quality.control.item</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+        </record>
+        <menuitem id="quality_control_item_config_activity_type"
+                  action="quality_control_item_action_config_project_task"
+                  parent="project.menu_project_config"/>
+
+    </data>
+
+</odoo>
