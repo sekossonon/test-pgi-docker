@@ -22,7 +22,6 @@ pipeline {
                 pip install pre-commit
                 git config --unset-all core.hooksPath
                 pre-commit install
-                cat /root/.cache/pre-commit/pre-commit.log
                 '''
             }
         }
