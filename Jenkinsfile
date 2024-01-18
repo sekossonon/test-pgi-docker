@@ -27,7 +27,7 @@ pipeline {
         //         '''
         //     }
         // }
-        stage('Testing') {
+        stage('Cloning dependencies') {
             steps {
                 echo 'clone odoo-common 16'
                 sh '''
@@ -37,6 +37,12 @@ pipeline {
                 sh '''
                 git clone --depth=1 --branch=16.0 https://github.com/OCA/project.git
                 '''
+            }
+        }
+        stage('TEst') {
+            steps {
+                echo 'Test'
+                sh "ls -l ."
             }
         }
     }
