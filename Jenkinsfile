@@ -40,5 +40,10 @@ pipeline {
                 sh "ls -l ."
             }
         }
+        stage('Cloning dependencies') {
+            echo 'Test'
+            sh "ls -l ."
+        }
+
     }
 }
