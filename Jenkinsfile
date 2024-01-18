@@ -11,10 +11,10 @@ pipeline {
                 #!/usr/bin/bash
                 cd mic
                 python -m venv venv
-                . venv/bin/activate
+                source venv/bin/activate
                 pip install --upgrade pip
                 pip install pre-commit
-                pre-commit install
+                sudo pre-commit install
                 '''
             }
         }
