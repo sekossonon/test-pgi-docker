@@ -8,12 +8,10 @@ pipeline {
 
     stages {
         stage('Setting up virtual env') {
-            checkout scm
             steps {
                 echo 'creating virtual env and install pre-commit'
                 sh '''
                 git init .
-                git fetch
                 cat /root/.cache/pre-commit/pre-commit.log
                 ls -l .
                 python -m venv venv
