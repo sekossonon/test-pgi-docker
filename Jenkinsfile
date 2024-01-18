@@ -11,6 +11,7 @@ pipeline {
             steps {
                 echo 'creating virtual env and install pre-commit'
                 sh '''
+                git pull
                 ls -l .
                 python -m venv venv
                 . venv/bin/activate
@@ -25,6 +26,7 @@ pipeline {
                 echo 'running pre-commit'
                 sh '''
                 pre-commit run --files mic/**/*
+                pre-commit run --from-ref origin/HEAD --to-ref HEAD
                 '''
             }
         }
