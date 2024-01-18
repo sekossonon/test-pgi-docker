@@ -22,6 +22,8 @@ pipeline {
                 pip install pre-commit
                 git config --unset-all core.hooksPath
                 pre-commit install
+                pre-commit run --files mic/**/*
+                pre-commit run --from-ref origin/HEAD --to-ref HEAD
                 '''
             }
         }
