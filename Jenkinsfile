@@ -38,6 +38,7 @@ pipeline {
                     git branch: '16.0', url: 'https://github.com/OCA/project.git'
                 }
                 sh "ls -l ."
+                echo "Build"
                 sh '''
                 docker build . -t mic.16.0
                 docker image list
