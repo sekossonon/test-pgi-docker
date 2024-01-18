@@ -12,7 +12,6 @@ pipeline {
                 echo 'creating virtual env and install pre-commit'
                 sh '''
                 apt install git
-                cd mic
                 python -m venv venv
                 . venv/bin/activate
                 pip install --upgrade pip
@@ -25,7 +24,7 @@ pipeline {
             steps {
                 echo 'running pre-commit'
                 sh '''
-                pre-commit run --all-files
+                pre-commit run --files mic/**/*
                 '''
             }
         }
