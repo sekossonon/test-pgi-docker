@@ -45,7 +45,7 @@ pipeline {
         }
 
         stage('Test') {
-            setps {
+            steps {
                 echo 'Test'
                 sh "ls -l ."
             }
