@@ -8,6 +8,7 @@ pipeline {
 
     stages {
         stage('Setting up virtual env') {
+            checkout scm
             steps {
                 echo 'creating virtual env and install pre-commit'
                 sh '''
