@@ -11,6 +11,7 @@ pipeline {
             steps {
                 echo 'creating virtual env and install pre-commit'
                 sh '''
+                apt install git
                 cd mic
                 python -m venv venv
                 . venv/bin/activate
