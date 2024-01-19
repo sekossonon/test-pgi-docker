@@ -59,10 +59,11 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('Uni Tests') {
             steps {
-                echo 'Test'
-                sh "ls -l ."
+                echo 'build image'
+                sh "docker build my-pgi-16.0:${env.BUILD_ID} ."
+                echo 'run tests'
             }
 
         }
