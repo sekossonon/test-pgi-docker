@@ -62,7 +62,7 @@ pipeline {
         stage('Uni Tests') {
             steps {
                 echo 'build image'
-                sh "docker build my-pgi-16.0:${env.BUILD_ID} ."
+                sh "docker build -t my-pgi-16.0:${env.BUILD_ID} ."
                 echo 'run tests'
             }
 
