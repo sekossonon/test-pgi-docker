@@ -41,6 +41,7 @@ pipeline {
                     git branch: '16.0', url: 'https://github.com/OCA/project.git'
                 }
                 echo 'install docker'
+                sh 'lsb_release -c'
                 sh '''
                 apt-get update
                 apt-get install ca-certificates curl gnupg
