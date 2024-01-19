@@ -40,10 +40,9 @@ pipeline {
                 dir('project') {
                     git branch: '16.0', url: 'https://github.com/OCA/project.git'
                 }
-                sh "apt-get update && apt-get install -y docker.io"
-                script {
-                    docker.build("mymic-16:${env.BUILD_ID}")
-                }
+                echo 'install docker'
+                sh 'apt-get update && apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y'
+                sh 'docker image list'
             }
         }
 
