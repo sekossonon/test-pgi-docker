@@ -17,8 +17,6 @@ pipeline {
         //         echo $(pwd)
         //         git config --global --add safe.directory $(pwd)
         //         git init .
-        //         git status
-        //         ls -l .
         //         python -m venv venv
         //         . venv/bin/activate
         //         pip install --upgrade pip
@@ -26,7 +24,7 @@ pipeline {
         //         git config --unset-all core.hooksPath
         //         pre-commit install
         //         pre-commit run --files mic/**/* --show-diff-on-failure
-        //         pre-commit run --from-ref origin/HEAD --to-ref HEAD
+        //         # pre-commit run --from-ref origin/HEAD --to-ref HEAD
         //         '''
         //     }
         // }
@@ -61,9 +59,15 @@ pipeline {
 
         stage('Uni Tests') {
             steps {
-                echo 'build image'
-                sh "docker build -t my-pgi-16.0:${env.BUILD_ID} ."
-                echo 'run tests'
+                withCredentials([usernamePassword(credentialsId: 'my-docker-reg-upa', usernameVariable: 'docker-uname', passwordVariable: 'docker-pwd')]) {
+                    echo 'build image'
+                    sh '''
+                    docker login -u $docker-uname -p $docker-pwd
+                    docker build -t my-pgi-16.0:${env.BUILD_ID} .
+
+                    '''
+                    echo 'run tests'
+                }
             }
 
         }
