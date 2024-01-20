@@ -3,6 +3,7 @@ pipeline {
         docker {
             image 'sek990/jenkins-py3.10-docker-agent'
             args '-u root --privileged'
+        }
     }
     environment {
         dockerImage = 'pgi'
