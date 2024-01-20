@@ -5,9 +5,6 @@ pipeline {
             args '-u root --privileged'
         }
     }
-    environment {
-        dockerImage = 'pgi'
-    }
 
     stages {
         // stage('Code QA') {
