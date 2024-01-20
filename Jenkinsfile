@@ -44,8 +44,8 @@ pipeline {
                 apt-get update
                 apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
                 apt-get clean
-                service docker start
                 '''
+                sh 'service docker start'
             }
             
         }
