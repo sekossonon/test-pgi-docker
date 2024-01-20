@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker.image('sek990/jenkins-py3.10-docker-agent').runWith('-u root --privileged')
+        docker.image('sek990/jenkins-py3.10-docker-agent').withRun('-u root --privileged')
     }
     environment {
         dockerImage = 'pgi'
