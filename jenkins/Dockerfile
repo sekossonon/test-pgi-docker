@@ -1,7 +1,10 @@
 FROM python:3.10-bookworm
 
-COPY ./install /tmp/install
+COPY --chown=+x ./install /tmp/install
 
-RUN chmod +x /tmp/install/*.sh /tmp/install/docker.sh && rm -r /tmp/install
+RUN chmod +x /tmp/install/*.sh
+RUN ls /tmp/install
+RUN /tmp/install/docker.sh
+RUN rm -r /tmp/install
 
-ENTRYPOINT ["service", "docker", "start"]
+ENTRYPOINT ["docker", "run", "hello-world"]

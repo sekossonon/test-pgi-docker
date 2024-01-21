@@ -1,12 +1,12 @@
 pipeline {
-    agent {
-        docker {
-            image 'sek990/jenkins-py3.10-docker-agent:latest'
-            args '-u root --privileged'
-        }
-    }
+    agent any
 
     stages {
+        stage('Test') {
+            steps {
+                'python3 --version'
+            }
+        }
         // stage('Code QA') {
         //     steps {
         //         echo 'creating virtual env and install pre-commit'
