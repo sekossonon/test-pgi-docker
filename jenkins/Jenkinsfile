@@ -14,10 +14,10 @@ pipeline {
 
         stage('Code QA') {
             steps {
-                sh'''
-                git config --global --add safe.directory $(pwd)
-                git init .
-                '''
+                //sh'''
+                //git config --global --add safe.directory $(pwd)
+                //git init .
+                //'''
                 echo 'Setting up virtual env'
                 sh'''
                 #chown -R 1000 $(pwd)
