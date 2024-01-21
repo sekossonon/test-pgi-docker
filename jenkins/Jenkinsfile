@@ -10,7 +10,8 @@ pipeline {
                 '''
                 echo 'Setting up virtual env'
                 sh'''
-                sudo python3 -m venv venv
+                chown -R 1000 $(pwd)
+                python3 -m venv venv
                 . venv/bin/activate
                 pip install --upgrade pip
                 pip install pre-commit
