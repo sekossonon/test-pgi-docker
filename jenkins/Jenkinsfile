@@ -6,8 +6,10 @@ pipeline {
 
     stages {
         stage('Init environment') {
-            cleanWs()
-            checkout scm
+            steps {
+                cleanWs()
+                checkout scm
+            }
         }
 
         stage('Code QA') {
