@@ -1,7 +1,15 @@
 pipeline {
     agent any
+    options {
+        skipDefaultCheckout(true)
+    }
 
     stages {
+        stage('Init environment') {
+            cleanWs()
+            checkout scm
+        }
+
         stage('Code QA') {
             steps {
                 sh'''
@@ -10,7 +18,7 @@ pipeline {
                 '''
                 echo 'Setting up virtual env'
                 sh'''
-                chown -R 1000 $(pwd)
+                #chown -R 1000 $(pwd)
                 python3 -m venv venv
                 . venv/bin/activate
                 pip install --upgrade pip
