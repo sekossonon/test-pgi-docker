@@ -49,7 +49,6 @@ pipeline {
         stage('Uni Tests') {
             steps {
                 echo 'Build image'
-                sh './jenkins/dockerhub_login.sh'
                 sh './jenkins/build_image.sh'
             }
 
