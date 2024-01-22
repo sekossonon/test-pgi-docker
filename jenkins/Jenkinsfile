@@ -2,6 +2,11 @@ pipeline {
     agent any
     options {
         skipDefaultCheckout(true)
+        buildDiscarder(logRotator(numToKeepStr: '2'))
+    }
+    environment {
+        GITHUB_CREDS = credentials('jenkins-upa-test')
+        DOCKERHUB_CREDS = credentials('my-docker-reg-upa')
     }
 
     stages {
@@ -34,15 +39,7 @@ pipeline {
         // }
         stage('Cloning dependencies') {
             steps {
-                echo 'cloning odoo-common 16'
-                withCredentials([gitUsernamePassword(credentialsId: 'jenkins-upa-test', gitToolName: 'git-tool')]) {
-                    sh 'git clone --branch=16.0 --depth=1 https://github.com/microcom/odoo-common.git'
-                }
-                sh 'mv ./odoo-common ./src/projects/'
-                echo 'clone oca/project'
-                sh 'git clone --branch=16.0 --depth=1 https://github.com/OCA/project.git'
-                sh 'mv ./project ./src/projects/'
-                sh 'ls -l ./src/projects/.'
+                sh './jenkins/clone_dependencies.sh'
             }
         }
 
