@@ -26,9 +26,6 @@ pipeline {
                 git config --unset-all core.hooksPath
                 pip install --upgrade pip && pip install pre-commit
                 pre-commit install
-                '''
-                echo 'Running pre-commit'
-                sh'''
                 pre-commit run --files src/projects/mic/**/* --show-diff-on-failure
                 # pre-commit run --from-ref origin/HEAD --to-ref HEAD
                 '''
