@@ -42,7 +42,7 @@ pipeline {
                 echo 'clone oca/project'
                 sh 'git clone --branch=16.0 --depth=1 https://github.com/OCA/project.git'
                 sh 'mv ./project ./src/projects/'
-                sh 'ls -l .'
+                sh 'ls -l ./src/projects/.'
             }
         }
 
