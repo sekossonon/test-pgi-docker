@@ -5,6 +5,7 @@ pipeline {
     }
 
     stages {
+
         stage('Init environment') {
             steps {
                 cleanWs()
@@ -31,39 +32,15 @@ pipeline {
                 '''
             }
         }
-        // stage('Initializing'){
-        //     steps{
-        //         echo 'install docker'
-        //         sh '''
-        //         apt-get update
-        //         apt-get install ca-certificates curl gnupg
-        //         install -m 0755 -d /etc/apt/keyrings
-        //         curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-        //         chmod a+r /etc/apt/keyrings/docker.gpg
-        //         echo \
-        //         "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
-        //         $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-        //         tee /etc/apt/sources.list.d/docker.list > /dev/null
-        //         apt-get update
-        //         apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
-        //         apt-get clean
-        //         '''
-        //         sh 'service docker start'
-        //     }
-            
-        // }
         stage('Cloning dependencies') {
             steps {
                 echo 'cloning odoo-common 16'
-                dir('odoo-common') {
-                    echo 'clone oca/projects 16'
-                    git branch: '16.0', credentialsId: 'jenkins-upa-test', url: 'https://github.com/microcom/odoo-common.git'
+                withCredentials([gitUsernamePassword(credentialsId: 'jenkins-upa-test', gitToolName: 'git-tool')]) {
+                    sh 'git clone --branch=16.0 --depth=1 https://github.com/microcom/odoo-common.git'
                 }
                 sh 'mv ./odoo-common ./src/projects/'
-                dir('project') {
-                    echo 'clone oca/project'
-                    git branch: '16.0', url: 'https://github.com/OCA/project.git'
-                }
+                echo 'clone oca/project'
+                sh 'git clone --branch=16.0 --depth=1 https://github.com/OCA/project.git'
                 sh 'mv ./project ./src/projects/'
                 sh 'ls -l .'
             }
