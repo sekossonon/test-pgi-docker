@@ -21,8 +21,6 @@ pipeline {
                 echo 'Setting up virtual env'
                 sh'''
                 #chown -R 1000 $(pwd)
-                pip install --upgrade pip
-                pip install virtualenv
                 python3 -m venv venv
                 . venv/bin/activate
                 
