@@ -37,25 +37,20 @@ pipeline {
         //         '''
         //     }
         // }
+
         stage('Cloning dependencies') {
             steps {
                 withCredentials([gitUsernamePassword(credentialsId: 'jenkins-upa-test', gitToolName: 'git-tool')]) {
                     sh './jenkins/clone_dependencies.sh'
                 }
-                sh 'ls -l ./src/projects/.'
             }
         }
 
         stage('Uni Tests') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'my-docker-reg-upa', usernameVariable: 'docker-uname', passwordVariable: 'docker-pwd')]) {
-                    echo 'build image'
-                    sh '''
-                    docker login -u $docker-uname -p $docker-pwd
-                    docker build -t my-pgi-16.0:${env.BUILD_ID} .
-                    '''
-                    echo 'run tests'
-                }
+                echo 'Build image'
+                sh './jenkins/dockerhub_login.sh'
+                sh './jenkins/build_image.sh'
             }
 
         }

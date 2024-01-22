@@ -16,6 +16,7 @@ RUN \
   pip install --no-cache-dir \
     -r /odoo/src/odoo/requirements.txt \
     -f https://wheelhouse.acsone.eu/manylinux2014
-RUN pip install pyOpenSSL --upgrade
 
+COPY ./install/ /tmp/install
+RUN /tmp/install/install_requirements.sh && rm -rf /tmp/install
 ENV ADDONS_PATH=/odoo/src/odoo/addons,/odoo/src/odoo/odoo/addons/,/odoo/custom_addons/16.0/project,/odoo/custom_addons/16.0/mic
