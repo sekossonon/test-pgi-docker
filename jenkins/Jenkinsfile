@@ -39,7 +39,10 @@ pipeline {
         // }
         stage('Cloning dependencies') {
             steps {
-                sh './jenkins/clone_dependencies.sh'
+                withCredentials([gitUsernamePassword(credentialsId: 'jenkins-upa-test', gitToolName: 'git-tool')]) {
+                    sh './jenkins/clone_dependencies.sh'
+                }
+                sh 'ls -l ./src/projects/.'
             }
         }
 
