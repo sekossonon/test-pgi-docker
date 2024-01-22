@@ -21,10 +21,11 @@ pipeline {
                 echo 'Setting up virtual env'
                 sh'''
                 #chown -R 1000 $(pwd)
-                python3 -m pip install virtualenv
+                pip install --upgrade pip
+                pip install virtualenv
                 python3 -m venv venv
                 . venv/bin/activate
-                pip install --upgrade pip
+                
                 pip install pre-commit
                 git config --unset-all core.hooksPath
                 pre-commit install
