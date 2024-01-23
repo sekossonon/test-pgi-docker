@@ -50,6 +50,10 @@ pipeline {
             steps {
                 echo 'Build image'
                 sh './jenkins/build_image.sh'
+                echo 'Start container'
+                sh './jenkins/start_container.sh'
+                echo 'Run tests'
+                sh './jenkins/run_tests.sh'
             }
 
         }

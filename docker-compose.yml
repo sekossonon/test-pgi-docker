@@ -1,0 +1,19 @@
+version: '3.1'
+services:
+  odoo:
+    image: my-pgi-16.0:latest
+    depends_on:
+      - db
+    ports:
+      - "8069:8069"
+    environment:
+      - DB_HOST=db
+      - DB_USER=odoo
+      - DB_PASSWORD=odoo
+
+  db:
+    image: postges:15
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
