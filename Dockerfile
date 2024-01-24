@@ -11,10 +11,10 @@ RUN apt install -y postgresql-common postgresql-client
 RUN apt-get install --no-install-recommends -y wkhtmltopdf
 RUN apt-get clean
 
-RUN \
-  pip install --no-cache-dir \
-    -r /odoo/src/odoo/requirements.txt \
-    -f https://wheelhouse.acsone.eu/manylinux2014
+# RUN \
+#   pip install --no-cache-dir \
+#     -r /odoo/src/odoo/requirements.txt \
+#     -f https://wheelhouse.acsone.eu/manylinux2014
 
 COPY ./install/ /tmp/install
 RUN /tmp/install/install_requirements.sh && rm -rf /tmp/install
