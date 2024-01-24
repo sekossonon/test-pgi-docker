@@ -48,8 +48,8 @@ pipeline {
 
         stage('Uni Tests') {
             steps {
-                echo 'Build image'
-                sh './jenkins/build_image.sh'
+                //echo 'Build image'
+                //sh './jenkins/build_image.sh'
                 echo 'Start container'
                 sh './jenkins/start_container.sh'
                 echo 'Run tests'
