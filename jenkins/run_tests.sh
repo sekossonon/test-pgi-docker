@@ -9,6 +9,6 @@ fi
 
 #docker compose build odoo # only destroy and rebuild odoo container
 docker compose up -d
-docker exec $container_name sh -c "odoo --workers 0 -d test_db -i microcom_ts --test-enable --stop-after-init"
+docker exec -u odoo $container_name sh -c "odoo --workers 0 -d test_db -i microcom_ts --test-enable --stop-after-init"
 docker ps
 # docker ps -a -q -f name=jenkins-docker1
