@@ -9,4 +9,5 @@ fi
 docker compose up -d
 docker ps
 echo $container_name
+sleep 5
 docker exec $container_name -1 -u odoo sh -c "odoo-bin -d test_db -i microcom_ts --test-enable --stop-after-init"
