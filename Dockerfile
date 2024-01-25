@@ -20,4 +20,3 @@ RUN /tmp/install/install_requirements.sh && rm -rf /tmp/install
 
 
 ENV ADDONS_PATH=/odoo/src/odoo/addons,/odoo/src/odoo/odoo/addons/,/odoo/custom_addons/16.0/project,/odoo/custom_addons/16.0/mic
-
