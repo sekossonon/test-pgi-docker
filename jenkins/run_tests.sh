@@ -7,7 +7,7 @@ if [ ! -z "$WORKSPACE" ]; then
     container_name="$(echo $WORKSPACE | rev | cut -d'/' -f 1 | rev)-$container_name-1"
 fi
 docker compose up -d
-docker ps
 echo $container_name
 sleep 5
+docker ps
 docker exec $container_name -1 -u odoo sh -c "odoo-bin -d test_db -i microcom_ts --test-enable --stop-after-init"
