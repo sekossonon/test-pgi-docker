@@ -52,7 +52,7 @@ pipeline {
                 //sh './jenkins/build_image.sh'
                 echo 'Start container'
                 sh './jenkins/docker_login.sh'
-                //sh './jenkins/start_container.sh'
+                sh './jenkins/start_container.sh'
                 echo 'Run tests'
                 sh './jenkins/run_tests.sh'
             }
