@@ -10,5 +10,5 @@ docker compose up -d
 docker ps
 sleep 5
 docker ps
-docker exec $container_name -u odoo sh -c "odoo-bin -d test_db -i microcom_ts --test-enable --stop-after-init"
-# docker ps -a -q -f name=$container_name
+docker exec $container_name sh -c "odoo-bin -d test_db -i microcom_ts --test-enable --stop-after-init"
+# docker ps -a -q -f name=jenkins-docker1
