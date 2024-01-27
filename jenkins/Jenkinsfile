@@ -16,17 +16,14 @@ pipeline {
                 cleanWs()
                 checkout([
                     $class: 'GitSCM',
-                    branches: [[name: "*/${params.BRANCH}"]],
-                    extensions: [[
+                    branches: scm.branches,
+                    extensions: scm.extensions + [[
                         $class: 'CloneOption',
                         shallow: true,
                         depth:   1,
                         timeout: 30
                     ]],
-                    userRemoteConfigs: [[
-                        url:           params.SCM_URL,
-                        credentialsId: 'jenkins-upa-test'
-                    ]]
+                    userRemoteConfigs: scm.userRemoteConfigs
                 ])
             }
         }
