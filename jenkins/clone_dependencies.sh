@@ -5,4 +5,4 @@ mv ./odoo-common ./src/projects/odoo-common
 echo 'clone oca/project'
 git clone --branch=16.0 --depth=1 https://github.com/OCA/project.git
 mv ./project ./src/projects/project
-ls ./src/projects/
+ls ./src/projects/odoo-common
