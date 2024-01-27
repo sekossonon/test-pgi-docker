@@ -1,3 +1,3 @@
 #!/bin/bash
 docker logout
-docker compose down --remove-orphans --volumes
+docker compose down --remove-orphans --volumes --rmi=local
