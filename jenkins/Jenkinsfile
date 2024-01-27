@@ -14,7 +14,20 @@ pipeline {
         stage('Init environment') {
             steps {
                 cleanWs()
-                checkout scm
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: "*/${params.BRANCH}"]],
+                    extensions: [[
+                        $class: 'CloneOption',
+                        shallow: true,
+                        depth:   1,
+                        timeout: 30
+                    ]],
+                    userRemoteConfigs: [[
+                        url:           params.SCM_URL,
+                        credentialsId: 'jenkins-upa-test'
+                    ]]
+                ])
             }
         }
 
