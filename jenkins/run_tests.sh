@@ -14,7 +14,6 @@ docker exec -u odoo $container_name sh -c "odoo --workers 0 -d test_db -i microc
 
 error_lines=(`grep -n -x " ERROR " test_result.txt`)
 if [ ${#error_lines[*]} > 0 ]; then
-    echo "FAILED !!!"
     exit 1
 fi
 
