@@ -9,6 +9,14 @@ fi
 
 #docker compose build odoo # only destroy and rebuild odoo container
 docker compose up -d
-docker exec -u odoo $container_name sh -c "odoo --workers 0 -d test_db -i microcom_ts --test-tags=/microcom_ts --stop-after-init"
-docker ps
+docker exec -u odoo $container_name sh -c "odoo --workers 0 -d test_db -i microcom_ts --test-tags=/microcom_ts --stop-after-init" \
+    2>&1 | tee test_result.txt
+
+error_lines=(`grep -n -x " ERROR " test_result.txt`)
+if [ ${#error_lines[*]} > 0 ]; then
+    echo "FAILED !!!"
+    exit 1
+fi
+
+# docker ps
 # docker ps -a -q -f name=jenkins-docker1
