@@ -16,6 +16,3 @@ error_lines=(`grep -n -x " ERROR " test_result.txt`)
 if [ ${#error_lines[*]} > 0 ]; then
     exit 1
 fi
-
-# docker ps
-# docker ps -a -q -f name=jenkins-docker1
